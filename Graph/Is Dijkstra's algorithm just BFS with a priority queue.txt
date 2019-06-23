@@ -1,0 +1,35 @@
+Is Dijkstra's algorithm just BFS with a priority queue
+
+First, how can we adapt BFS to more general weighted graph G=(V,E)?
+Here is an idea from the book "Algorithms (Section 4.4)" by Dasgupta et al:
+
+For any edge e=(u,v) of E (with weight le), replace it by le edges of length 1, by adding le-1 dummy nodes 
+between u and v.
+
+As a result, the edges of the result graph G' all have unit length. Therefore, we can compute distances in G 
+by running BFS on G'.
+
+Second, how does Dijkstra algorithm on G beat BFS on the transformed graph G'?
+BFS on G' can be really slow if some le are big because it wastes too much time on computing distances to 
+those dummy nodes that we don't care about at all. The Dijkstra algorithm avoids this by setting estimated 
+distances for nodes and relaxing them whenever possible.
+
+Third, how does Dijkstra algorithm behave on unweighted graphs?
+It behaves exactly the same as BFS does. We elaborate this from two major points.
+
+On "relaxation".
+
+For Dijkstra algorithm on general, weighted graph, the relaxation is
+
+for all edges (u,v) in E:
+    if dist(v) > dist(u) + w(u,v)
+       dist(v) = dist(u) + w(u,v)
+For BFS on unweighted graph, we know that dist(v)=8 and w(u,v)=1, so the relaxation is simpler:
+
+for all edges (u,v) in E:
+    if dist(v) = \infty
+       dist(v) = dist(u) + 1
+On "priority queue".
+
+When Dijkstra algorithm is run on unweighted graph, at any time, the priority queue contains at most two 
+distinct (distance) values. Therefore, a FIFO queue of BFS suffices.

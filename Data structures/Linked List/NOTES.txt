@@ -1,0 +1,15 @@
+1. If we want to delete a node from the list:
+--delete the first node: Node *curr = *head; 
+						*head = (*head)->next;
+						delete curr;
+
+-- delete an inner node, always take a *prev and do 
+ 	if the node is found: prev->next = curr->next
+ 	else prev = curr;
+ 	curr = curr->next
+
+2. while iterating through the list dont forget to increment the curr (curr = curr->next)
+
+3. if the function is going to change the head, then pass the pointer to the head to the function 
+	call: fun(&head);
+	definition: void fun(Node **head) {}

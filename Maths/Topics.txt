@@ -1,0 +1,7 @@
+Sieve if Eratosthenes
+Euclid theoren
+Extended euclid/Linear diophantine equation
+Chinese Remainder theorem
+Euler Totient function
+Fermat's little therem
+Zeckendorf's theorem

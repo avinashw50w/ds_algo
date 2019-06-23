@@ -1,0 +1,58 @@
+1 << n : equivalent to 2^n
+x << n : equivalent to x * 2^n
+
+1 >> n : equivalent to 2^(-n) or 1/2^n
+x >> n : equivalent to x * 2^(-n)
+
+
+* odd, even check 
+n & 1 : returns 0 if n even and 1 if n is odd
+
+* check if a number n is a power of 2
+n & (n-1) : returns 0 if n is a power of 2 otherwise returns 1
+
+
+Use the bitwise OR operator (|) to set a bit.
+
+number |= 1 << x;
+That will set bit x from LSB.
+
+Clearing a bit
+
+Use the bitwise AND operator (&) to clear a bit.
+
+number &= ~(1 << x);
+That will clear bit x. You must invert the bit string with the bitwise NOT operator (~), then AND it.
+
+Toggling a bit
+
+The XOR operator (^) can be used to toggle a bit.
+
+number ^= 1 << x;
+That will toggle bit x.
+
+* Checking if the ith bit of number n is set or not
+n & (1 << i) - will give (1<<i) if ith bit is set otherwise 0
+
+* to get the ith bit:
+1 & (n >> i) - returns the ith bit from the end
+
+Changing the nth bit to x
+
+Setting the nth bit to either 1 or 0 can be achieved with the following:
+
+number ^= (-x ^ number) & (1 << n);
+Bit n will be set if x is 1, and cleared if x is 0
+
+/* a=target variable, b=bit number to act upon 0-n */
+#define BIT_SET(a,b) ((a) |= (1<<(b)))
+#define BIT_CLEAR(a,b) ((a) &= ~(1<<(b)))
+#define BIT_FLIP(a,b) ((a) ^= (1<<(b)))
+#define BIT_CHECK(a,b) ((a) & (1<<(b)))
+
+/* x=target variable, y=mask */
+#define BITMASK_SET(x,y) ((x) |= (y))
+#define BITMASK_CLEAR(x,y) ((x) &= (~(y)))
+#define BITMASK_FLIP(x,y) ((x) ^= (y))
+#define BITMASK_CHECK(x,y) (((x) & (y)) == (y))
+

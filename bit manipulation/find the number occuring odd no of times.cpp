@@ -1,0 +1,1 @@
+/* simply take the xor of the elements of the array, this will eliminate the even occuring elements*/

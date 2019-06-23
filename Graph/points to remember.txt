@@ -1,0 +1,3 @@
+Depth First Traversal can be used to detect cycle in both directed and undirected Graph. 
+cycle in an undirected graph can also be found using disjoint sets
+DFS for a connected graph produces a tree.
