@@ -1,24 +1,16 @@
 
-int minDepth(Node *root)
-{
-    // Corner case. Should never be hit unless the code is 
-    // called on root = NULL
+int minDepth(Node *root) {
     if (root == NULL)
         return 0;
  
-    // Base case : Leaf Node. This accounts for height = 1.
     if (root->left == NULL && root->right == NULL)
        return 1;
  
     // If left subtree is NULL, recur for right subtree
-    if (!root->left)
-       return minDepth(root->right) + 1;
- 
-    // If right subtree is NULL, recur for right subtree
-    if (!root->right)
-       return minDepth(root->left) + 1;
- 
-    return min(minDepth(root->left), minDepth(root->right)) + 1;
+    int ld = root->left ? minDepth(root->left) : INT_MAX;
+    int rd = root->right ? minDepth(root->right) : INT_MAX;
+
+    return 1 + min(ld, rd);
 }
 
 /*A Better Solution is to do Level Order Traversal. While doing traversal, returns depth of the first encountered leaf node.*/

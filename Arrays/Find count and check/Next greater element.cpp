@@ -2,7 +2,7 @@ void printNGE(int arr[], int n)
 {
     int i = 0;
     stack<int> s;
-    int element, next;
+    int top, next;
  
     /* push the first element to stack */
     s.push(arr[0]);
