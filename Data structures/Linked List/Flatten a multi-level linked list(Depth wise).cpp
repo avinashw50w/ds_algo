@@ -37,11 +37,11 @@ struct Node {
     struct Node *next, *down;
 };
 
-void flatten(Node *head) {
+Node* flatten(Node *head) {
 
     if(head == NULL) return;
 
-    Node *last = head;
+    static Node *last = head;
 
     Node *next = head->next;
 

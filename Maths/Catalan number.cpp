@@ -51,7 +51,7 @@ unsigned long int catalanDP(unsigned int n)
     return catalan[n];
 }
 ///////////////////////////////////////////////////////////////////////////////
-/*Using Binomial Coefficient Cn = (2n)!/(n+1)!*n!
+/*Using Binomial Coefficient Cn = (2n)!/(n+1)!*n!  (2nCn / (n+1))
 We can also use the below formula to find nth catalan number in O(n) time.*/
 
 ll nCr(int n, int r) {

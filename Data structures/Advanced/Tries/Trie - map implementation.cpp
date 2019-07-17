@@ -6,17 +6,17 @@ using namespace std;
 struct Node {
     bool leaf;
     Node *parent;
-    map<char, Node *> child;
+    unordered_map<char, Node *> child;
     Node(Node *parent = NULL): parent(parent), leaf(false), child() {}
 };
  
 /**
- * Complexity: O(|key| * log(k))
+ * Complexity: O(|key|)
  */
 Node *trie_find(Node *root, char *key) {
     Node *it;
-    for (it = root; *key != 0; key++) {
-        if (it->child.find(*key) == it->child.end())
+    for (it = root; *key; key++) {
+        if (it->child.count(*key) == 0)
             return NULL;
         it = it->child[*key];
     }
@@ -24,12 +24,12 @@ Node *trie_find(Node *root, char *key) {
 }
  
 /**
- * Complexity: O(|key| * log(k))
+ * Complexity: O(|key|)
  */
 void trie_insert(Node *root, char *key) {
     Node *it;
-    for (it = root; *key != 0; key++) {
-        if (it->child.find(*key) == it->child.end())
+    for (it = root; *key; key++) {
+        if (it->child.count(*key) == 0)
             it->child[*key] = new Node(it);
         it = it->child[*key];
     }
@@ -41,8 +41,8 @@ void trie_insert(Node *root, char *key) {
  */
 void trie_erase(Node *root, char *key) {
     Node *it;
-    for (it = root; *key != 0; key++) {
-        if (it->child.find(*key) == it->child.end())
+    for (it = root; *key; key++) {
+        if (it->child.count(*key) == 0)
             return;
         it = it->child[*key];
     }

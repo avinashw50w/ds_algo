@@ -1,5 +1,5 @@
 // store x, y, and g as global variables
-
+// ax + by = c
 void extendedEuclid(int a, int b) {
 	if (b == 0) { 
 		g = a;
