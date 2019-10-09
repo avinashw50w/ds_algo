@@ -42,8 +42,7 @@ int topDownCutRod(int n) {
  
 // bottom-up solution
 int buttomUpCutRod(int n) {
-    if (r[n] != -1)
-        return r[n];
+    
     for (int i = 1; i <= n; ++i) {
         int q = 0;
         for (int j = 1; j <= i; ++j)

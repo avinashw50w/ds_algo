@@ -19,7 +19,7 @@ int main(){
 
 /////////////////////////////////////////////////////////////
 // other lenghty way to do this is //
-/*
+
 ll mpow(int a,int b,int m){
 	if(b==0) return 1;
 	ll x = mpow(a,b/2,m);
@@ -32,4 +32,3 @@ int main(){
 	for(int i=1;i<m;++i)
 		cout << mpow(i,m-2,m) << endl;
 }
-*/

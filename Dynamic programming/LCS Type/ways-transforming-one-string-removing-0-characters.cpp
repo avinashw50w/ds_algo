@@ -38,7 +38,6 @@ int solve(string a, string b, int n, int m) {
 
 	if (a[n-1] == b[m-1])
 	 	res = solve(a, b, n-1, m) + solve(a, b, n-1, m-1);
-
 	 else 
 	 	res = solve(a, b, n-1, m);
 

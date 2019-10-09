@@ -42,6 +42,7 @@ Result = count[0] + count[1] + ... + count[9]
                         count[4] = 6, count[5] = 6} 
        = 14.*/
 
+// O(N^2) solution
 int countSub(int arr[], int n)
 {
     // count[] array is used to store all sub-
@@ -70,4 +71,38 @@ int countSub(int arr[], int n)
         result += count[i];
  
     return result;
+}
+
+////////////////////////////////////////
+// O(NlogN) solution
+#include <bits/stdc++.h>
+using namespace std;
+
+const int maxn = 1e3;
+int N;
+int bit[maxn];
+
+void update(int idx, int val) {
+    for (; idx <= N; idx += idx & -idx) bit[idx] += val;
+}
+
+int query(int idx) {
+    int res = 0;
+    for (; idx > 0; idx -= idx & -idx) res += bit[idx];
+    return res;
+}
+
+int main() {
+
+    vector<int> arr = {1,2,3,4};
+    N = *max_element(arr.begin(), arr.end()) + 1;
+    for (int i = 0; i < arr.size(); ++i) {
+        int x = 0;
+        if (arr[i] - 1) {
+            x = query(arr[i]-1);
+        }
+        update(arr[i], 1 + x);
+    }
+    int ans = query(N);
+    cout << ans << endl;
 }

@@ -1,6 +1,5 @@
 /*Transform One String to Another using Minimum Number of Given Operation
-Given two strings A and B, the task is to convert A to B if possible. The only operation allowed 
-is to put any character from A and insert it at front. Find if it’s possible to convert the string. 
+Given two strings A and B, the task is to convert A to B if possible. The only operation allowed is to put any character from A and insert it at front. Find if it’s possible to convert the string. 
 If yes, then output minimum no. of operations required for transformation.
 
 Examples:
@@ -26,7 +25,7 @@ int solve(string a, string b) {
 	for (int i = 0; i < n; ++i) f[a[i]-'a']++;
 	for (int i = 0; i < n; ++i) f[b[i]-'a']--;
 
-	for (int i = 0; i < 26; ++i) if (f[i]) return 0;
+	for (int i = 0; i < 26; ++i) if (f[i] != 0) return 0;
 
 	int res = 0;
 

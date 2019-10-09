@@ -14,7 +14,7 @@ See this for more applications.
 
 The first few Catalan numbers for n = 0, 1, 2, 3, … are 1, 1, 2, 5, 14, 42, 132, 429, 1430, 4862, …
 
-Recursive Solution*/
+Recursive Solution: C(n) = sum(i = 0 to i = n-1) C(i) * C(n-i-1) */
 
 unsigned long int catalan(unsigned int n)
 {

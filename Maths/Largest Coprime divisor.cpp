@@ -20,8 +20,8 @@ How does this work ?
 
 On doing prime factorisation of A and B, we get :
 
-A = p1x1 . p2x2 . … . pkxk
-B = q1y1 . q2y2 . … . qlyl
+A = p1^x1 . p2^x2 . … . pk^xk
+B = q1^y1 . q2^y2 . … . ql^yl
 Where pi ; i = 1, 2, …, k are prime factors of A and xi ; i = 1, 2, …, k are their respective powers
 Similarly, qj ; i = 1, 2, …, l are prime factors of B and yi ; j = 1, 2, …, l are their respective powers
 

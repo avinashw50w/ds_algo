@@ -35,10 +35,10 @@ void LCS(int i,int j){
 	if(i == 0 || j == 0) return 0;
 			
 	if(X[i-1] == Y[j-1])
-		return T[i][j] = 1 + LCS(i-1,j-1);
+		return dp[i][j] = 1 + LCS(i-1,j-1);
 			
 	else
-		return T[i][j] = max(LCS(i-1,j) , LCS(i,j-1));
+		return dp[i][j] = max(LCS(i-1,j) , LCS(i,j-1));
 
 }
 

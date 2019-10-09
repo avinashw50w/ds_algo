@@ -5,22 +5,22 @@ int N;              // no of nodes
 vi G[N];            // graph
 int f[N],g[N],diameter;       //  f and g used are to store the maximum diameter of each node for two different cases 
 
-void dfs(int v,int pv){
+void dfs(int u,int par){
 	vi fvalues;              //  to store the values of f
-	for(auto u:G[v]){        //  traverse all children of v
-		if(u==pv) continue;
-		dfs(u,v);
-		fvalues.push_back(f[u]);      //  store the values of f in fvalues
+	for(auto v:G[u]){        //  traverse all children of u
+		if(v==par) continue;
+		dfs(v,u);
+		fvalues.push_back(f[v]);      //  store the values of f in fvalues
 	}
 
 	sort(fvalues.begin(), fvalues.end(),greater<int>);    // sort in descending order to get the max of them
-	f[v]=1;
+	f[u]=1;
 	if(!fvalues.empty())
-		f[v]+=fvalues.front();            //  get the max from fvalues
+		f[u]+=fvalues.front();            //  get the max from fvalues
 	if(fvalues.size()>=2)
-		g[v]+=fvalues[0]+fvalues[1];          //  get the maximum two from fvalues
+		g[u]+=fvalues[0]+fvalues[1];          //  get the maximum two from fvalues
 
-	diameter = max(diameter,f[v]+g[v]);      // update the diameter
+	diameter = max(diameter,f[u]+g[u]);      // update the diameter
 }
 
 
