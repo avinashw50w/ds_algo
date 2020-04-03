@@ -8,13 +8,13 @@ bool solve(int N, int K)
 {
 	int f[N] = {0};
 
+	if(N & 1) return false;
+
 	for(int i = 0; i < N; ++i) {
 		cin >> A[i];
 
 		f[A[i] % K]++;
 	}
-
-	if(N & 1) return false;
 
 	for(int i = 0; i < N; ++i)
 	{
@@ -25,7 +25,7 @@ bool solve(int N, int K)
 				return false;
 		}
 		else if(rem == 0) {
-			if(f[rem] & 1) 
+			if(f[rem] & 1)
 				return false;
 		}
 		else if(f[rem] != f[K - rem])
@@ -42,4 +42,3 @@ int main() {
 
 	puts(ans ? "YES" : "NO");
 }
-

@@ -7,22 +7,16 @@ void inorderIterative(Node *root) {
 
 	Node *curr = root;
 
-	while(!done) {
+	while(curr || !s.empty()) {
 
-		if(curr != NULL) {
+		while (curr) {
 			s.push(curr);
 			curr = curr->left;
 		}
 
-		else {
-			
-			if(!s.empty()) {
-				cout << (s.top())->data << endl;
-				s.pop();
-				curr = curr->right;
-			}
+		curr = s.top(); s.pop();
+		cout << curr->data << " ";
 
-			else done = 1;
-		}
+		s.push(curr->right);
 	}
 }

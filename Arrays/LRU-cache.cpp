@@ -45,7 +45,7 @@ public:
 };
 
 const int cache_sz = 4
- 
+
 void ReferencePage(list<int>& L, unordered_map<int, int>& hash, int page)
 {
     if (L.size() < cache_sz)
@@ -55,10 +55,10 @@ void ReferencePage(list<int>& L, unordered_map<int, int>& hash, int page)
     }
     else // list full
     {
-        list<int>::iterator itr = std::find(L.begin(), L.end(), page);
- 
-        if (itr != L.end()) // page already present in list
+        // if page already exists in the list
+        if (hash.count(page))
         {
+            list<int>::iterator itr = std::find(L.begin(), L.end(), page);
             L.erase(itr);
             L.push_front(page);
         }
@@ -66,19 +66,19 @@ void ReferencePage(list<int>& L, unordered_map<int, int>& hash, int page)
         {
             hash.erase(L.back());
             L.erase(L.end());
- 
+
             L.push_front(page);
             hash[page] = page;
         }
     }
 }
- 
+
 // Driver program to test above functions
 int main()
 {
     list<int> L;
     unordered_map<int, int> hash;
- 
+
     // Let us refer pages 1, 2, 3, 1, 4, 5
     ReferencePage(L, hash, 1);
     ReferencePage(L, hash, 2);
@@ -86,12 +86,12 @@ int main()
     ReferencePage(L, hash, 1);
     ReferencePage(L, hash, 4);
     ReferencePage(L, hash, 5);
- 
+
     // Let us print cache frames after the above referenced pages
     for (auto& val : L)
     {
         cout << val << endl;
     }
- 
+
     return 0;
 }

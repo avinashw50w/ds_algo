@@ -48,7 +48,7 @@ int convert(string a, int b) {
 string toBase_b(int n,int b){
 	string chars = "0123456789ABCDEFGHIJ";
 	string res = "";
-
+	
 	while(n){
 		res = chars[n%b] + res;
 		n /= b;

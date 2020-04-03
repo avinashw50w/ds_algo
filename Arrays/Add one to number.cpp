@@ -10,7 +10,7 @@ If the vector has [1, 2, 3]
 
 the returned vector should be [1, 2, 4]
 
-as 123 + 1 = 124. 
+as 123 + 1 = 124.
 
 eg. 0 1 2 3  => 124
 9 9 => 100 */
@@ -26,7 +26,7 @@ vector<int> solve(vector<int> &A) {
 
 	for (int i = n-2; i >= 0; --i) {
 		sum = A[i] + carry;
-		carry = (sum == 0) ? 1: 0;
+		carry = (sum == 10) ? 1: 0;
 		sum  %= 10;
 
 		res.push_back(sum);
@@ -36,6 +36,6 @@ vector<int> solve(vector<int> &A) {
 
 	while(res[res.size()-1] == 0) res.pop_back();
 	reverse(res.begin(), res.end());
-	
+
 	return res;
 }

@@ -48,12 +48,12 @@ bool isPalindrome(struct node *head)
     struct node *midnode = NULL;  // To handle odd size list
     bool res = true; // initialize result
  
-    if (head!=NULL && head->next!=NULL)
+    if (head && head->next)
     {
         /* Get the middle of the list. Move slow_ptr by 1
           and fast_ptrr by 2, slow_ptr will have the middle
           node */
-        while (fast_ptr != NULL && fast_ptr->next != NULL)
+        while (fast_ptr && fast_ptr->next)
         {
             fast_ptr = fast_ptr->next->next;
  
@@ -68,7 +68,7 @@ bool isPalindrome(struct node *head)
            And not NULL for odd elements. We need to skip the middle node 
            for odd case and store it somewhere so that we can restore the
            original list*/
-        if (fast_ptr != NULL)
+        if (fast_ptr != NULL) // for list of odd length
         {
             midnode = slow_ptr;
             slow_ptr = slow_ptr->next;
@@ -128,7 +128,7 @@ bool compareLists(struct node* head1, struct node *head2)
         else return 0;
     }
  
-    /* Both are empty reurn 1*/
+    /* Both are empty return 1*/
     if (temp1 == NULL && temp2 == NULL)
         return 1;
  

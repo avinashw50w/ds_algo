@@ -1,4 +1,5 @@
 /*Given an array of random numbers, Push all the zero’s of a given array to the end of the array. 
+// try to do it inplace
 For example, if the given arrays is {1, 9, 8, 4, 0, 0, 2, 7, 0, 6, 0}, 
 it should be changed to {1, 9, 8, 4, 2, 7, 6, 0, 0, 0, 0}. */
 

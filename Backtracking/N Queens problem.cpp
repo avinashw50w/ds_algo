@@ -14,9 +14,9 @@ void print() {
 		printf("\n");
 	}
 }
-// checks whether a queen can be placed at (r,c) // 
-/* it can ony be placed at (r,c) iff there is no queen in row r and column < c  
-   or there exists no queen diagonal to it */ 
+// checks whether a queen can be placed at (r,c) //
+/* it can ony be placed at (r,c) iff there is no queen in row r and column < c
+   or there exists no queen diagonal to it */
 bool safe(int row, int col){
 	for(int C = 1; C < col; C++){
 		if(x[C] == row || abs(x[C] - row) == abs(C - col))
@@ -32,9 +32,9 @@ void N_queens(int col) {
 	for(int row = 1; row <= N; ++row) {
 		// check if the queen can be placed at column 'col' of this row
 		if(!safe(row, col)) continue;
-			x[col] = row;	
-			
-			N_queens(col + 1);
+		x[col] = row;
+
+		N_queens(col + 1);
 	}
 }
 
@@ -42,3 +42,16 @@ int main() {
 	N = 4;
 	N_queens(1);
 }
+
+/*
+Configuration : 1
+-	-	Q	-
+Q	-	-	-
+-	-	-	Q
+-	Q	-	-
+Configuration : 2
+-	Q	-	-
+-	-	-	Q
+Q	-	-	-
+-	-	Q	-
+*/

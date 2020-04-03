@@ -2,33 +2,30 @@
 to any node in the list and not just the previous node. Now write a program in O(n) time to duplicate this list. That is, write a program which will create a 
 copy of this list.*/
 
-struct node {
+struct Node {
 	int data;
-	struct node *next, *random;
+	struct Node *next, *random;
 }
 
-node *head = NULL;
+Node *head = NULL;
 
-node* newNode(int data) {
-	node *tmp = new node();
+Node* newNode(int data) {
+	Node *tmp = new Node();
 	tmp->data = data;
 	tmp->next = tmp->random = NULL;
 	return tmp;
 }
 
-node* push(node* head, int data) {
-	node* tmp = new node();
-
+Node* push(Node* head, int data) {
+	Node* tmp = new Node();
 	tmp->data = data;
-	tmp->next = head;
-	head = tmp;
 	return tmp;
 }
 
-node* clone(node *head) {
-	node *origCurr = head, cloneCurr = NULL;
+Node* clone(Node *head) {
+	Node *origCurr = head, cloneCurr = NULL;
 
-	map<node*, node*> m;
+	map<Node*, Node*> m;
 
 	while(origCurr != NULL) {
 		cloneCurr = newNode(origCurr->data);
@@ -45,5 +42,5 @@ node* clone(node *head) {
 		origCurr = origCurr->next;
 	}
 
-	return 
+	return;
 }

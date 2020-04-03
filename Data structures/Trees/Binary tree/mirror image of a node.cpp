@@ -31,44 +31,45 @@ SAMPLE INPUT
 4 */
 
 #include <iostream>
+#include <string.h>
 using namespace std;
 
-int map[N+1], rmap[N+1], set[N+1], rset[N+1];
+const int maxn = 100001;
+int indexOf[maxn], rIndexOf[maxn], nodeAtIndex[maxn], rNodeAtIndex[maxn];
 
 int main() {
-	
-	int N, Q;
-	int a, b, index, rindex;
-	char c;
-	cin >> N >> Q;
-
-	for (int i = 0; i < N+1; ++i)
-		set[i] = rset[i] = -1;
-
-	set[1] = rset[1] = map[1] = rmap[1] = 1;
-
-	for (int i = 1; i < N; ++i) {
-		
-		cin >> a >> b >> c;
-
-		if (c == 'L') {
-			index = map[a] << 1;
-			rindex = rmap[a] << 1 | 1;
-		}
-		else {
-			index = map[a] << 1 | 1;
-			rindex = rmap[a] << 1;
-		}
-
-		set[index] = b;
-		rset[rindex] = b;
-
-		map[b] = index;
-		rmap[b] = rindex;
-	}
-
-	while(Q--) {
-		cin >> a;
-		cout << rset[map[a]] << endl;
-	}
+    int N, Q;
+    int q, idx, ridx, par, child;
+    char dir;
+    
+    cin >> N >> Q;
+    
+    memset(nodeAtIndex, -1, sizeof(nodeAtIndex));
+    memset(rNodeAtIndex, -1, sizeof(rNodeAtIndex));
+    
+    indexOf[1] = rIndexOf[1] = nodeAtIndex[1] = rNodeAtIndex[1] = 1;
+    
+    for (int i = 1; i < N; ++i) {
+        cin >> par >> child >> dir;
+        
+        if (dir == 'L') {
+            idx = indexOf[par] << 1;
+            ridx = rIndexOf[par] << 1 | 1;
+        }
+        else {
+            idx = indexOf[par] << 1 | 1;
+            ridx = rIndexOf[par] << 1;
+        }
+        
+        nodeAtIndex[idx] = child;
+        rNodeAtIndex[ridx] = child;
+        
+        indexOf[child] = idx;
+        rIndexOf[child] = ridx;
+    }
+    
+    while (Q--) {
+        cin >> q;
+        cout << rNodeAtIndex[indexOf[q]] << endl;
+    }
 }

@@ -5,53 +5,39 @@ Now the distance between B and C is the diameter of the tree. */
 #include <bits/stdc++.h>
 using namespace std;
 
-const int MAXN = 1e5+5;
-
-vector<pair<int,int>> G[MAXN];
-
-int dist[MAXN];
+vector<vector<int>> G;
+pair<int, int> best;
 int N;
 
-void DFS(int u) {
-
-	for(auto it: G[u]) {
-		int v = it.first;
-		int w = it.second;
-
-		if(dist[v] == -1) {
-			dist[v] = dist[u] + w;
-			DFS(v);
-		}
+void DFS(int u, int par, int len) {
+	best = max(best, {len, u});
+	for(auto v: G[u]) {
+		if (v == par) continue;
+		DFS(v, u, len + 1);
 	}
 }
 
 int main() {
 	cin >> N;
 
+	G.clear();
+	G.resize(N+1);
+
 	for(int i = 0; i < N; ++i) {
 		int u, v, w;
 		cin >> u >> v >> w;
-		G[u].push_back(make_pair(v, w));
-		G[v].push_back(make_pair(u, w));
+		G[u].push_back(v);
+		G[v].push_back(u);
 	}
 
-	memset(dist, -1, sizeof(dist));
+	int first = 1;
+	best = {-1, -1};
+	DFS(first, -1, 0);
 
-	int start = 1;
+	int second = best.second;
+	
+	best = {-1, -1};
+	DFS(second, -1, 0);
 
-	DFS(start);
-
-	int interm = 0;
-
-	for(int i = 0; i < N; ++i)
-		if(dist[i] > dist[interm])
-			iterm = i;
-
-	memset(dist, -1, sizeof(dist));
-		
-	DFS(iterm);
-
-	int finish = 0;
-
-	cout << *max_element(dist, dist + n);
+	return best.first;	
 }
