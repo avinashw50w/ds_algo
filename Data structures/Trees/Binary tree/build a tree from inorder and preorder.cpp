@@ -1,32 +1,30 @@
-node* newNode(int val){
-	node* temp= new node();
+Node* newNode(int val){
+	Node* temp= new Node();
 	temp->data = val;
 	temp->left = temp->right = NULL;
 	return temp;
 }
 
-int search(int A[],int l,int r,int x){
-	while(l<=r){
-		int mid = (l+r)/2;
-		if(x==A[mid]) return mid;
-		else if(x<A[mid]) r=mid-1;
-		else l=mid+1;
-	}
-	return -1;
+Node *buildTree(vector<int> inorder, vector<int> preorder) {
+    int n = inorder.size();
+    unordered_map<int,int> mp;
+    for (int i = 0; i < n; ++i) mp[in[i]] = i;
+
+    buildTreeUtil(0, n-1, preorder, 0, mp);
 }
 
-node* buildTree(int in[],int pre[],int instart,int inend){
-	if(instart>inend) return NULL;
-	static int preIndex=0;
-	node* Node = newNode(pre[preIndex++]);
+Node* buildTree(int start, int end, vector<int> &preorder, int &preIndex,  auto &mp){
+	if(start > end) return NULL;
+	Node* node = newNode(preorder[preIndex++]);
 	
-	if(instart==inend) return Node;
+	if(start == end) return node;
 	
-	int inIndex = search(in,instart,inend,Node->data);
-	Node->left = buildTree(in,pre,instart,inIndex-1);
-	Node->right = buildTree(in,pre,inIndex+1,inend);
+	int inIndex = mp[node->data];
 	
-	return Node;
+    node->left = buildTree(start, inIndex - 1, preorder, preIndex, mp);
+	node->right = buildTree(inIndex + 1, end, preorder, preIndex, mp);
+	
+	return node;
 }
 
 /*Let us consider the below traversals:

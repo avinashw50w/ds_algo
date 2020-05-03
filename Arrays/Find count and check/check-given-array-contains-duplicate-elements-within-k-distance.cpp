@@ -10,7 +10,7 @@ All duplicates are more than k distance away.*/
 
 bool find(int A[], int N, int K) {
 
-	set<int> st;
+	unordered_set<int> st;
 
 	REP(i, 0, N) {
 
@@ -22,4 +22,18 @@ bool find(int A[], int N, int K) {
 	}
 
 	return false;
+}
+
+// but the above algo is O(nlogn) 
+// here's O(n)
+bool find(vector<int> A, int K) {
+
+    unordered_map<int, int> mp;
+
+    for (int i = 0; i < A.size(); ++i) {
+        int x = A[i];
+        if (mp.count(x) and i - mp[x] <= K) return true;
+
+        mp[x] = i;
+    }
 }
