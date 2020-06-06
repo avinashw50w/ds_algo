@@ -5,26 +5,59 @@ using namespace std;
 
 stack<int> st;
 
+bool solve(string s) {
+	stack<char> st;
+	for (char c: s) {
+		if (c == '(') st.push(c);
+		else {
+			if (st.empty()) return false;
+			else st.pop();
+		}
+	}
+
+	return st.empty();
+}
+
 int main() {
 
 	string s = ")(()(()))((()))";
 
-	int n = s.length();
+	puts(solve(s) ? "YES\n" : "NO\n");
+}
 
-	int i = 0; 
+/////////////////////////////////////
+// without stack
 
-	while(i < n) {
-		while(i < n and s[i] == '(') st.push(1), i++;
+bool solve(string s) {
+	int l = 0, r = 0;
+	for (char c: s) {
+		if (c == '(') l++; 
+		else l--;
+		if (l < 0) return false;
+	}
+	
+	return l==0;
+}
+int main() {
+	// your code goes here
+	string s = "(())()";
+	puts(solve(s) ? "YES\n" : "NO\n");
+	return 0;
+}
 
-		if(st.empty()) break;
-		
-		while(s[i] == ')') {
-			if(st.empty()) break;
-			st.pop();
-			i++;
-		}
+/////////////////////////////////////
+// follow up: string also contains a "*". The * can be converted to a '(' or  a ')' or just empty string ''.  Now check whether the string s
+// can be converted to a valid parenthesis sequence.
+
+bool solve(string s) {
+	int l = 0, r = 0;
+	for (char c: s) {
+		if (c == '(') l++, r++;
+		if (c == ')') l--, r--;
+		if (c == '*') l--, r++;
+		if (r < 0) return false;
+		l = max(l, 0);
 	}
 
-	if(i == n and st.empty()) cout << "Valid parenthesis" << endl;
-	else cout << "Invalid paranthesis" << endl;
+	return r <= l and l == 0;
 }

@@ -1,28 +1,28 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-int firstOccurrence(int a[],int l,int r,int item){
-	int mid, ans = -1;
-	while(l <= r){
-		mid = l + (r-l)/2;
-		if(item <= a[mid])
-			ans = mid, r = mid-1;
-		else 
-			l = mid+1;
-	}
-	return ans;
+int firstOccurrence(int a[], int l, int r, int item) {
+    int mid, ans = -1;
+    while (l <= r) {
+        mid = l + (r - l) / 2;
+        if (item <= a[mid])
+            ans = mid, r = mid - 1;
+        else
+            l = mid + 1;
+    }
+    return ans;
 }
 
-int lastOccurrence(int a[],int l,int r,int item){
-	int mid, ans = -1;
-	while(l <= r){
-		mid = l + (r-l)/2;
-		if(a[mid] <= item)
-			ans = mid, l = mid+1;
-		else 
-			r = mid-1;
-	}
-	return ans;
+int lastOccurrence(int a[], int l, int r, int item) {
+    int mid, ans = -1;
+    while (l <= r) {
+        mid = l + (r - l) / 2;
+        if (a[mid] <= item)
+            ans = mid, l = mid + 1;
+        else
+            r = mid - 1;
+    }
+    return ans;
 }
 
 int numberOfOccurrences(int A[], int size, int item) {
@@ -36,15 +36,46 @@ int numberOfOccurrences(int A[], int size, int item) {
 }
 
 int numberOfOccurrences1(int A[], int size, int item) {
-	int low = lower_bound(A, A+size, item) - A;
-	int high = upper_bound(A, A+size, item) - A;
-	return (high - low);
+    int low = lower_bound(A, A + size, item) - A;
+    int high = upper_bound(A, A + size, item) - A;
+    return (high - low);
 }
 
-int main(){
-	int a[] = {1,3,4,4,4,5,6,7,8,8};
-	int n = sizeof(a)/sizeof(a[0]);
-	cout << firstOccurrence(a,0,n,2) << endl;
-	cout << lastOccurrence(a,0,n,8) << endl;
-	cout << numberOfOccurrences(a,n,4) << endl;
+int main() {
+    int a[] = {1, 3, 4, 4, 4, 5, 6, 7, 8, 8};
+    int n = sizeof(a) / sizeof(a[0]);
+    cout << firstOccurrence(a, 0, n, 2) << endl;
+    cout << lastOccurrence(a, 0, n, 8) << endl;
+    cout << numberOfOccurrences(a, n, 4) << endl;
+}
+
+
+////////////////////////////////
+// another implementation
+// first occurence
+
+int firstOccurrence(vector<int> A, int X) {
+    int N = A.size();
+    int l = 0, r = N - 1, mid;
+
+    while (l < r) {
+        mid = (l + r) >> 1;
+        if (X <= A[mid]) r = mid;
+        else l = mid + 1;
+    }
+
+    return l;
+}
+
+int lastOccurrence(vector<int> A, int X) {
+    int N = A.size();
+    int l = 0, r = N - 1, mid;
+
+    while (l < r) {
+        mid = (l + r + 1) >> 1;
+        if (A[mid] <= X) l = mid;
+        else r = mid - 1;
+    }
+
+    return l;
 }
