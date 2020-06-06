@@ -31,3 +31,46 @@ int solve(vector<int> prices, int K) {
 
 	return dp[K][n - 1];
 }
+
+////////////////////////////////////////////////////////////////
+// Another variation is that one can do any no of transation to obtain maximum profit
+// for that just keep adding the difference between the consecutive elements which are
+// strictly increasing.
+
+
+int solve(vector<int> prices) {
+	int n = prices.size();
+
+	int ans = 0;
+	for (int i = 1; i < n; ++i)
+		if (a[i] > a[i - 1]) ans += a[i] - a[i - 1];
+
+	return ans;
+}
+
+////////////////////////////////////////////////////
+// another variation is that one can do atmost 2 transations
+// which is = max(
+// 			      	max profit after one transation for subarray [0..i]
+// 			      	max profit after one transation for subarray [i..n-1]
+// 			      ) for all i in [1..n-1];
+
+int solve(vector<int> prices) {
+	int n = prices.size();
+	int profit[n] = {0};
+
+	int max_price = prices[n - 1];
+	// profit[i] = max profit after one transation for subarray [i..n-1]
+	for (int i = n - 2; i >= 0; --i) {
+		max_price = max(max_price, prices[i]);
+		profit[i] = max(profit[i + 1], max_price - prices[i]);
+	}
+
+	int min_price = prices[0];
+	for (int i = 1; i < n; ++i) {
+		min_price = min(min_price, prices[i]);
+		profit[i] = max(profit[i - 1], prices[i] - min_price + profit[i]);
+	}
+
+	return profit[n - 1];
+}
