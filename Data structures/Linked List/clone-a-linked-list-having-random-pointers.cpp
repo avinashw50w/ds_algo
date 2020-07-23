@@ -1,5 +1,5 @@
-/*You are given a Double Link List with one pointer of each node pointing to the next node just like in a single link list. The second pointer however CAN point 
-to any node in the list and not just the previous node. Now write a program in O(n) time to duplicate this list. That is, write a program which will create a 
+/*You are given a Double Link List with one pointer of each node pointing to the next node just like in a single link list. The second pointer however CAN point
+to any node in the list and not just the previous node. Now write a program in O(n) time to duplicate this list. That is, write a program which will create a
 copy of this list.*/
 
 struct Node {
@@ -16,31 +16,24 @@ Node* newNode(int data) {
 	return tmp;
 }
 
-Node* push(Node* head, int data) {
-	Node* tmp = new Node();
-	tmp->data = data;
-	return tmp;
-}
-
 Node* clone(Node *head) {
-	Node *origCurr = head, cloneCurr = NULL;
+	Node *original = head, copy = NULL;
 
 	map<Node*, Node*> m;
 
-	while(origCurr != NULL) {
-		cloneCurr = newNode(origCurr->data);
-		m[origCurr] = cloneCurr;
-		origCurr = origCurr->next;
+	while(original) {
+		m[original] = newNode(original->data);
+		original = original->next;
 	}
 
-	origCurr = head;
+	original = head;
 
-	while(origCurr != NULL) {
-		cloneCurr = m[origCurr];
-		cloneCurr->next = m[origCurr->next];
-		cloneCurr->random = m[origCurr->random];
-		origCurr = origCurr->next;
+	while(original != NULL) {
+		copy = m[original];
+		copy->next = m[original->next];
+		copy->random = m[original->random];
+		original = original->next;
 	}
 
-	return;
+	return copy;
 }

@@ -11,7 +11,7 @@ bool solve(string s) {
 		if (c == '(') st.push(c);
 		else {
 			if (st.empty()) return false;
-			else st.pop();
+			st.pop();
 		}
 	}
 
@@ -31,11 +31,11 @@ int main() {
 bool solve(string s) {
 	int l = 0, r = 0;
 	for (char c: s) {
-		if (c == '(') l++; 
+		if (c == '(') l++;
 		else l--;
 		if (l < 0) return false;
 	}
-	
+
 	return l==0;
 }
 int main() {
@@ -46,7 +46,8 @@ int main() {
 }
 
 /////////////////////////////////////
-// follow up: string also contains a "*". The * can be converted to a '(' or  a ')' or just empty string ''.  Now check whether the string s
+// follow up: string also contains a "*". The * can be converted to a '(' or  a ')'
+// or just empty string ''.  Now check whether the string s
 // can be converted to a valid parenthesis sequence.
 
 bool solve(string s) {

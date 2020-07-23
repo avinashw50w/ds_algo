@@ -22,32 +22,29 @@ This method takes O(n) time and O(1) extra space.
 4) Construct the original linked list by reversing the second half again and attaching it back to the first half
 
 To divide the list in two halves, method 2 of this post is used.
-When number of nodes are even, the first and second half contain exactly half nodes. The challenging thing in this method is to 
-handle the case when number of nodes are odd. We don’t want the middle node as part of any of the lists as we are going to 
+When number of nodes are even, the first and second half contain exactly half nodes. The challenging thing in this method is to
+handle the case when number of nodes are odd. We don’t want the middle node as part of any of the lists as we are going to
 compare them for equality. For odd case, we use a separate variable ‘midnode’.
 
 CJava
 /* Program to check if a linked list is palindrome */
- 
+
 /* Link list node */
 struct node
 {
     char data;
-    struct node* next;
+    node* next;
 };
- 
-void reverse(struct node**);
-bool compareLists(struct node*, struct node *);
- 
+
 /* Function to check if given linked list is
   palindrome or not */
 bool isPalindrome(struct node *head)
 {
-    struct node *slow_ptr = head, *fast_ptr = head;
-    struct node *second_half, *prev_of_slow_ptr = head;
-    struct node *midnode = NULL;  // To handle odd size list
+    node *slow_ptr = head, *fast_ptr = head;
+    node *second_half, *prev_of_slow_ptr = head;
+    node *midnode = NULL;  // To handle odd size list
     bool res = true; // initialize result
- 
+
     if (head && head->next)
     {
         /* Get the middle of the list. Move slow_ptr by 1
@@ -56,16 +53,16 @@ bool isPalindrome(struct node *head)
         while (fast_ptr && fast_ptr->next)
         {
             fast_ptr = fast_ptr->next->next;
- 
+
             /*We need previous of the slow_ptr for
              linked lists  with odd elements */
             prev_of_slow_ptr = slow_ptr;
             slow_ptr = slow_ptr->next;
         }
- 
- 
-        /* fast_ptr would become NULL when there are even elements in list. 
-           And not NULL for odd elements. We need to skip the middle node 
+
+
+        /* fast_ptr would become NULL when there are even elements in list.
+           And not NULL for odd elements. We need to skip the middle node
            for odd case and store it somewhere so that we can restore the
            original list*/
         if (fast_ptr != NULL) // for list of odd length
@@ -73,19 +70,19 @@ bool isPalindrome(struct node *head)
             midnode = slow_ptr;
             slow_ptr = slow_ptr->next;
         }
- 
+
         // Now reverse the second half and compare it with first half
         second_half = slow_ptr;
         prev_of_slow_ptr->next = NULL; // NULL terminate first half
         reverse(&second_half);  // Reverse the second half
         res = compareLists(head, second_half); // compare
- 
+
         /* Construct the original list back */
          reverse(&second_half); // Reverse the second half again
- 
-          // If there was a mid node (odd size case) which                                                         
+
+          // If there was a mid node (odd size case) which
          // was not part of either first half or second half.
-         if (midnode != NULL) 
+         if (midnode != NULL)
          {
             prev_of_slow_ptr->next = midnode;
             midnode->next = second_half;
@@ -94,16 +91,12 @@ bool isPalindrome(struct node *head)
     }
     return res;
 }
- 
+
 /* Function to reverse the linked list  Note that this
     function may change the head */
-void reverse(struct node** head_ref)
-{
-    struct node* prev   = NULL;
-    struct node* current = *head_ref;
-    struct node* next;
-    while (current != NULL)
-    {
+void reverse(struct node** head_ref) {
+    struct node* prev = NULL, *current = *head_ref, *next;
+    while (current != NULL){
         next  = current->next;
         current->next = prev;
         prev = current;
@@ -111,46 +104,28 @@ void reverse(struct node** head_ref)
     }
     *head_ref = prev;
 }
- 
+
 /* Function to check if two input lists have same data*/
-bool compareLists(struct node* head1, struct node *head2)
-{
+bool compareLists(struct node* head1, struct node *head2) {
     struct node* temp1 = head1;
     struct node* temp2 = head2;
- 
-    while (temp1 && temp2)
-    {
-        if (temp1->data == temp2->data)
-        {
-            temp1 = temp1->next;
-            temp2 = temp2->next;
+
+    while (temp1 && temp2) {
+        if (temp1->data != temp2->data) {
+			return false;
         }
-        else return 0;
+		temp1 = temp1->next;
+		temp2 = temp2->next;
     }
- 
-    /* Both are empty return 1*/
-    if (temp1 == NULL && temp2 == NULL)
-        return 1;
- 
-    /* Will reach here when one is NULL
-      and other is not */
-    return 0;
+
+	return temp1 == NULL && temp2 == NULL;
 }
- 
+
 /* Push a node to linked list. Note that this function
   changes the head */
-void push(struct node** head_ref, char new_data)
-{
-    /* allocate node */
-    struct node* new_node =
-        (struct node*) malloc(sizeof(struct node));
- 
-    /* put in the data  */
+void push(node** head_ref, char new_data) {
+    node* new_node = new node();
     new_node->data  = new_data;
- 
-    /* link the old list off the new node */
     new_node->next = (*head_ref);
- 
-    /* move the head to pochar to the new node */
     (*head_ref) = new_node;
 }

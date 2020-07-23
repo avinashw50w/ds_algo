@@ -32,11 +32,11 @@ int subCount(int arr[], int n, int k)
     int mod[k];
     memset(mod, 0, sizeof(mod));
 
-    int cumSum = 0;
-    for (int i=0; i<n; i++)
+    int sum = 0;
+    for (int i = 0; i < n; i++)
     {
-        cumSum += arr[i];
-        mod[cumSum%k]++;
+        sum += arr[i];
+        mod[sum % k]++;
     }
 
     int result = 0;  // Initialize result
@@ -44,9 +44,9 @@ int subCount(int arr[], int n, int k)
     if (mod[0] == 1)
         result = 1;
 
-    for (int i=0; i<k ; i++)
+    for (int i = 0; i < k ; i++)
         if (mod[i] > 1)
-            result += (mod[i]*(mod[i]-1))/2;
+            result += (mod[i] * (mod[i] - 1)) / 2;
 
     return result;
 }
@@ -55,7 +55,7 @@ int main()
 {
     int arr[] = {4, 5, 0, -2, -3, 1};
     int k = 5;
-    int n = sizeof(arr)/sizeof(arr[0]);
+    int n = sizeof(arr) / sizeof(arr[0]);
     cout << subCount(arr, n, k);
     return 0;
 }

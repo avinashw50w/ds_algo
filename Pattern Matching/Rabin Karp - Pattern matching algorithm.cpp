@@ -3,7 +3,8 @@
 using namespace std;
 
 typedef long long ll;
-const int p = 37;
+const int mod = 1e9 + 7;
+const int p = 29;
 
 void solve(string txt, string pat) {
 
@@ -12,28 +13,25 @@ void solve(string txt, string pat) {
 
 	ll hash = 0LL, pp = 1LL;
 
-	for(int i = 0; i < m; ++i) {
-		hash += (pat[i]-'a'+1) * pp;
-		pp *= (ll)p;
+	for (int i = 0; i < m; ++i) {
+		if (i < m - 1) pp = (pp * p) % mod;
+		hash = (hash * p + (pat[i] - 'a' + 1));
+		if (hash >= mod) hash -= mod;
 	}
 
 	ll hash2 = 0LL;
-	pp = 1LL;
 
-	for(int i = 0; i < m; ++i) {
-		hash2 += (txt[i]-'a'+1) * pp;
-		pp *= (ll)p;
+	for (int i = 0; i < m; ++i) {
+		hash2 = (hash * p + (txt[i] - 'a' + 1));
+		if (hash2 >= mod) hash2 -= mod;
 	}
-	
-	pp /= p;
 
-	for(int i = m; i < n; ++i) {
-		if(hash == hash2)
+	for (int i = m; i < n; ++i) {
+		if (hash == hash2)
 			cout << i - m << endl;
 
-		hash2 -= (txt[i-m] - 'a' + 1);
-		hash2 /= p;
-		hash2 += (txt[i] - 'a' + 1) * pp;
+		hash2 = (hash2 - pp * (txt[i - m] - 'a' + 1) + p) % mod;
+		hash2 = (hash2 * p + (txt[i] - 'a' + 1)) % mod;
 	}
 }
 

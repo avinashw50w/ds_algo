@@ -16,12 +16,12 @@ Node* add(Node *first, Node *second) {
 	while(first or second) {
 
 		sum = (first ? first->data : 0) + (second ? second->data : 0) + carry;
-		carry = (sum >= 10) ? 1 : 0;
+		carry = sum / 10;
 		sum %= 10;
 
 		tmp = newNode(sum);
 
-		if(res == NULL) res = tmp;
+		if(res == NULL) res = resEnd = tmp;
 
 		else resEnd->next = tmp;
 

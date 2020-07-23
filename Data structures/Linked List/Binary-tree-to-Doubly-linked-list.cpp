@@ -1,6 +1,6 @@
 /*Convert a given Binary Tree to Doubly Linked List | Set 4
-Given a Binary Tree (BT), convert it to a Doubly Linked List(DLL) In-Place. The left and right pointers in nodes are 
-to be used as previous and next pointers respectively in converted DLL. The order of nodes in DLL must be same as Inorder 
+Given a Binary Tree (BT), convert it to a Doubly Linked List(DLL) In-Place. The left and right pointers in nodes are
+to be used as previous and next pointers respectively in converted DLL. The order of nodes in DLL must be same as Inorder
 of the given Binary Tree. The first node of Inorder traversal (left most node in BT) must be head node of the DLL.
 
 								10
@@ -11,10 +11,10 @@ of the given Binary Tree. The first node of Inorder traversal (left most node in
 
 		25 <-> 12 <-> 30 <-> 10 <-> 36 <-> 15
 
-In the following implementation, we traverse the tree in inorder fashion. 
-We add nodes at the beginning of current linked list 
-and update head of the list using pointer to head pointer. 
-Since we insert at the beginning, we need to process leaves in reverse order. 
+In the following implementation, we traverse the tree in inorder fashion.
+We add nodes at the beginning of current linked list
+and update head of the list using pointer to head pointer.
+Since we insert at the beginning, we need to process leaves in reverse order.
 For reverse order, we first traverse the right subtree before the left subtree. i.e. do a reverse inorder traversal.
 */
 // Structure for tree and linked list
@@ -26,21 +26,21 @@ struct Node
 
 void BToDLL(Node* root, Node** head_ref)
 {
-    if (root == NULL)
+    if (!root)
         return;
 
     BToDLL(root->right, head_ref);
 
     root->right = *head_ref;
- 
-    if (*head_ref != NULL)
+
+    if (*head_ref)
         (*head_ref)->left = root;
 
     *head_ref = root;
- 
+
     BToDLL(root->left, head_ref);
 }
- 
+
 // Utility function for allocating node for Binary
 // Tree.
 Node* newNode(int data)
@@ -70,11 +70,11 @@ int main()
     root->left->left->right = newNode(2);
     root->right->right->left = newNode(7);
     root->right->right->right = newNode(9);
- 
+
     Node* head = NULL;
     BToDLL(root, &head);
- 
+
     printList(head);
- 
+
     return 0;
 }

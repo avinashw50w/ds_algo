@@ -1,13 +1,13 @@
 
 
-bool hasCycle(int u) {
+bool hasCycle(int u, int par) {
 	vis[u] = 1;
 
-	for (int v: G[u]) {
+	for (int v : G[u]) {
+		if (v == par) continue;
 		if ((!vis[v] and hasCycle(v)) or vis[v] == 1) return true;
 	}
 
-	vis[u] = 2;
 	return false;
 }
 
@@ -16,7 +16,7 @@ bool isCyclic() {
 
 	for (int i = 0; i < N; ++i) {
 		if (!vis[i]) {
-			if (hasCycle(i))
+			if (hasCycle(i, -1))
 				return true;
 		}
 	}

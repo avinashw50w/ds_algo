@@ -23,10 +23,18 @@ double solve(int i, int j, int N, int M, int K) {
 
     double prob = 0.0;
 
-    prob += solve(i-1, j, N, M, K-1) * 0.25;
-    prob += solve(i, j-1, N, M, K-1) * 0.25;
-    prob += solve(i+1, j, N, M, K-1) * 0.25;
-    prob += solve(i, j+1, N, M, K-1) * 0.25;
+    prob += solve(i - 1, j, N, M, K - 1) * 0.25;
+    prob += solve(i, j - 1, N, M, K - 1) * 0.25;
+    prob += solve(i + 1, j, N, M, K - 1) * 0.25;
+    prob += solve(i, j + 1, N, M, K - 1) * 0.25;
 
     return dp[i][j][K] = prob;
 }
+
+int main() {
+    solve(0, 0, N, M, K);
+}
+
+// bottom up recurrence relation
+// dp[i][j][k] = dp[i-1][j][k-1] * 0.25 + dp[i][j-1][k-1] * 0.25 + dp[i+1][j][k-1] * 0.25 + dp[i][j+1][k-1] * 0.25
+//

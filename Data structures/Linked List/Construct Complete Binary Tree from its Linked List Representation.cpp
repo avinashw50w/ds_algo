@@ -20,31 +20,26 @@ If root node is stored at index i, its left, and right children are stored at in
 
 // converts a given linked list representing a complete binary tree into the
 // linked representation of binary tree.
-void convertList2Binary(ListNode *head, Node* &root)
-{
-    queue<Node *> q;
+void convertList2Binary(ListNode *head, Node* &root) {
 
     if (head == NULL)
     {
         root = NULL; // Note that root is passed by reference
         return;
     }
- 
-    // 1.) The first node is always the root node, and add it to the queue
+
+    queue<Node *> q;
     root = newNode(head->data);
-    // advance the pointer to the next node
     head = head->next;
     q.push(root);
- 
 
- 
     // until the end of linked list is reached, do the following steps
     while (head)
     {
         // 2.a) take the parent node from the q and remove it from q
         Node* parent = q.front();
         q.pop();
- 
+
         Node *leftChild = NULL, *rightChild = NULL;
 
         leftChild = newNode(head->data);
@@ -57,7 +52,7 @@ void convertList2Binary(ListNode *head, Node* &root)
             head = head->next;
             q.push(rightChild);
         }
- 
+
         // 2.b) assign the left and right children of parent
         parent->left = leftChild;
         parent->right = rightChild;
@@ -84,10 +79,10 @@ int main()
     push(&head, 15);
     push(&head, 12);
     push(&head, 10); /* First node of Linked List */
- 
+
     BinaryTreeNode *root;
     convertList2Binary(head, root);
- 
+
     cout << "Inorder Traversal of the constructed Binary Tree is: \n";
     inorderTraversal(root);
     return 0;
@@ -95,7 +90,7 @@ int main()
 ////////////////////////////////////////////////////////////////////////////////////////
 
 /*
-The structure of Link list node is as follows 
+The structure of Link list node is as follows
 struct node
 {
     int data;
@@ -124,27 +119,27 @@ void convert(node *head,TreeNode * &root)
         root = NULL;
         return;
     }
-  
+
     root = newNode(head->data);
     head = head->next;
     q.push(root);
-    
+
     while(head) {
         TreeNode *parent = q.front();
         q.pop();
-        
+
         TreeNode *lchild = NULL, *rchild = NULL;
-        
+
         lchild = newNode(head->data);
         head = head->next;
         q.push(lchild);
-        
+
         if(head) {
             rchild = newNode(head->data);
             head = head->next;
             q.push(rchild);
         }
-        
+
         parent->left = lchild;
         parent->right = rchild;
     }
