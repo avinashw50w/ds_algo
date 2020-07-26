@@ -1,65 +1,52 @@
-#include <iostream>
-#include <queue>
-#include <cstring>
+#include <bits/stdc++.h>
 using namespace std;
-#define pii pair<int,int>
-#define vi vector<int>
-#define pb emplace_back
 
-int dx[]={1,0,-1,0};
-int dy[]={0,1,0,-1};
+const int maxn = 1e3;
 
-int V[5][5];
-int dist[5][5];
-int grid[5][5]={{1,2,3,-1,5},
-				{6,7,-1,999,-1},
-				{11,12,13,14,15},
-				{23,99,999,45,22},
-				{13,45,32,56,23}};
-void bfs(pii s)
-{
-	queue<pii> q;
-	q.push(s);
-	int f=0;
-	memset(dist, oo, sizeof(dist));
-	dist[0][0]=0;
-	
-	while(!q.empty())
-	{
-		int x=q.front().first;
-		int y=q.front().second;
-		q.pop();
-		
-		if(V[x][y]) continue;
-		V[x][y] = 1;
-			
-		for(int i=0;i<4;i++){
-			
-			int nx=x+dx[i] , ny=y+dy[i];
-			
-			if(nx>=0 && nx<5 && ny>=0 && ny<5 && grid[nx][ny]!=-1)
-			{						
-				if(!V[nx][ny]) 
-				{
-					if(dist[nx][ny] == oo || dist[nx][ny] > dist[x][y] + 1) 
-					{
-						dist[nx][ny] = dist[x][y] + 1
-						q.push(pii(nx,ny));
-					}
-					
-					if(grid[nx][ny]==999) { 
-                        f=1;cout<<"found at ("<<nx<<","<<ny<<")"<<endl; 
-                        cout<<"shortest dist :"<<dist[nx][ny]<<endl;
-                    }
-				}
+int dx[4] = { 0,1,0,-1 };
+int dy[4] = { 1,0,-1,0 };
+int grid[maxn][maxn]; // grid[i][j] stores the edge length between i and j, otherwise -1
+vis[maxn][maxn];
+int N, M;
+
+struct Node {
+	int x, y, dist;
+};
+
+void bfs(int sx, int sy, int dx, int dy) {
+	memset(vis, 0, sizeof(vis));
+	queue<Node> q;
+	q.push(Node(sx, sy, 0));
+
+	while (!q.empty()) {
+		Node u = q.front(); q.pop();
+		int x = u.x, y = u.y, dist = u.dist;
+
+		if (x == dx and y == dy) return dist;
+
+		vis[x][y] = 1;
+		for (int i = 0; i < 4; ++i) {
+			int nx = x + dx[i], ny = y + dy[i];
+			if (nx >= 0 and nx < N and ny >= 0 and ny < M
+				and !vis[nx][ny]
+				and grid[nx][ny] != -1)
+			{
+				q.push(Node(nx, ny, dist + 1));
 			}
 		}
 	}
-	if(f==0)
-	cout<<"not found";
+
+	return -1;
 }
-int main(){
-	
-	bfs(pii(0,0));
-	return 0;
+
+int main() {
+	cin >> N >> M;
+
+	for (int i = 0; i < N; ++i) {
+		for (int j = 0; j < M; ++j)
+			cin >> grid[i][j];
+	}
+
+	cin >> sx >> sy >> dx >> dy;
+	cout << bfs(sx, sy, dx, dy);
 }

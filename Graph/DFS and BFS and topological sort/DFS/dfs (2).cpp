@@ -34,7 +34,7 @@ int main() {
 
 // DFS for a general tree
 
-void dfs(int u, int baap) {
+void dfs(int u, int baap = -1) {
 
 	for (auto v: G[u]) {
 		if (v == baap) continue;
@@ -49,7 +49,7 @@ void dfs(int u, int baap) {
 
 int level[maxn];
 
-void dfs(int u, int baap) {
+void dfs(int u, int baap = -1) {
 
 	for (auto v: G[u]) {
 		if (v == baap) continue;
@@ -130,7 +130,7 @@ void dfs1(int u, int baap) {
 		if (v == baap) continue;
 		dfs(v, u);
 
-		height[u] = max(height[u], 1+height[v]);
+		in[u] = max(in[u], 1+in[v]);
 	}
 }
 
@@ -147,7 +147,7 @@ void dfs2(int u, int baap) {
 
 	for (auto v: G[u]) {
 		if (v == baap) continue;
-		
+
 		int use = mx1;
 		if (mx1 == in[v])
 			use = mx2;

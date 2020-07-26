@@ -1,12 +1,12 @@
 class Graph {
 	int N;
 	vector<int> *G;
-	int *vis;
+	vector<int> vis;
 public:
 	Graph(int N) {
 		this->N = N;
 		G = new vector<int>[N];
-		vis = new int[N](); // also initializes the array with 0
+		vis.assign(N, 0); // also initializes the array with 0
 	}
 
 	void dfs(int u, vector<int> &comp) {
@@ -20,11 +20,11 @@ public:
 
 	vector<vector<int>> findConnectedComponents() {
 		vector<vector<int>> res;
-		vector<int> comp;
 		memset(vis, 0, sizeof(vis));
 
 		for (int i = 0; i < N; ++i) {
 			if (!vis[i]) {
+				vector<int> comp;
 				dfs(i, comp);
 				res.push_back(comp);
 			}

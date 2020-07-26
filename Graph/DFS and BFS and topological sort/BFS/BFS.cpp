@@ -8,13 +8,13 @@ void bfs(int u) {
 	Q.push(u);
 
 	while(!Q.empty()) {
-		int top = Q.front(); Q.pop();
-		
-		vis[top] = 1;
+		int u = Q.front(); Q.pop();
 
-		for(int i = 0; i < G[top].size(); ++i) {
-			if(!vis[G[top][i]])
-				Q.push(G[top][i]);
+		vis[u] = 1;
+
+		for(auto v: G[u]) {
+			if(!vis[v])
+				Q.push(v);
 		}
 	}
 }

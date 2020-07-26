@@ -6,17 +6,17 @@ using namespace std;
 int n;  // no of vertices
 vector<int> g[MAXN];   // graph
 vector<int> vist;     // visited array
-stack<int> ans;
- 
+stack<int> order;
+
 void dfs (int v) {
 	vist[v] = 1;
 	for (auto i: g[v]) {
 		if (!vist[i])
 			dfs (i);
 	}
-	ans.push(v);
+	order.push(v);
 }
- 
+
 void topological_sort() {
 	vist.assign(n,0);
 
@@ -34,6 +34,6 @@ void topological_sort(int u){
         int v=G[u][i];
         if(!V[v]) topologicalSort(v);
     }
-    ans.push(u);
-    
+    order.push(u);
+
 }

@@ -18,7 +18,7 @@ int connectedComponents(){
 	for(int i=0;i<N;i++){
 		if(!V[i]){
 			ans++;
-			dfs(i);       //  dfs call to vertex i will visit all the vertices that are connected to i,and will not visit the vertex 
+			dfs(i);       //  dfs call to vertex i will visit all the vertices that are connected to i,and will not visit the vertex
 		}                 //  that is not connnected to i.
 	}
 	return ans;
@@ -28,3 +28,5 @@ int connectedComponents(){
     1            4
   /  \         /  \
  2    3       5    6            the ans will be 2 .
+
+ */

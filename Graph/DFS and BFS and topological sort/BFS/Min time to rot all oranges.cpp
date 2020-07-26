@@ -4,9 +4,9 @@ Given a matrix of dimension m*n where each cell in the matrix can have values 0,
 
 1: Cells have fresh oranges
 
-2: Cells have rotten oranges 
-So we have to determine what is the minimum time required so that all the oranges become rotten. 
-A rotten orange at index [i,j] can rot other fresh orange at indexes [i-1,j], [i+1,j], [i,j-1], [i,j+1] 
+2: Cells have rotten oranges
+So we have to determine what is the minimum time required so that all the oranges become rotten.
+A rotten orange at index [i,j] can rot other fresh orange at indexes [i-1,j], [i+1,j], [i,j-1], [i,j+1]
 (up, down, left and right). If it is impossible to rot every orange then simply return -1.*/
 
 
@@ -22,17 +22,17 @@ int solve(vector<vector<int>> grid) {
 		for (int j = 0; j < M; ++j)
 			if (grid[i][j] == 2) Q.push({i, j});
 
-	Q.push({-1, -1}); // put a delimiter
 
 	while (!Q.empty()) {
-		int flag = 0;
+		queue<pair<int,int>> q;
 
-		while(!isDelimiter(Q.front())) {
+		swap(Q, q);
+
+		while (!q.empty()) {
+
 			auto top = Q.front(); Q.pop();
 
 			int x = top.first, y = top.second;
-
-			if (!flag) ans++, flag = 1;
 
 			for (int i = 0; i < 4; ++i) {
 				int nx = x + dx[i];
@@ -44,11 +44,7 @@ int solve(vector<vector<int>> grid) {
 			}
 		}
 
-		Q.pop(); // pop the delimiter
-
-		// if there are rotten oranges left in the queue, then push the delimiter
-		if (!Q.empty()) 
-			Q.push({-1, -1});
+		ans++;
 	}
 
 	return ans;
@@ -134,7 +130,7 @@ int convert(int mat[][N]) {
 		passes++;
 	}
 
-	// return number of passes or 
+	// return number of passes or
 	// inifinity if the matrix has an unreachable cell which is negative
 	return hasNegative(mat) ? INT_MAX : (passes - 1);
 }
@@ -152,7 +148,7 @@ int main()
 	int pass = convert(mat);
 	if (pass != INT_MAX)
 		cout << "No of passes required is " << pass;
-	else 
+	else
 		cout << "Invalid Input";
 
 	return 0;

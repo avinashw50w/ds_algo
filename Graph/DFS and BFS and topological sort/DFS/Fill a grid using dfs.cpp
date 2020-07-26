@@ -1,5 +1,5 @@
 /*Flood fill Algorithm – how to implement fill() in paint?
-In MS-Paint, when we take the brush to a pixel and click, the color of the region of that pixel is replaced with a new selected color. Following is the problem statement to do this task. 
+In MS-Paint, when we take the brush to a pixel and click, the color of the region of that pixel is replaced with a new selected color. Following is the problem statement to do this task.
 Given a 2D screen, location of a pixel in the screen and a color, replace color of the given pixel and all adjacent same colored pixels with the given color.
 
 Example:
@@ -52,11 +52,12 @@ void dfs(vector<vector<int>> &grid, int x, int y, int currColor, int newColor) {
     }
 }
 
+// Given the starting coordinates, flood fill with newColor
 vector<vector<int>> floodFill(vector<vector<int>> grid, int x, int y, int newColor) {
     int currColor = grid[x][y];
 
     int N = grid.size();
     int M = grid[0].size();
 
-    dfs(grid, int x, int y, int currColor, int newColor);
+    dfs(grid, x, y, currColor, newColor);
 }

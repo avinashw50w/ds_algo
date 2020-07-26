@@ -39,7 +39,7 @@ int bfs(int src, int lvl) {
 	q.push(src);
 
 	while(!Q.empty()) {
-		int u = Q.front();
+		int u = Q.front(); Q.pop();
 		vis[u] = 1;
 
 		for (int v: G[u]) {

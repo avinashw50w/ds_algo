@@ -27,7 +27,7 @@ int mat[maxn][maxn];
 void init() {
 	cin >> R >> C;
 
-	REP(i, 0, R) 
+	REP(i, 0, R)
 		REP(j, 0, C) {
 			int k; cin >> k;
 			mat[i][j] = k;
@@ -42,22 +42,22 @@ void init() {
 	memset(vis, 0, sizeof(vis));
 }
 
-void minJumps(vector<pair<int, int>> &path, vector<pair<int, int>> &buff, int x, int y, int destx, int desty) {
-	if(x < 0 || x >= R || y < 0 || y >= C || vis[x][y]) 
+void minJumps(vector<pair<int, int>> &path, vector<pair<int, int>> buff, int x, int y, int destx, int desty) {
+	if(x < 0 || x >= R || y < 0 || y >= C || vis[x][y])
 		return;
-
-	if(x == dx and y == dy) {
-		if(path.size() == 0 or buff.size() + 1 < path.size()) {
-			path = buff;
-			path.push_back({x, y});
-		}
-	}
 
 	buff.push_back({x, y});
 	vis[x][y] = true;
 
-	REP(jump, 1, mat[x][y]) {
-		REP(d, 0, jump) {
+	if(x == destx and y == desty) {
+		if(buff.size() + 1 < path.size()) {
+			path = buff;
+		}
+		return;
+	}
+
+	for (int jump = 1; jump <= mat[x][y]; ++jump) {
+		for (int d = 0; d <= jump; ++d) {
 			int dx = d;
 			int dy = jump-d;
 
@@ -84,4 +84,3 @@ int main() {
 	for(auto p : path)
 		cout << p.first << ", " << p.second << endl;
 }
-

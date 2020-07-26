@@ -5,7 +5,7 @@ class Solution {
 	static const int maxn = 1e3;
 	int G[maxn][maxn];
 	int V;
-public: 
+public:
 	int DFS(int u, int v, int k) {
 		if (k == 0 and u == v) return 0;
 		if (k == 1 and G[u][v] != INF) return G[u][v];
@@ -19,7 +19,7 @@ public:
 
 				if (t != INF)
 					res = min(res, G[u][i] + t);
-			}			
+			}
 		}
 
 		return res;
@@ -33,6 +33,7 @@ int solve(int u, int v, int k) {
 
 	for (int i = 0; i < V; ++i) {
 		for (int j = 0; j < V; ++j) {
+			for (int l = 0; l <= k; ++l) dp[i][j][l] = INF;
 			if (i == j) dp[i][j][0] = 0; // min cost to move from i to i with 0 steps is 0
 			if (G[i][j] != INF) dp[i][j][1] = G[i][j]; // min cost to move from i to j with 1 step is G[i][j]
 		}
@@ -41,16 +42,14 @@ int solve(int u, int v, int k) {
 	for (int l = 2; l <= k; ++l) {
 		for (int i = 0; i < V; ++i) { // for source
 			for (int j = 0; j < V; ++j) { // for destination
-				dp[i][j][l] = INF;
 
-				for (int a = 0; a < V; ++a) { // for any middle node between i and j
-					if (G[i][a] != INF and i != a and j != a and dp[a][j][l-1] != INF)
+				for (int a = 0; a < V; ++a) { // iterate through all the neighbours of i
+					if (G[i][a] != INF and a != i and a != j and dp[a][j][l-1] != INF)
 						dp[i][j][l] = min(dp[i][j][l], G[i][a] + dp[a][j][l-1]);
 				}
 			}
 		}
-	}	
+	}
 
-	return dp[u][v][k]
+	return dp[u][v][k];
 }
-

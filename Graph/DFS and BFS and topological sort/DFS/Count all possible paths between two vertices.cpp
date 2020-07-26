@@ -2,7 +2,7 @@
 vector<int> G[maxn];
 int vis[maxn];
 
-void dfs(int u, int dest, &cnt) {
+void dfs(int u, int dest, int &cnt) {
 	vis[u] = 1;
 
 	if (u == desc) cnt++;

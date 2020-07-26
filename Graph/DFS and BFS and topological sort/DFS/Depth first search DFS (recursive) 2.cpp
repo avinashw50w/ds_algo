@@ -3,13 +3,13 @@ using namespace std;
 
 class Graph{
 	int N;
-	vector<int> *G;
-	int *vis;
+	vector<vector<int>> G;
+	vector<int> vis;
 public:
 	Graph(int N) {
 		this->N = N;
-		vis = new int[N]();
-		G = new vector<int>[N];
+		vis.assign(N, 0);
+		G = vector<vector<int>>(N, vector<int>());
 	}
 
 	void addEdge(int u, int v) {
@@ -36,10 +36,10 @@ int main()
     g.addEdge(2, 0);
     g.addEdge(2, 3);
     g.addEdge(3, 3);
- 
+
     cout << "Following is Depth First Traversal (starting from vertex 2) \n";
     g.dfs(2);
- 
+
     return 0;
 }
 /*
