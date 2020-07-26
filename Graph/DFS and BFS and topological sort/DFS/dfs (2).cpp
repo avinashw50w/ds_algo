@@ -90,6 +90,20 @@ void dfs(int u, int baap) {
 	}
 }
 
+////////////////////////////////////////
+// subtree size
+int sub[maxn];
+
+void dfs(int u, int par = -1) {
+	sub[u] = 1;
+	for (int v: G[u]) {
+		if (v^p) {
+			dfs(v, u);
+			sub[u] += sub[v];
+		}
+	}
+}
+
 
 ///////////////////////////////////////////////////////
 

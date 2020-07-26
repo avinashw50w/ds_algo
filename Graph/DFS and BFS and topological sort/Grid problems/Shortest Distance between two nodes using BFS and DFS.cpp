@@ -9,7 +9,7 @@ DFS can be used to find the shortest path between two nodes in a tree, coz in a 
 const int maxn = 1e2;
 int grid[maxn][maxn];
 int vis[maxn][maxn];
-int dist[maxn][maxn];
+// int dist[maxn][maxn];
 
 struct Node {
     int x, y, dist;
@@ -20,9 +20,10 @@ int BFS(int sx, int sy, int dx, int dy) {
     memset(vis, 0, sizeof(vis));
     queue<Node> q;
     q.push(Node(sx, sy, 0));
-    vis[sx][sy] = 1;
 
     while(!q.empty()) {
+        vis[x][y] = 1;
+
         Node top = q.front(); q.pop();
         int x = top.x;
         int y = top.y;
@@ -35,10 +36,12 @@ int BFS(int sx, int sy, int dx, int dy) {
             int ny = y + dy[i];
 
             if (!safe(nx, ny) or vis[nx][ny]) continue;
-            vis[nx][ny] = 1;
+            // dist[nx][ny] = dist[x][y] + 1;
             q.push(Node(nx, ny, dist + 1));
         }
     }
+
+    return -1;
 }
 
 

@@ -5,7 +5,7 @@ int vis[maxn];
 void dfs(int u, int dest, int &cnt) {
 	vis[u] = 1;
 
-	if (u == desc) cnt++;
+	if (u == dest) cnt++;
 
 	else {
 		for (int v: G[u])

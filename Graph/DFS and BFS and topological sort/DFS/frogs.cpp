@@ -50,7 +50,7 @@ void minJumps(vector<pair<int, int>> &path, vector<pair<int, int>> buff, int x, 
 	vis[x][y] = true;
 
 	if(x == destx and y == desty) {
-		if(buff.size() + 1 < path.size()) {
+		if(buff.size() < path.size()) {
 			path = buff;
 		}
 		return;

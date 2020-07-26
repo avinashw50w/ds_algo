@@ -14,7 +14,7 @@ bool IsCyclic(int u) {
         if ((vis[v] == WHITE and IsCyclic(v)) or vis[v] == GREY) return true;
     }
 
-    V[u] = BLACK;
+    vis[u] = BLACK;
     return false;
 }
 /*===========================================================*/
