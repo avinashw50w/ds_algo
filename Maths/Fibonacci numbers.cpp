@@ -8,25 +8,36 @@ int func(int n){
   else return func(n-1) + func(n-2);
 }
 
+// using three variables
+int fib(int n) {
+    int a = 0, b = 1, c = 0;
+    for (int i = 2; i < n; ++i) {
+        c = a + b;
+        a = b;
+        b = c;
+    }
+
+    return c;
+}
 
 // bottom up  O(n) //
 int fib[1000];
 int func(){
   fib[0] = 0;
   fib[1] = 1;
-  for(int i=2;i<1000;++i) 
+  for(int i=2;i<1000;++i)
     fib[i] = fib[i-1] + fib[i-2];
 }
 
 ////////////////////////////////////////////////////////
 // top down  O(n) //
 
-int fib[1000]; // memset to -1 // 
+int fib[1000]; // memset to -1 //
 int func(int n){
-  if(n<2) 
+  if(n<2)
     return fib[n] = n;
   if(fib[n] != -1) return fib[n];
-  
+
   return fib[n] = func(n-1) + func(n-2);
 }
 
@@ -35,10 +46,10 @@ int func(int n){
 // calculate in O(logn + loglogn) //
 
 const int MAX = 1000;
- 
+
 // Create an array for memoization
 int f[MAX] = {0};
- 
+
 // Returns n'th fuibonacci number using table f[]
 int fib(int n)
 {
@@ -46,24 +57,24 @@ int fib(int n)
         return 0;
     if (n == 1 || n == 2)
         return (f[n] = 1);
- 
+
     if (f[n]) return f[n];
- 
+
     int k = (n & 1)? (n+1)/2 : n/2;
- 
+
     f[n] = (n & 1) ? (fib(k)*fib(k) + fib(k-1)*fib(k-1))
            : (2*fib(k-1) + fib(k))*fib(k);
- 
+
     return f[n];
 }
 
-/* Proof : 
-In the matirx equation : 
+/* Proof :
+In the matirx equation :
 	|1 1|^n = |Fn+1   Fn|
 	|1 0|	  |Fn   Fn-1|
 Taking determinant on both sides, we get
 (-1)n = Fn+1Fn-1 – Fn2
-Moreover, since AnAm = An+m for any square matrix A, the following identities can be derived 
+Moreover, since AnAm = An+m for any square matrix A, the following identities can be derived
 (they are obtained form two different coefficients of the matrix product)
 
 FmFn + Fm-1Fn-1 = Fm+n-1
@@ -86,7 +97,7 @@ If n is odd, we can put k = (n+1)/2
 
 ///////////////////// for higher fibonacci ///////////////////////////////////////
 
-// matrix form // 
+// matrix form //
 
 typedef vector<vector<ll>> vvi;
 
@@ -129,7 +140,7 @@ int main() {
 // 1/sqrt(5) * ((1+sqrt(5))/2)^n
 #define round(x) x < 0 ? x-0.5 : x+0.5
 
-int fib(int n) 
+int fib(int n)
 {
     double phi = (1 + sqrt(5))/2;
 	return round(pow(phi, n) / sqrt(5));

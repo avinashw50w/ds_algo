@@ -1,9 +1,10 @@
-/*The Ruler of HackerLand believes that every citizen of the country should have access to a library. Unfortunately, 
-HackerLand was hit by a tornado that destroyed all of its libraries and obstructed its roads! As you are the greatest 
-programmer of HackerLand, the ruler wants your help to repair the roads and build some new libraries efficiently.
+/*The Ruler of HackerLand believes that every citizen of the country should have access to a library.
+Unfortunately, HackerLand was hit by a tornado that destroyed all of its libraries and obstructed its
+roads! As you are the greatest programmer of HackerLand, the ruler wants your help to repair the roads
+and build some new libraries efficiently.
 
-HackerLand has n cities numbered from 1 to n. The cities are connected by m bidirectional roads. A citizen has access 
-to a library if:
+HackerLand has n cities numbered from 1 to n. The cities are connected by m bidirectional roads.
+A citizen has access to a library if:
 
 Their city contains a library.
 They can travel by road from their city to a city containing a library.
@@ -11,7 +12,7 @@ The following figure is a sample map of HackerLand where the dotted lines denote
 
 image
 
-The cost of repairing any road is cr dollars, and the cost to build a library in any city is Ccl dollars.
+The cost of repairing any road is cr dollars, and the cost to build a library in any city is cl dollars.
 
 You are given q queries, where each query consists of a map of HackerLand and value of cl and cr.
 
@@ -19,12 +20,12 @@ For each query, find the minimum cost of making libraries accessible to all the 
 
 Input Format
 
-The first line contains a single integer, q, denoting the number of queries. The subsequent lines describe each query in the 
+The first line contains a single integer, q, denoting the number of queries. The subsequent lines describe each query in the
 following format:
 
-The first line contains four space-separated integers describing the respective values of  n(the number of cities),  
+The first line contains four space-separated integers describing the respective values of  n(the number of cities),
 m(the number of roads),  cl(the cost to build a library), and  cr(the cost to repair a road).
-Each line  of the  subsequent lines contains two space-separated integers, u and v, describing a bidirectional road 
+Each line  of the  subsequent lines contains two space-separated integers, u and v, describing a bidirectional road
 connecting cities u and v.*/
 #include <bits/stdc++.h>
 using namespace std;
@@ -51,37 +52,37 @@ void dfs(int u, int &cnt) {
 
 int main() {
     int q; cin >> q;
-    
+
     int u, v;
-    
+
     while(q--) {
         cin >> n >> m >> cl >> cr;
-        
+
         init();
-        
+
         for(int i = 0; i < m; ++i) {
             cin >> u >> v;
             G[u].push_back(v);
             G[v].push_back(u);
         }
-        
+
         ll ans = 0;
-        
+
         for(int i = 1; i <= n; ++i) {
             if(!V[i]) {
                 int cnt = 0;
                 cost1 = 0, cost2 = 0;
                 cost1 += (ll)cl;
-                
+
                 dfs(i, cnt);
-                
+
                 cost1 += ((cnt - 1) * cr);
                 cost2 += (cnt * cl);
-                
+
                 ans += min(cost1, cost2);
             }
         }
-        
+
         cout << ans << endl;
     }
 }

@@ -4,7 +4,7 @@ const int manx = 1e5 + 5;
 
 int N, M; // no of nodes and edges respectively
 vector<int> G[maxn]; // the graph
-int vis[maxn]; // visited array
+int vis[maxn]; // visited array (used to avoid loops in graph)
 
 void dfs(int u) {
 	vis[u] = 1;
@@ -58,6 +58,18 @@ void dfs(int u, int baap = -1) {
 	}
 }
 
+// or
+int level[maxn];
+
+void dfs(int u, int p = -1, int l = 0) {
+	level[u] = l;
+	for (auto v: G[u]) {
+		if (v^p) {
+			dfs(v, u, l + 1);
+		}
+	}
+}
+
 //////////////////////////////////////////////////////////
 
 // calculate height of a tree using DFS
@@ -97,13 +109,12 @@ int sub[maxn];
 void dfs(int u, int par = -1) {
 	sub[u] = 1;
 	for (int v: G[u]) {
-		if (v^p) {
+		if (v^par) {
 			dfs(v, u);
 			sub[u] += sub[v];
 		}
 	}
 }
-
 
 ///////////////////////////////////////////////////////
 
@@ -130,10 +141,33 @@ void dfs(int u, int baap) {
 }
 
 ///////////////////////////////////////////////////////////
+// ancestor check in a tree
+int tin[maxn], tout[maxn];
+int timer;
+
+void dfs(int u = 0, int p = -1) {
+	tin[u] = timer++;
+	for (auto v: G[u]) if (v^p) dfs(v, u);
+	tout[u] = timer++;
+}
+// check if u is an ancestor of v
+bool isAncestor(int u, int v) {
+	return tin[u] < tin[v] and tout[u] > tout[v];
+}
+
+///////////////////////////////////////////////////////////
 
 // find the height of the tree when u is the root
+// Note: for a single query this can be easily calculated by calling dfs(u),
+// but for answering multiple queries, we have to precalculate some data.
 
-int in[maxn], out[maxn];
+// inward height from a node u with respect to the root; in[u] = 1 + max(in[v1], in[v2], ..., in[vn])
+// where v1, v2, ..., vn are the children of u
+int in[maxn];
+// outward height from a node u with respect to the root; out[v] = max(1 + out[u], 2 + in[v2]),
+// where u is the parent, v and v2 are the children of u where height of the subtree rooted at v and v2
+// are the maximum
+int out[maxn];
 int dp[maxn]; // dp[i] stores the height of tree if i is the root of the tree
 
 void dfs1(int u, int baap) {
@@ -171,8 +205,6 @@ void dfs2(int u, int baap) {
 		dfs(v, u);
 	}
 }
-
-
 
 int main() {
 
