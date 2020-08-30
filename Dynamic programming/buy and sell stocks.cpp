@@ -71,6 +71,31 @@ int solve(vector<int> prices, int K) {
 }
 
 ////////////////////////////////////////////////////////////////
+// recursive
+vector<int> price;
+int dp[N][2][t + 1];
+
+int solve(int i, int own, int t, int N) {
+	if (i == N or t == 0) return 0;
+
+	int &res = dp[i][own][t];
+	if (res != -1) return res;
+
+	if (own) {
+		int op1 = price[i] + solve(i + 1, 0, t - 1, N); // sell the stock
+		int op2 = solve(i + 1, own, t, N); // do nothing
+
+		return res = max(op1, op2);
+	}
+	else {
+		int op1 = -price[i] + solve(i + 1, 1, t, N); // buy the stock
+		int op2 = solve(i + 1, own, t, N); // do nothing
+
+		return res = max(op1, op2);
+	}
+}
+
+////////////////////////////////////////////////////////////////
 // Another variation is that one can do any no of transation to obtain maximum profit
 // for that just keep adding the difference between the consecutive elements which are
 // strictly increasing.

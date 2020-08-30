@@ -2,26 +2,22 @@
 
 eg. [4, 1, 2, 5, 6],  ans = 3 [4,5,6] */
 
-int fun(int a[], int N)
-{
-	set<int> st;
-
-	for(int i = 0; i < N; ++i) st.insert(a[i]);
+int solve(vector<int> a) {
+	int n = a.size();
+	unordered_set<int> st(a.begin(), a.end());
 
 	int ans = 0;
-
-	for(int i: st)
-	{
-		if(st.count(i-1)) continue;
-
-		int len = 0;
-		while(st.count(i++)) len++;
-
-		ans = max(ans, len);
+	for (int e : st) {
+		if (st.count(e - 1) == 0) {
+			int len = 1;
+			while (st.count(e + len)) len++;
+			ans = max(ans, len);
+		}
 	}
+
+	return ans;
 }
 
-// Time complexity : O(nlogn)
+// Time complexity : O(n)
 // Space complexity : O(n)
 
-// Time complexity can be reduced by using a hash table instead of set.

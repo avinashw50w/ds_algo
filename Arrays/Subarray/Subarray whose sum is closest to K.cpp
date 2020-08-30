@@ -1,7 +1,9 @@
 /*Subarray whose sum is closest to K
 Given an array of positive and negative integers and an integer K.
 The task is to find the subarray which has its sum closest to k. In case of multiple answers, print any one.
-Note: Closest here means abs(sum-k) should be minimal.*/
+Note: Closest here means abs(sum-k) should be minimal.
+sum(A[0..i-1]) - sum(A[0..j]) ~ K
+*/
 
 int closestSubarraySumToK(int a[], int n, int k)
 {
@@ -42,18 +44,10 @@ int closestSubarraySumToK(int a[], int n, int k)
         // present in between
         else if (it != s.end()) {
 
-            // get the prefix sum till start
-            // of the subarray
             int diff = *it;
 
-            // if the subarray sum is closest to K
-            // than the previous one
             if (abs((presum - diff) - k) < mini) {
-
-                // update the minimal difference
                 mini = abs((presum - diff) - k);
-
-                // update the sum
                 sum = presum - diff;
             }
 
@@ -62,18 +56,10 @@ int closestSubarraySumToK(int a[], int n, int k)
             // or less than K also
             it--;
 
-            // get the prefix sum till start
-            // of the subarray
             diff = *it;
 
-            // if the subarray sum is closest to K
-            // than the previous one
             if (abs((presum - diff) - k) < mini) {
-
-                // update the minimal difference
                 mini = abs((presum - diff) - k);
-
-                // update the sum
                 sum = presum - diff;
             }
         }
@@ -114,4 +100,3 @@ int main()
 }
 
 // Time Complexity: O(N log N)
-

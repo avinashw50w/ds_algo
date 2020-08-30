@@ -4,7 +4,7 @@ using namespace std;
 // also a proper suffix for substring [0,i] , 0 <= i <= N-1
 /*
 Algo: j = 0, i = 1.
-If pattern matches then f[i] = j+1, i++, j++;
+If pattern at i matches pattern at j then f[i] = j+1, i++, j++;
 Otherwise, while pat[i] doesn't match pat[j], do j = f[j-1];
  */
 vector<int> LPS(string pat) {
@@ -13,9 +13,9 @@ vector<int> LPS(string pat) {
 	vector<int> f(l);
 	f[0] = 0;
 
-	for(int i = 1; i < l; ++i) {
-		while(j >= 0 and pat[i] != pat[j]) {
-			if(j > 0) j = f[j-1];
+	for (int i = 1; i < l; ++i) {
+		while (j >= 0 and pat[i] != pat[j]) {
+			if (j > 0) j = f[j - 1];
 			else j = -1;
 		}
 		j++;
@@ -32,15 +32,15 @@ void KMP(string txt, string pat) {
 	int lt = txt.size();
 	int lp = pat.size();
 	int j = 0;
-	for(int i = 0; i < lt; ++i) {
-		while(j >= 0 and txt[i] != pat[j]) {
-			if(j >= 1) j = f[j-1];
+	for (int i = 0; i < lt; ++i) {
+		while (j >= 0 and txt[i] != pat[j]) {
+			if (j >= 1) j = f[j - 1];
 			else j = -1;
 		}
 		j++;
-		if(j == lp) {
-			cout << i-j+1 << endl;
-			j = f[j-1];
+		if (j == lp) {
+			cout << i - j + 1 << endl;
+			j = f[j - 1];
 		}
 	}
 }

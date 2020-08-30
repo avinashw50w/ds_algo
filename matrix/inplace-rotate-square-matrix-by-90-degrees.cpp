@@ -9,8 +9,8 @@ Input
  7  8  9
 
 Output:
- 3  6  9 
- 2  5  8 
+ 3  6  9
+ 2  5  8
  1  4  7
 
  How to do without extra space?
@@ -24,57 +24,57 @@ so … on
 
 Last row of source –> Last column of destination, elements filled in opposite order.
 
-An N x N matrix will have floor(N/2) square cycles. For example, a 4 X 4 matrix will have 2 cycles. 
-The first cycle is formed by its 1st row, last column, last row and 1st column. The second cycle is 
+An N x N matrix will have floor(N/2) square cycles. For example, a 4 X 4 matrix will have 2 cycles.
+The first cycle is formed by its 1st row, last column, last row and 1st column. The second cycle is
 formed by 2nd row, second-last column, second-last row and 2nd column.
 
-The idea is for each square cycle, we swap the elements involved with the corresponding cell in the matrix 
-in anti-clockwise direction i.e. from top to left, left to bottom, bottom to right and from right to top one at a time. 
+The idea is for each square cycle, we swap the elements involved with the corresponding cell in the matrix
+in anti-clockwise direction i.e. from top to left, left to bottom, bottom to right and from right to top one at a time.
 We use nothing but a temporary variable to achieve this.
 
 Below steps demonstrate the idea
 
 First Cycle (Involves Red Elements)
- 1  2  3 4 
- 5  6  7  8 
- 9 10 11 12 
- 13 14 15 16 
+ 1  2  3 4
+ 5  6  7  8
+ 9 10 11 12
+ 13 14 15 16
 
- 
+
 Moving first group of four elements (First
-elements of 1st row, last row, 1st column 
+elements of 1st row, last row, 1st column
 and last column) of first cycle in counter
-clockwise. 
+clockwise.
  4  2  3 16
- 5  6  7 8 
- 9 10 11 12 
- 1 14  15 13 
- 
-Moving next group of four elements of 
-first cycle in counter clockwise 
- 4  8  3 16 
- 5  6  7  15  
- 2  10 11 12 
- 1  14  9 13 
+ 5  6  7 8
+ 9 10 11 12
+ 1 14  15 13
 
-Moving final group of four elements of 
-first cycle in counter clockwise 
- 4  8 12 16 
- 3  6  7 15 
- 2 10 11 14 
- 1  5  9 13 
+Moving next group of four elements of
+first cycle in counter clockwise
+ 4  8  3 16
+ 5  6  7  15
+ 2  10 11 12
+ 1  14  9 13
+
+Moving final group of four elements of
+first cycle in counter clockwise
+ 4  8 12 16
+ 3  6  7 15
+ 2 10 11 14
+ 1  5  9 13
 
 
 Second Cycle (Involves Blue Elements)
- 4  8 12 16 
- 3  6 7  15 
- 2  10 11 14 
- 1  5  9 13 
+ 4  8 12 16
+ 3  6 7  15
+ 2  10 11 14
+ 1  5  9 13
 
 Fixing second cycle
- 4  8 12 16 
- 3  7 11 15 
- 2  6 10 14 
+ 4  8 12 16
+ 3  7 11 15
+ 2  6 10 14
  1  5  9 13  */
 
 /*So overall the transformations are:
@@ -84,47 +84,47 @@ Fixing second cycle
     (N-1-y, x)     -> (x, y)
 */
 
- // An Inplace function to rotate a N x N matrix
+// An Inplace function to rotate a N x N matrix
 // by 90 degrees in anti-clockwise direction
-void rotateMatrix(int mat[][N])
+void rotateMatrixAntiClockWise(int mat[][N])
 {
-    // Consider all squares one by one
-    for (int x = 0; x < N / 2; x++)
-    {
-        // Consider elements in group of 4 in 
-        // current square
-        for (int y = x; y < N-x-1; y++)
-        {
-            // store current cell in temp variable
-            int temp = mat[x][y];
- 
-            // move values from right to top
-            mat[x][y] = mat[y][N-1-x];
- 
-            // move values from bottom to right
-            mat[y][N-1-x] = mat[N-1-x][N-1-y];
- 
-            // move values from left to bottom
-            mat[N-1-x][N-1-y] = mat[N-1-y][x];
- 
-            // assign temp to left
-            mat[N-1-y][x] = temp;
+    for (int i = 0; i < N / 2; ++i) {
+        for (int j = i; j < N - 1 - i; ++j) {
+            int t = mat[i][j];
+            mat[i][j] = mat[j][N - 1 - i];
+            mat[j][N - 1 - i] = mat[N - 1 - i][N - 1 - j];
+            mat[N - 1 - i][N - 1 - j] = mat[N - 1 - j][i];
+            mat[N - 1 - j][i] = t;
         }
     }
 }
- 
+
+// rotate by 90 degree clockwise
+void rotateMatrixClockWise(int mat[][N])
+{
+    for (int i = 0; i < N / 2; ++i) {
+        for (int j = i; j < N - 1 - i; ++j) {
+            int t = mat[i][j];
+            mat[i][j] = mat[N - 1 - j][i];
+            mat[N - 1 - j][i] = mat[N - 1 - i][N - 1 - j];
+            mat[N - 1 - i][N - 1 - j] = mat[j][N - 1 - i];
+            mat[j][N - 1 - i] = t;
+        }
+    }
+}
+
 
 ///////////////////////////////////////////////////
 // a more readable version
 
 void rotate(int mat[][N]) {
 
-    for (int layer = 0; layer < N/2; ++layer) {
+    for (int layer = 0; layer < N / 2; ++layer) {
         int first = layer;
-        int last = N-1-layer;
+        int last = N - 1 - layer;
 
         for (int i = first; i < last; ++i) {
-            int offset = N-1-i;
+            int offset = N - 1 - i;
 
             int top = mat[first][i];
 
@@ -147,13 +147,13 @@ void displayMatrix(int mat[N][N])
     {
         for (int j = 0; j < N; j++)
             printf("%2d ", mat[i][j]);
- 
+
         printf("\n");
     }
     printf("\n");
 }
- 
- 
+
+
 /* Driver program to test above functions */
 int main()
 {
@@ -165,11 +165,11 @@ int main()
         {9, 10, 11, 12},
         {13, 14, 15, 16}
     };
- 
+
     rotateMatrix(mat);
- 
+
     // Print rotated matrix
     displayMatrix(mat);
- 
+
     return 0;
 }
