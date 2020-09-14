@@ -49,10 +49,10 @@ int solve(int n, int bCount = 1, int cCount = 2)
 /// O(1) solution
 
 int solve(int n) {
-	return (n * (n - 1) * (n - 2) / 2) // a=n-b-c, b=1 c=2 => nC3 * 3! / 2!
-	       + (n * (n - 1) / 2) // a=n-b-c, b=0 c=2 => nC2
-	       + (n * (n - 1)) // a=n-b-c, b=1 c=1 => nC2 * 2! => choose 2 positions for b and c out of n positions and 2! for permutation of b and c
-	       + n //a=n-b-c, b=0 c=1
-	       + n //a=n-b-c, b=1 c=0
+	return (n * (n - 1) * (n - 2) / 2) // a=n-b-c, b=1 c=2 => n!/(n-3)! * 1! * 2!
+	       + (n * (n - 1) / 2) // a=n-b-c, b=0 c=2 => n!/(n-2)! * 2!
+	       + (n * (n - 1)) // a=n-b-c, b=1 c=1 => n!/(n-2)! * 1! * 1!, (n-2)! for a and 1! for both b and c
+	       + n //a=n-b-c, b=0 c=1 => n!/(n-1)!
+	       + n //a=n-b-c, b=1 c=0 => n!/(n-1)!
 	       + 1; //a=n-b-c, b=0 c=0
 }

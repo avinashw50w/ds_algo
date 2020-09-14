@@ -4,10 +4,10 @@
 using namespace std;
 
 // by traversing from left to right
-int toDecimal2(string a, int b) {
+int toDecimal2(string a) {
 	int n = a.size(), res = 0;
 	for (int i = 0; i < n; ++i) {
-		res += (res * b) + (a[i] - '0');
+		res = (res * 10) + (a[i] - '0');
 	}
 	return res;
 }

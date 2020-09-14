@@ -1,3 +1,22 @@
+char solve(string s) {
+	int n = s.size();
+	vector<int> index(256, n);
+
+	for (int i = 0; i < n; ++i) {
+		char c = s[i];
+		if (index[c] == n) index[c] = i; // c appears for the first time
+		else index[c] = n + 1; // c appeared before
+	}
+
+	sort(index.begin(), index.end());
+
+	return s[index[0]];
+}
+
+
+
+
+
 /* Given a string, find the first non-repeating character in a single pass of the string.
  * Assume a big character set is in use, like UTF-8, which makes it unfeasible to use a
  * character frequency count table.
@@ -39,20 +58,20 @@ bool solve(const string& str) {
 
 	initList(&head);
 
-	for(int i = 0; i < str.size(); ++i) {
+	for (int i = 0; i < str.size(); ++i) {
 		auto it = M.find(str[i]);
 		// if a character is found for the third time and so on, then continue
-		if(it != M.end() and it -> second == NULL)
+		if (it != M.end() and it -> second == NULL)
 			continue;
 		// if a character is found for the second time, then remove that character node from the list
-		else if(it != M.end()) 
+		else if (it != M.end())
 		{
 			deleteList(it -> second);
 			delete it -> second;
 			it -> second = NULL;
 		}
 		// if a character is found for the first time, then insert a node for that character in the list
-		else 
+		else
 		{
 			Node * node = new Node;
 			node -> idx = i;
@@ -61,7 +80,7 @@ bool solve(const string& str) {
 		}
 	}
 
-	if(emptyList(&head)) 
+	if (emptyList(&head))
 		return false;
 
 	return str[head.next -> idx];

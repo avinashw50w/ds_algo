@@ -1,57 +1,26 @@
-#include <iostream>
-#include <string.h>
-using namespace std;
+/*compress a string such that if the consecutive characters are equal then, replace then with a
+single character followed by the no of times it appeared.
+eg. aabbbcdddd => a2b3c1d4
+*/
 
-string runLengthEncode(string str)
+string runLengthEncode(string s)
 {
-    int len = str.length();
-    int j=0,k=0,cnt=0;
-    for(int i=0;i<len;i++)
-    {
-        j=i;
-        cnt=1;
-        while(i<len-1 && str[i]==str[i+1])
-        {
-            i++;
-            cnt++;
-        }
-        str[k++]=str[j];
-        string temp =to_string(cnt);
-        for(auto m:temp)
-            str[k++] = m;
+    int n = s.size();
+    int k = 0;
+    for (int i = 0; i < n; ++i) {
+        int len = 1;
+        while (i + len < n and s[i] == s[i + len]) len++;
+        string len_str = to_string(len);
+        s[k++] = s[i];
+        for (char c : len_str) s[k++] = c;
     }
-    str.resize(k);
-    return str;
+
+    return s.substr(0, k);
 }
 
-/////////////////////////////////////////////////////////
+int main() {
 
-/*You are required to complete this function */
-char *encode(char *src)
-{     
-  int n = strlen(src);
-  char *s = new char[2*n];
-  int cnt, i, j, k = 0;
-  
-  for(i = 0; i < n; ++i) {
-        cnt = 1;
-        char c = src[i];
-        while (i < n-1 and src[i] == src[i+1]) {
-            i++;
-            cnt++;
-        }
-        s[k++] = c;
-        string x = to_string(cnt);
-        for(auto m: x) s[k++] = m;
-        
-  }
-  s[k] = '\0';
-  return s;
-}
-
- int main() {
-   
     char c[] = "aaabbcccc";
-    
+
     cout << encode(c);
- }
+}

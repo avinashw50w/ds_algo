@@ -4,10 +4,14 @@
 #include<unordered_map>
 using namespace std;
 
+struct Node {
+    string key, value;
+};
+
 class LRUCache {
 
-    list<int> L;
-    unordered_map<int> hash;
+    list<Node> L;
+    unordered_map<string, list<string>::iterator> hash;
     int cache_sz;
 
 public:
@@ -15,36 +19,49 @@ public:
         cache_sz = N;
     }
 
-    void set(int x, int y) {
-        if (L.size() < cache_sz) {
-            L.push_front(y);
-            hash[x] = y;
-            return;
-        }
-
-        // check if the page exists in the list
-        if (hash.count(x)) {
-            auto it = find(L.begin(), L.end(), y);
-            L.erase(it);
-            L.push_front(y);
+    void set(string key, string value) {
+        // if key already exists, put that node to the front of the list
+        if (hash.count(key)) {
+            auto it = hash[key];
+            deleteFromList(it);
+            pushToFront(Node(key, value));
+            hash[key] = L.begin();
         }
         else {
-            L.erase(L.end());
-            hash.erase(L.back());
-
-            L.push_front(y);
-            hash[x] = y;
+            if (L.size() >= cache_sz) {
+                auto it = L.end();
+                hash.erase((*it).key);
+                deleteFromList(it);
+            }
+            pushToFront(Node(key, value));
+            hash[key] = L.begin();
         }
     }
 
-    int get(int x) {
-        if (hash.count(x) == 0) return -1;
+    string get(string key) {
+        if (hash.count(key) == 0) return "";
 
-        return *find(L.begin(), L.end(), hash[x]);
+        auto it = hash[key];
+        deleteFromList(it);
+        pushToFront(Node(key, (*it).value));
+
+        hash[key] = L.begin();
+
+        return (*it).value;
+    }
+
+    void deleteFromList(list<string>::iterator it) {
+        L.erase(it);
+    }
+
+    void pushToFront(Node node) {
+        L.push_front(node);
     }
 };
 
-const int cache_sz = 4
+
+//////////////////////////////////
+const int cache_sz = 4;
 
 void ReferencePage(list<int>& L, unordered_map<int, int>& hash, int page)
 {

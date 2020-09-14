@@ -25,7 +25,7 @@ memset(dp, -1, sizeof(dp));
 int solve(int s, int e, int year) {
     if (dp[s][e] != -1) return dp[s][e];
 
-    if (s == e) return price[s] * year;
+    if (s == e) return dp[s][e] = price[s] * year;
 
     int left = price[s] * year + solve(s + 1, e, year + 1);
     int right = price[e] * year + solve(s, e - 1, year + 1);
@@ -35,7 +35,11 @@ int solve(int s, int e, int year) {
 
 // bottom up
 int solve2() {
+    vector<vector<int>> dp(N, vector<int>(N, 0));
+    // for maximizing the profit, sell the ith wine last.
+    // So after selling N-1 items, the current year will be N
     for (int i = 0; i < N; ++i) dp[i][i] = price[i] * N;
+
     for (int l = 2; l <= N; ++l) {
         for (int i = 0; i <= N - l; ++i) {
             int j = i + l - 1;
@@ -58,7 +62,7 @@ int order[N][N]; // value of 0 represents beginning and 1 represents end
 int solve(int s, int e, int year) {
     if (dp[s][e] != -1) return dp[s][e];
 
-    if (s == e) return price[s] * year;
+    if (s == e) return dp[s][e] = price[s] * year;
 
     int left = price[s] * year + solve(s + 1, e, year + 1);
     int right = price[e] * year + solve(s, e - 1, year + 1);

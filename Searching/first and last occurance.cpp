@@ -1,11 +1,11 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-int firstOccurrence(int a[], int l, int r, int item) {
-    int mid, ans = -1;
+int firstOccurrence(vector<int> a, int target) {
+    int l = 0, r = a.size() - 1, mid, ans = -1;
     while (l <= r) {
         mid = l + (r - l) / 2;
-        if (item <= a[mid])
+        if (a[mid] >= target)
             ans = mid, r = mid - 1;
         else
             l = mid + 1;
@@ -13,11 +13,11 @@ int firstOccurrence(int a[], int l, int r, int item) {
     return ans;
 }
 
-int lastOccurrence(int a[], int l, int r, int item) {
-    int mid, ans = -1;
+int lastOccurrence(vector<int> a, int target) {
+    int l = 0, r = a.size() - 1, mid, ans = -1;
     while (l <= r) {
         mid = l + (r - l) / 2;
-        if (a[mid] <= item)
+        if (a[mid] <= target)
             ans = mid, l = mid + 1;
         else
             r = mid - 1;
@@ -27,8 +27,8 @@ int lastOccurrence(int a[], int l, int r, int item) {
 
 int numberOfOccurrences(int A[], int size, int item) {
     // Note the boundary parameters
-    int l = firstOccurrence(A, 0, size, item);
-    int r = lastOccurrence(A, 0, size, item);
+    int l = firstOccurrence(A, item);
+    int r = lastOccurrence(A, item);
     if (A[l] == item && A[r] == item)            // If the item is in the array A
         return (r - l + 1);
     else                                               // If the item is not in the array A
@@ -53,20 +53,19 @@ int main() {
 ////////////////////////////////
 // another implementation
 // first occurence
-
 int firstOccurrence(vector<int> A, int X) {
     int N = A.size();
     int l = 0, r = N - 1, mid;
 
     while (l < r) {
-        mid = (l + r) >> 1;
+        mid = l + ((r - l) >> 1);
         if (X <= A[mid]) r = mid;
         else l = mid + 1;
     }
 
     return l;
 }
-
+// last occurence
 int lastOccurrence(vector<int> A, int X) {
     int N = A.size();
     int l = 0, r = N - 1, mid;

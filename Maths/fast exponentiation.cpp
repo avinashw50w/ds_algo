@@ -19,8 +19,8 @@ int power(int base, int expo) {
 // recursive
 int power(int base, int expo) {
     if (expo == 0) return 1;        // if exponent is zero then return  1
-
-    if (expo & 1) return base * power(base, expo - 1); //  if exponent is odd  then return  x*(x^n-1)    ....here '^' stand for power
+    // if expo is odd then this condition appears 2 times otherwise only 1 time
+    if (expo & 1) return base * power(base, expo - 1);
 
     int p = power(base, expo / 2);                 //  if expo is even then return  (x^n/2)*(x^n/2)
     return p * p;

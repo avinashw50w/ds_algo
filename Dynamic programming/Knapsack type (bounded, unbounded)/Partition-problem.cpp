@@ -3,11 +3,11 @@
 Examples
 
 arr[] = {1, 5, 11, 5}
-Output: true 
+Output: true
 The array can be partitioned as {1, 5, 5} and {11}
 
 arr[] = {1, 5, 3}
-Output: false 
+Output: false
 The array cannot be partitioned into equal sum sets.
 
 Following are the two main steps to solve this problem:
@@ -18,18 +18,38 @@ The first step is simple. The second step is crucial, it can be solved either us
 
 bool isPartitionPossible(int a[], int n) {
 
-	int sum = 0;
+    int sum = 0;
 
-	for(int i = 0; i < n; ++i) sum += a[i];
+    for (int i = 0; i < n; ++i) sum += a[i];
 
-	if(sum & 1) return false;
+    if (sum & 1) return false;
 
-	bitset<sum+1> bit;
+    bitset < sum + 1 > bit;
 
-	bit.reset();
-	bit[0] = 1;
+    bit.reset();
+    bit[0] = 1;
 
-	for(int i = 0; i < n; ++i) bit |= (bit << a[i]);
+    for (int i = 0; i < n; ++i) bit |= (bit << a[i]);
 
-	return bit[sum/2]; 
+    return bit[sum / 2];
+}
+
+///////////////////////////////////////
+// another way
+bool check(int A[], int N) {
+
+    int sum = 0;
+
+    REP(i, 0, N) sum += A[i];
+
+    if (sum  & 1) return false;
+
+    int dp[sum + 1] = {};
+    dp[0] = 1;
+
+    for (int i = 0; i < N; ++i)
+        for (int j = sum; j >= A[i]; --j)
+            dp[j] |= dp[j - A[i]];
+
+    return dp[sum >> 1];
 }
