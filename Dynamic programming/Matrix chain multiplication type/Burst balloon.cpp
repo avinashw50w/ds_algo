@@ -41,3 +41,37 @@ public:
         return solve(a, 1, n - 2);
     }
 };
+
+
+////////////////////////////////////////
+// bottom up
+/*Suppose we want to burst all the ballons within range [l, r] (both inclusive)
+before bursting ballon l - 1 and r + 1, and note f[l][r] as the maximum coins we can collect in this process.
+If i is the last ballon we want to burst within range [l, r], we can get:
+
+    f[l][r] = ln * nums[i] * rn + f[l][i - 1] + f[i + 1][r]
+where ln and rn are the left/right neighbors to [l, r]. Remember by definition we always burst [l, r] before bursting l - 1 and r + 1, we can easily get the neighbors to be:
+
+    int ln = l > 0 ? nums[l - 1] : 1;
+    int rn = r + 1 < n ? nums[r + 1] : 1;
+If we start with small ranges and build the dynamic programming table by iterating all the possible is (last burst ballon), we can get the full code in bottom-up approach: */
+
+int maxCoins(vector<int>& nums) {
+    int n = nums.size();
+    if (n == 0) return 0;
+    vector<vector<int>> f(n + 1, vector<int>(n + 1, 0));
+    for (int len = 1; len <= n; ++len) {
+        for (int l = 0; l <= n - len; ++l) {
+            int r = l + len - 1;
+            int ln = l > 0 ? nums[l - 1] : 1;
+            int rn = r + 1 < n ? nums[r + 1] : 1;
+            for (int i = l; i <= r; ++i) {
+                int temp = ln * nums[i] * rn
+                           + (i ? f[l][i - 1] : 0)
+                           + (i + 1 <= r ? f[i + 1][r] : 0);
+                f[l][r] = max(f[l][r], temp);
+            }
+        }
+    }
+    return f[0][n - 1];
+}

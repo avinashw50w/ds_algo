@@ -34,7 +34,7 @@ void Merge(int l, int mid, int r)
             temp[pos++] = a[i++];
         else
         {
-            ans += (mid - i + 1);    ///  this is the only change that is made here
+            ans += (mid + 1 - i);    ///  this is the only change that is made here
             temp[pos++] = a[j++];
         }
     }

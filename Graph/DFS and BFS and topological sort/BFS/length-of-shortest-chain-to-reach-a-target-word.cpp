@@ -1,6 +1,6 @@
 /*Length of shortest chain to reach a target word
-Given a dictionary, and two words ‘start’ and ‘target’ (both of same length). Find length of the smallest chain from ‘start’ 
-to ‘target’ if it exists, such that adjacent words in the chain only differ by one character and each word in the chain is a 
+Given a dictionary, and two words ‘start’ and ‘target’ (both of same length). Find length of the smallest chain from ‘start’
+to ‘target’ if it exists, such that adjacent words in the chain only differ by one character and each word in the chain is a
 valid word i.e., it exists in the dictionary. It may be assumed that the ‘target’ word exists in dictionary and length of all dictionary words is same.
 
 Example:
@@ -12,7 +12,7 @@ Output: 7
 Explanation: TOON - POON - POIN - POIE - PLIE - PLEE - PLEA
 We strongly recommend you to minimize your browser and try this yourself first.
 
-The idea is to use BFS. We start from the given start word, traverse all words that adjacent (differ by one character) 
+The idea is to use BFS. We start from the given start word, traverse all words that adjacent (differ by one character)
 to it and keep doing so until we find the target word or we have traversed all words.*/
 
 // C++ program to find length of the shortest chain
@@ -25,7 +25,7 @@ class Graph {
     unordered_map<string, unordered_set<string>> G;
     vector<int> dist;
     int N;
-    
+
 public:
     Graph(int N) {
         this->N = N;
@@ -34,7 +34,7 @@ public:
     // check if two strings differ by only 1 character
     bool isAdjacent(string s1, string s2) {
         int cnt = 0;
-        for (int i = 0; i < min(s1, s2); ++i) cnt += (s1[i] != s2[i]);
+        for (int i = 0; i < min(s1.length(), s2.lenght()); ++i) cnt += (s1[i] != s2[i]);
 
         return (cnt == 1);
     }
@@ -50,11 +50,11 @@ public:
         dist[src] = 0;
 
         while (!Q.empty()) {
-            string top = Q.front();
+            string u = Q.front(); Q.pop();
 
-            for (string v: G[top]) {
+            for (string v : G[u]) {
                 if (dist[v] == -1) {
-                    dist[v] = dist[top] + 1;
+                    dist[v] = dist[u] + 1;
                     Q.push(v);
                 }
 
@@ -66,8 +66,8 @@ public:
     }
 
     int solve(vector<string> dict, string src, string dest) {
-        for (int i = 0; i < dict.size()-1; ++i)
-            for (int j = i+1; j < dict.size(); ++j)
+        for (int i = 0; i < dict.size() - 1; ++i)
+            for (int j = i + 1; j < dict.size(); ++j)
                 if (isAdjacent(dict[i], dict[j]))
                     addEdge(dict[i], dict[j]);
 

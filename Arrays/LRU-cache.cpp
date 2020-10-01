@@ -1,61 +1,37 @@
-#include<iostream>
-#include<algorithm>
-#include<list>
-#include<unordered_map>
-using namespace std;
 
 struct Node {
     string key, value;
 };
 
-class LRUCache {
+class LRU {
+    int cache_size;
+    deque<int> list;
+    unordered_map<int> mp;
 
-    list<Node> L;
-    unordered_map<string, list<string>::iterator> hash;
-    int cache_sz;
-
-public:
-    LRUCache(int N) {
-        cache_sz = N;
+    LRU(int N) {
+        this->cache_size = N;
     }
 
-    void set(string key, string value) {
-        // if key already exists, put that node to the front of the list
-        if (hash.count(key)) {
-            auto it = hash[key];
-            deleteFromList(it);
-            pushToFront(Node(key, value));
-            hash[key] = L.begin();
+    void set(int key, value) {
+        // if key is already present
+        if (mp.count(key)) {
+            list.erase(find(list.begin(), list.end(), key));
+            list.push_front(key);
         }
         else {
-            if (L.size() >= cache_sz) {
-                auto it = L.end();
-                hash.erase((*it).key);
-                deleteFromList(it);
+            // if cache is full
+            if (list.size() == cache_size) {
+                mp.erase(list.back());
+                list.pop_back();
             }
-            pushToFront(Node(key, value));
-            hash[key] = L.begin();
+            list.push_front(key);
+            mp[key] = value;
         }
     }
 
-    string get(string key) {
-        if (hash.count(key) == 0) return "";
-
-        auto it = hash[key];
-        deleteFromList(it);
-        pushToFront(Node(key, (*it).value));
-
-        hash[key] = L.begin();
-
-        return (*it).value;
-    }
-
-    void deleteFromList(list<string>::iterator it) {
-        L.erase(it);
-    }
-
-    void pushToFront(Node node) {
-        L.push_front(node);
+    int get(int key) {
+        if (mp.count(key)) return mp[key];
+        else return -1;
     }
 };
 
