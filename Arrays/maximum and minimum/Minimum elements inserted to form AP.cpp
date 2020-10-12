@@ -6,17 +6,17 @@ will be = (a[i+1] - a[i]) / GCD - 1
 
 
 int solve(vector<int> a) {
-	int n = a.size();
-	if (n == 0 or n == 1 or n == 2) return 0;
+    int n = a.size();
+    if (n == 0 or n == 1 or n == 2) return 0;
 
-	vector<int> diff(n - 1);
-	for (int i = 0; i + 1 < n; ++i) diff[i] = a[i + 1] - a[i];
+    vector<int> diff(n - 1);
+    for (int i = 0; i + 1 < n; ++i) diff[i] = a[i + 1] - a[i];
 
-	int g = diff[0];
-	for (int e : diff) g = __gcd(e, g);
+    int g = diff[0];
+    for (int e : diff) g = __gcd(e, g);
 
-	int ans = 0;
-	for (int e : diff) ans += e / g - 1;
+    int ans = 0;
+    if (g > 1) for (int e : diff) ans += e / g - 1;
 
-	return ans;
+    return ans;
 }

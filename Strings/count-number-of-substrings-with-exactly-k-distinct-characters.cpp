@@ -1,8 +1,23 @@
 /*Given a string of lowercase alphabets, count all possible substrings (not necessarily distinct) that has exactly k distinct characters.
-The problem can be solved in O(n*n). Idea is to maintain a hash table while generating substring 
+The problem can be solved in O(n*n). Idea is to maintain a hash table while generating substring
 and checking the number of unique characters using that hash table.
 The implementation below assume that the input string contains only characters from ‘a’ to ‘z’.*/
 
+int solve(string s, int K) {
+	int n = s.length();
+	unordered_map<int, int> mp;
+	int cnt = 0;
+	for (int i = 0; i < n; ++i) {
+		mp.clear();
+		for (int j = i; j < n; ++j) {
+			mp[s[i] - 'a']++;
+			if (mp.size() == K) cnt++;
+		}
+	}
+
+	return cnt;
+}
+/////////////////////////////////////
 int countSubstring(string s) {
 
 	int n = s.length();
@@ -17,11 +32,11 @@ int countSubstring(string s) {
 
 		REP(j, i, n) {
 
-			if(cnt[s[j]-'a'] == 0) unique++;
+			if (cnt[s[j] - 'a'] == 0) unique++;
 
-			cnt[s[j]-'a']++;
+			cnt[s[j] - 'a']++;
 
-			if(unique == k) res++;
+			if (unique == k) res++;
 		}
 	}
 
@@ -29,21 +44,21 @@ int countSubstring(string s) {
 }
 
 /* (Further Optimization):
-The above code resets count array “cnt[]” in every iteration of outer loop. This can be very costly for large alphabet size. 
+The above code resets count array “cnt[]” in every iteration of outer loop. This can be very costly for large alphabet size.
 We can modify the above program such that cnt[] is not reset every time. Following is the way :*/
 
 memset(cnt, 0, sizeof(cnt));
 
 REP(i, 0, n) {
-		
-		unique = 0;
 
-		REP(j, i, n) {
+	unique = 0;
 
-			if(cnt[s[j]-'a'] == i) unique++;
+	REP(j, i, n) {
 
-			cnt[s[j]-'a'] = i + 1;
+		if (cnt[s[j] - 'a'] == i) unique++;
 
-			if(unique == k) res++;
-		}
+		cnt[s[j] - 'a'] = i + 1;
+
+		if (unique == k) res++;
 	}
+}

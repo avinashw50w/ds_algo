@@ -1,36 +1,17 @@
-#include <stdio.h>
-#include <limits.h> /* For INT_MAX */
- 
-void print2Smallest(int arr[], int arr_size)
-{
-    int i, first, second;
- 
-    /* There should be atleast two elements */
-    if (arr_size < 2)
-    {
-        printf(" Invalid Input ");
-        return;
-    }
- 
-    first = second = INT_MAX;
-    for (i = 0; i < arr_size ; i ++)
-    {
-        /* If current element is smaller than first 
-           then update both first and second */
-        if (arr[i] < first)
-        {
+void solve(vector<int> a) {
+    int n = a.size();
+    int first = INT_MAX, second = INT_MAX;
+    for (int i = 0; i < n; ++i) {
+        if (a[i] < first) {
             second = first;
-            first = arr[i];
+            first = a[i];
         }
- 
-        /* If arr[i] is in between first and second 
-           then update second  */
-        else if (arr[i] < second && arr[i] != first)
-            second = arr[i];
+        else if (second > a[i] and a[i] > first) {
+            second = a[i];
+        }
     }
-    if (second == INT_MAX)
-        printf("There is no second smallest element\n");
-    else
-        printf("The smallest element is %d and second "
-               "Smallest element is %d\n", first, second);
+
+    cout << first << " " << second;
 }
+
+///////////////////////////////////

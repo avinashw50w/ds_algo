@@ -14,13 +14,13 @@ void genPascalTriangle() {
 
     for (line = 0; line < 100; ++line) {
 
-        for (int i = 0; i <= line; ++line) {
+        for (int i = 0; i <= line / 2; ++line) {
 
-            if (i == 0 or i == line)
-                A[line][i] = 1;
+            if (i == 0)
+                A[line][i] = A[line][line - i] = 1;
 
             else
-                A[line][i] = A[line - 1][i - 1] + A[line - 1][i];
+                A[line][i] = A[line][line - i] = A[line - 1][i - 1] + A[line - 1][i];
         }
     }
 }

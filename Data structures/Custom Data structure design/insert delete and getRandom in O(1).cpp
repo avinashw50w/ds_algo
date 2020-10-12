@@ -20,6 +20,14 @@ public:
         mp.erase(x);
     }
 
+    void update(int oldVal, int newVal) {
+        if (mp.count(oldVal) == 0) return;
+        int pos = mp[oldVal];
+        a[pos] = newVal;
+        mp.erase(oldVal);
+        mp[newVal] = pos;
+    }
+
     int getRandom() {
         return a[rand() % a.size()];
     }

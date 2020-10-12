@@ -23,6 +23,7 @@ vector<int> solve(vector<int> a) {
     vector<int> b(a.begin(), a.end());
     sort(b.begin(), b.end());
 
+    // update array elements to be in the range [1, N]
     for (int i = 0; i < N; ++i) {
         int d = lower_bound(b.begin(), b.end(), a[i]) - b.begin();
         a[i] = d + 1;
@@ -34,12 +35,8 @@ vector<int> solve(vector<int> a) {
     update(a[N - 1], 1);
 
     for (int i = N - 2; i >= 0; --i) {
-        if (a[i] != 0) {
-            update(a[i], 1);
-
-            res[i] = sum(a[i] - 1) + zeroes;
-        }
-        else zeroes++;
+        update(a[i], 1);
+        res[i] = sum(a[i] - 1);
     }
 
     return res;

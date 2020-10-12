@@ -1,26 +1,28 @@
-
-struct Node {
-    string key, value;
-};
-
+/*algo:
+store a value "value" with key "key"
+we use hashmap to store the key value pairs, and a deque to maintain the order of occurrence of the keys
+set(key, value)
+- if key is already present in the map, then remove the key from the list and push it to the front.
+- if key is not present:
+    - if cache_size is full: remove the last element from the list. Also remove it from the map
+    else: push the element to the front of the list
+*/
 class LRU {
     int cache_size;
     deque<int> list;
-    unordered_map<int> mp;
+    unordered_map<int, int> mp;
 
     LRU(int N) {
         this->cache_size = N;
     }
 
-    void set(int key, value) {
-        // if key is already present
+    void set(int key, int value) {
         if (mp.count(key)) {
             list.erase(find(list.begin(), list.end(), key));
             list.push_front(key);
         }
         else {
-            // if cache is full
-            if (list.size() == cache_size) {
+            if (list.size() == cache_size()) {
                 mp.erase(list.back());
                 list.pop_back();
             }
@@ -30,61 +32,6 @@ class LRU {
     }
 
     int get(int key) {
-        if (mp.count(key)) return mp[key];
-        else return -1;
+        return mp.count(key) ? mp[key] : -1;
     }
 };
-
-
-//////////////////////////////////
-const int cache_sz = 4;
-
-void ReferencePage(list<int>& L, unordered_map<int, int>& hash, int page)
-{
-    if (L.size() < cache_sz)
-    {
-        L.push_front(page);
-        hash[page] = page;
-    }
-    else // list full
-    {
-        // if page already exists in the list
-        if (hash.count(page))
-        {
-            list<int>::iterator itr = std::find(L.begin(), L.end(), page);
-            L.erase(itr);
-            L.push_front(page);
-        }
-        else // page NOT present in list
-        {
-            hash.erase(L.back());
-            L.erase(L.end());
-
-            L.push_front(page);
-            hash[page] = page;
-        }
-    }
-}
-
-// Driver program to test above functions
-int main()
-{
-    list<int> L;
-    unordered_map<int, int> hash;
-
-    // Let us refer pages 1, 2, 3, 1, 4, 5
-    ReferencePage(L, hash, 1);
-    ReferencePage(L, hash, 2);
-    ReferencePage(L, hash, 3);
-    ReferencePage(L, hash, 1);
-    ReferencePage(L, hash, 4);
-    ReferencePage(L, hash, 5);
-
-    // Let us print cache frames after the above referenced pages
-    for (auto& val : L)
-    {
-        cout << val << endl;
-    }
-
-    return 0;
-}

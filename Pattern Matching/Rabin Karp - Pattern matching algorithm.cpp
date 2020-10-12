@@ -22,7 +22,7 @@ void solve(string txt, string pat) {
 	ll hash2 = 0LL;
 
 	for (int i = 0; i < m; ++i) {
-		hash2 = (hash * p + (txt[i] - 'a' + 1));
+		hash2 = (hash2 * p + (txt[i] - 'a' + 1));
 		if (hash2 >= mod) hash2 -= mod;
 	}
 
@@ -30,7 +30,7 @@ void solve(string txt, string pat) {
 		if (hash == hash2)
 			cout << i - m << endl;
 
-		hash2 = (hash2 - pp * (txt[i - m] - 'a' + 1) + p) % mod;
+		hash2 = (hash2 - pp * (txt[i - m] - 'a' + 1) + mod) % mod;
 		hash2 = (hash2 * p + (txt[i] - 'a' + 1)) % mod;
 	}
 }

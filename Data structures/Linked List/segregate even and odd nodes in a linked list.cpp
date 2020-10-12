@@ -1,31 +1,36 @@
 /*input : 1->2->4->3->6->8
  output : 2->4->6->6->1->3  */
 
+ struct Node {
+	 int data;
+	 Node *left, *right;
+ };
+
 void segregate(Node *head) {
 
-	Node *curr = head, *evenHead = NULL, *oddHead = NULL, *lastEven = NULL, *lastOdd = NULL;
+	Node *curr = head, *evenHead = NULL, *oddHead = NULL, *evenEnd = NULL, *oddEnd = NULL;
 
 	while (curr != NULL) {
 		if (curr->data % 2 == 0) {
-			if(evenHead == NULL) 
-				evenHead = lastEven = curr;
+			if(evenHead == NULL)
+				evenHead = evenEnd = curr;
 			else {
-				lastEven->next = curr;
-				lastEven = curr;
+				evenEnd->next = curr;
+				evenEnd = curr;
 			}
 		}
 
 		else {
 			if(oddHead == NULL)
-				oddHead = lastOdd = curr;
+				oddHead = oddEnd = curr;
 			else {
-				lastOdd->next = curr;
-				lastOdd = curr;
+				oddEnd->next = curr;
+				oddEnd = curr;
 			}
 		}
-		
+
 		curr = curr->next;
 	}
 
-	lastEven->next = oddHead;
+	evenEnd->next = oddHead;
 }

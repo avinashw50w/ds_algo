@@ -1,4 +1,4 @@
-/*Given a read only array of n + 1 integers between 1 and n, find one number that repeats in linear time using 
+/*Given a read only array of n + 1 integers between 1 and n, find one number that repeats in linear time using
 less than O(n) space and traversing the stream sequentially O(1) times.
 
 Sample Input:
@@ -23,6 +23,32 @@ Using a hash table to keep frequencies, you’ll find a repeated element.
 
 This is O(sqrt(n)) memory and 2 sequential passes through the stream.*/
 
+int repeatedNumber(const vector<int> &a) {
+    // n = no of unique elements
+    int n = a.size() - 1;
+    int sq = sqrt(n);
+    int blocks = n / sq + 1;
+    vector<int> count(blocks, 0);
+    for (int i = 0; i <= n; ++i) count[(a[i] - 1) / sq]++;
+
+    int selected_block = 0;
+    for (int i = 1; i < blocks; ++i) {
+        if (count[i] > sq) {
+            selected_block = i;
+            break;
+        }
+    }
+
+    unordered_map<int, int> mp;
+    for (int i = 0; i <= n; ++i) {
+        if (selected_block * sq < a[i] and a[i] <= (selected_block + 1) * sq) {
+            mp[a[i]]++;
+            if (mp[a[i]] > 1) return a[i];
+        }
+    }
+    return -1;
+}
+///////////////////////////////////////////////////////
 class Solution {
 public:
     int repeatedNumber(const vector<int> &V) {
@@ -34,9 +60,9 @@ public:
         memset(count, 0, sizeof(count));
 
         for (int i = 0; i < V.size(); i++) {
-        count[(V[i] - 1) / blocks]++;
+            count[(V[i] - 1) / blocks]++;
         }
-    
+
         int repeatingRange = -1;
         int numRanges = ((valueRange - 1) / blocks) + 1;
         for (int i = 0; i < numRanges && repeatingRange == -1; i++) {

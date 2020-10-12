@@ -23,18 +23,18 @@ case a[Mid] in
 
 void sort012(int a[], int n) {
 	int l = 0;
-	int mid = 0;
-	int h = n-1;
+	int i = 0;
+	int h = n - 1;
 
-	while(mid <= h) {
-		switch (a[mid]) {
-			case 0: swap(a[mid++], a[l++]);
+	while (i <= h) {
+		switch (a[i]) {
+		case 0: swap(a[i++], a[l++]);
 			break;
 
-			case 1: mid++;
+		case 1: i++;
 			break;
 
-			case 2: swap(a[mid], a[h--]);
+		case 2: swap(a[i], a[h--]);
 			break;
 		}
 	}

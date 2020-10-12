@@ -23,9 +23,9 @@ int Count(int n, int r, int g, int b)
     int remain = n - (r + g + b);
     int sum = 0;
 
-    for (int i = 0 ; i <= remain ; i++) {
-        for (int j = 0 ; j <= remain - i ; j++) {
-            int k = remain - (i + j);
+    for (int i = 0 ; i <= remain ; i++) { // r
+        for (int j = 0 ; j <= remain - i ; j++) { // g
+            int k = remain - (i + j); // b
             sum = sum + fact[n] / (fact[i + r] * fact[j + g] * fact[b + k]);
         }
     }

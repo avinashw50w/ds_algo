@@ -1,13 +1,13 @@
 /*Check if a binary tree is subtree of another binary tree | Set 1
-Given two binary trees, check if the first tree is subtree of the second one. A subtree of a tree T is a tree S 
-consisting of a node in T and all of its descendants in T. The subtree corresponding to the root node is the entire tree; 
+Given two binary trees, check if the first tree is subtree of the second one. A subtree of a tree T is a tree S
+consisting of a node in T and all of its descendants in T. The subtree corresponding to the root node is the entire tree;
 the subtree corresponding to any other node is called a proper subtree.
 
 For example, in the following case, tree S is a subtree of tree T.
 
         Tree 2
-          10  
-        /    \ 
+          10
+        /    \
       4       6
        \
         30
@@ -21,50 +21,50 @@ For example, in the following case, tree S is a subtree of tree T.
       4       6      3
        \
         30
-Solution: Traverse the tree T in preorder fashion. For every visited node in the traversal, 
+Solution: Traverse the tree T in preorder fashion. For every visited node in the traversal,
 see if the subtree rooted with this node is identical to S.*/
 // time: O(n^2)
 bool areIdentical(struct node* root1, struct node* root2)
 {
-    /* base cases */
-    if (root1 == NULL && root2 == NULL)
-        return true;
- 
-    if (root1 == NULL || root2 == NULL)
-        return false;
- 
-    /* Check if the data of both roots is same and data of left and right
-       subtrees are also same */
-    return (root1->data == root2->data   &&
-            areIdentical(root1->left, root2->left) &&
-            areIdentical(root1->right, root2->right) );
+  /* base cases */
+  if (root1 == NULL && root2 == NULL)
+    return true;
+
+  if (root1 == NULL || root2 == NULL)
+    return false;
+
+  /* Check if the data of both roots is same and data of left and right
+     subtrees are also same */
+  return (root1->data == root2->data   &&
+          areIdentical(root1->left, root2->left) &&
+          areIdentical(root1->right, root2->right) );
 }
- 
- 
+
+
 /* This function returns true if S is a subtree of T, otherwise false */
 bool isSubtree(struct node *T, struct node *S)
 {
-    /* base cases */
-    if (S == NULL)
-        return true;
- 
-    if (T == NULL)
-        return false;
- 
-    /* Check the tree with root as current node */
-    if (areIdentical(T, S))
-        return true;
- 
-    /* If the tree with root as current node doesn't match then
-       try left and right subtrees one by one */
-    return isSubtree(T->left, S) ||
-           isSubtree(T->right, S);
+  /* base cases */
+  if (S == NULL)
+    return true;
+
+  if (T == NULL)
+    return false;
+
+  /* Check the tree with root as current node */
+  if (areIdentical(T, S))
+    return true;
+
+  /* If the tree with root as current node doesn't match then
+     try left and right subtrees one by one */
+  return isSubtree(T->left, S) ||
+         isSubtree(T->right, S);
 }
 
 //////////////////////////////////////////////////////////////////////////////
 // Time: O(n)
-/*We have discussed a O(n2) solution for this problem. In this post a O(n) solution is discussed. 
-The idea is based on the fact that inorder and preorder/postorder uniquely identify a binary tree. 
+/*We have discussed a O(n2) solution for this problem. In this post a O(n) solution is discussed.
+The idea is based on the fact that inorder and preorder/postorder uniquely identify a binary tree.
 Tree S is a subtree of T if both inorder and preorder traversals of S arew substrings of inorder and preorder traversals of T respectively.
 
 Following are detailed steps.
@@ -93,8 +93,8 @@ inT[] and preS[] is a subarray of preT[]. */
 
 bool isSubtree(Node *T, Node *S) {
 
-  if(S == NULL) return true;
-  if(T == NULL) return false;
+  if (S == NULL) return true;
+  if (T == NULL) return false;
 
   char inT[100], inS[100];
 
@@ -107,7 +107,7 @@ bool isSubtree(Node *T, Node *S) {
   inS[j] = '\0';
 
   // Note that you have to use KMP instead of strstr to make the running time O(n)
-  if(strstr(inT, inS) == NULL) return false;
+  if (strstr(inT, inS) == NULL) return false;
 
   i = j = 0;
   char preT[100], preS[100];
@@ -118,20 +118,20 @@ bool isSubtree(Node *T, Node *S) {
   preT[i] = '\0';
   preS[j] = '\0';
 
-  if(strstr(preT, preS) == NULL) return false;
+  if (strstr(preT, preS) == NULL) return false;
 
   return true;
 }
 
 void inorder(Node *root, char a[], int &i) {
-  if(root == NULL) return;
+  if (root == NULL) return;
   inorder(root->left, a, i);
   a[i++] = root->data;
   inorder(root->right, a, i);
 }
 
 void preorder(Node *root, char a[], int &i) {
-  if(root == NULL) return;
+  if (root == NULL) return;
   a[i++] = root->data;
   preorder(root->left, a, i);
   preorder(root->right, a, i);
@@ -139,7 +139,11 @@ void preorder(Node *root, char a[], int &i) {
 
 ///////////////////////////////////////////////////////////////////
 // using serialization
-
+/*
+            A        after serialization
+          /   \     ====================>  AB$$C$$
+         B     c
+ */
 string serialize(Node *root) {
   string s = "";
   if (!root) {
@@ -158,10 +162,10 @@ string check(Node *root, string str) {
   }
 
   string left = check(root->left, str);
-  if (left == s) return s;
+  if (left == "") return "";
 
   string right = check(root->right, str);
-  if (right == s) return s;
+  if (right == "") return "";
 
   s += to_string(root->data) + left + right;
 
@@ -170,17 +174,17 @@ string check(Node *root, string str) {
   return s;
 }
 
-bool isSubtree(struct node *T, struct node *S) 
-{ 
-    /* base cases */
-    if (S == NULL) 
-        return true; 
-  
-    if (T == NULL) 
-        return false; 
-  
-    string subtree = serialize(S);
-    string chk = check(T, subtree) ;
-    if (chk == "") return true;
+bool isSubtree(struct node *T, struct node *S)
+{
+  /* base cases */
+  if (S == NULL)
+    return true;
+
+  if (T == NULL)
     return false;
-} 
+
+  string subtree = serialize(S);
+  string chk = check(T, subtree);
+  if (chk == "") return true;
+  return false;
+}

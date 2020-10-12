@@ -4,16 +4,16 @@
 #include <string.h>
 using namespace std;
 
-void permute(string s, int l, int r) {
-  if (l == r) {
-    cout << s << endl;
+// output: 123 132 213 321
+void permute(string s, int pos, int N) {
+  if (pos == N) {
+    cout << s << " ";
     return;
   }
-
-  for (int i = l; i <= r; i++) {
-    swap(a[l], a[i]);
-    permute(a, l + 1, r);
-    swap(a[l], a[i]); //backtrack
+  for (int i = pos; i < N; ++i) {
+    swap(s[pos], s[i]);
+    permute(s, i + 1, N);
+    swap(s[pos], s[i]);
   }
 }
 

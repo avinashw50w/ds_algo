@@ -27,11 +27,11 @@ After second step, array becomes {1, 0, 3, 2} */
 
 void rearrange(int arr[], int n)
 {
-    // First step: Increase all values by (arr[arr[i]]%n)*n
-    for (int i=0; i < n; i++)
-        arr[i] = (arr[arr[i]]%n)*n + arr[i];
+    // First step: Increase all values by (arr[arr[i] % n])*n
+    for (int i = 0; i < n; i++)
+        arr[i] = (arr[arr[i] % n] % n) * n + arr[i];
 
     // Second Step: Divide all values by n
-    for (int i=0; i<n; i++)
+    for (int i = 0; i < n; i++)
         arr[i] /= n;
 }

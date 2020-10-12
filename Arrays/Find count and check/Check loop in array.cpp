@@ -33,29 +33,25 @@ vector<int> G[maxn];
 int vis[maxn];
 
 bool isCyclic(int u) {
-	if (vis[u] == 0) {
-		vis[u] = 1;
-		for (auto v: G[u]) {
-			if ( (vis[v] == 0 and isCyclic(v)) or vis[v] == 1)
-				return true;
-		}
+	vis[u] = 1;
+	for (int v : G[u]) {
+		if ((vis[v] == 0 and isCyclic(v)) or vis[v] == 1) return true;
 	}
-
-	vis[u] = 2;
+	vis[v] = 2;
 	return false;
 }
 
 bool solve(int a[], int n) {
 
 	for (int i = 0; i < n; ++i) {
-		if (i != (i + a[i] + n)%n)
-			G[i].push_back((i + a[i] + n)%n);
+		if (a[i] > 0 and i != (i + a[i]) % n)
+			G[i].push_back((i + a[i]) % n);
+		else if (a[i] < 0 and i != (i + a[i] + n) % n)
+			G[i].push_back((i + a[i] + n) % n);
 	}
 
 	for (int i = 0; i < n; ++i) {
-		if (vis[i] == 0) {
-			if (isCyclic(i)) return true;
-		}
+		if (vis[i] == 0 and isCyclic(i)) return true;
 	}
 
 	return false;

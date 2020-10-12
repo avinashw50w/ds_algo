@@ -1,12 +1,10 @@
-#include <iostream>
-#include <cstring>
-using namespace std;
-
+// using bitmasking
+// output for ABC: A B AB C AC BC ABC
 void solve(string s) {
     int n = s.size();
-    int mask = (1 << n) - 1;
+    int mask = 1 << n;
 
-    for (int i = 0; i <= mask; ++i) {
+    for (int i = 0; i < mask; ++i) {
         string res = "";
         for (int j = 0; j < n; ++j) {
             if (i & (1 << j)) res += s[j];
@@ -14,27 +12,27 @@ void solve(string s) {
         cout << res << endl;
     }
 }
+//////////////////////////////////
+// using backtracking
+// output for ABC: A AB ABC AC B BC C
+void btrk(string s, string str, int pos) {
+    cout << str << " ";
+    for (int i = pos; i < s.size(); ++i) {
+        str += s[i];
+        btrk(s, str, i + 1);
+        str.pop_back();
+    }
+}
+
+void solve(string s) {
+    btrk(s, "", 0);
+}
+
 int main() {
-    string s = "abc";
+    string s = "ABC";
     solve(s);
 }
 
-////////////////////////////////////
-
-void solve(string s, string res, int idx) {
-    if (idx == s.size()) return;
-
-    res += s[idx];
-    cout << res << endl;
-    solve(s, res, idx + 1);
-    res.pop_back();
-    solve(s, res, idx + 1);
-}
-
-int main() {
-    string s = "abc";
-    solve(s, "", 0);
-}
 
 ///////////////////////////////////////
 

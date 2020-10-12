@@ -7,9 +7,6 @@ create a suffix_min[] array where suffix_min[i] stores the minimum element from 
 vector<int> solve(vector<int> a) {
 	int n = a.size();
 	vector<int> res(n);
-	vector<int> suff(n);
-	suff[n - 1] = a[n - 1];
-	for (int i = n - 2; i >= 0; --i) suff[i] = min(a[i], suff[i + 1]);
 
 	for (int i = 0; i < n; ++i) {
 		int l = i + 1, r = n - 1, mid, ans = -1;

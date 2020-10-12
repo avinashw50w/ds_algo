@@ -50,11 +50,11 @@ int countSub(int arr[], int n)
     int count[10] = {0};
 
     // scan each digit in arr[]
-    for (int i=0; i<n; i++)
+    for (int i = 0; i < n; i++)
     {
         // count all possible sub-sequences by
         // the digits less than arr[i] digit
-        for (int j=arr[i]-1; j>=0; j--)
+        for (int j = arr[i] - 1; j >= 0; j--)
             count[arr[i]] += count[j];
 
         // store sum of all sub-sequences plus
@@ -65,7 +65,7 @@ int countSub(int arr[], int n)
     // now sum up the all sequences possible in
     // count[] array
     int result = 0;
-    for (int i=0; i<10; i++)
+    for (int i = 0; i < 10; i++)
         result += count[i];
 
     return result;
@@ -92,15 +92,17 @@ int query(int idx) {
 
 int main() {
 
-    vector<int> arr = {1,2,3,4};
+    vector<int> arr = {1, 2, 3, 4};
     N = *max_element(arr.begin(), arr.end()) + 1;
+
     for (int i = 0; i < arr.size(); ++i) {
         int x = 0;
         if (arr[i] - 1) {
-            x = query(arr[i]-1);
+            x = query(arr[i] - 1);
         }
         update(arr[i], 1 + x);
     }
+
     int ans = query(N);
     cout << ans << endl;
 }

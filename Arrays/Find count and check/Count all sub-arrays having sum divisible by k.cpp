@@ -26,6 +26,21 @@ Which means we have to count the no of prefix sums sum[L], sum[R] whose residue 
 where sum[i] = A[0] + A[1] + ... + A[i]
 */
 
+int solve(vector<int> a, int K) {
+    int n = a.size();
+    vector<int> mp(K, 0);
+    int sum = 0, ans = 0;
+    for (int i = 0; i < n; ++i) {
+        sum += a[i];
+        int x = (sum + K) % K;
+        ans += x == K;
+        ans += mp[x];
+        mp[x]++;
+    }
+    return ans;
+}
+/////////////////////////////////////////////
+// another way
 // function to find all sub-arrays divisible by k
 int subCount(int arr[], int n, int k)
 {
