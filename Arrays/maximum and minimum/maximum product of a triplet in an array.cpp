@@ -2,12 +2,12 @@
 
 Scan the array and compute Maximum, second maximum and third maximum element present in the array.
 Scan the array and compute Minimum and second minimum element present in the array.
-Return the maximum of product of Maximum, second maximum and third maximum and product of Minimum, 
+Return the maximum of product of Maximum, second maximum and third maximum and product of Minimum,
 second minimum and Maximum element.*/
 
 int maxProduct(int A[], int N) {
 
-	if(N < 3) return -1;
+	if (N < 3) return -1;
 
 	int maxA, maxB, maxC;
 	int minA, minB;
@@ -15,30 +15,30 @@ int maxProduct(int A[], int N) {
 	maxA = maxB = maxC = INT_MIN;
 	minA = minB = INT_MAX;
 
-	for(int i = 0; i < N; ++i)
+	for (int i = 0; i < N; ++i)
 	{
-		if(A[i] > maxA) {
+		if (A[i] > maxA) {
 			maxC = maxB;
 			maxB = maxA;
 			maxA = a[i];
 		}
-		else if(A[i] > maxB) {
+		else if (maxB < A[i] and A[i] < maxA) {
 			maxC = maxB;
 			maxB = A[i];
 		}
-		else if(A[i] > maxC) {
+		else if (maxC < A[i] and A[i] < maxB) {
 			maxC = A[i];
 		}
 
-		if(A[i] < minA) {
+		if (A[i] < minA) {
 			minB = minA;
 			minA = A[i];
 		}
-		else if(A[i] < minB) {
+		else if (minA < A[i] and A[i] < minB) {
 			minB = A[i];
 		}
 	}
 
-	return max(maxA*maxB*maxC, maxA*minA*minB);
+	return max(maxA * maxB * maxC, maxA * minA * minB);
 }
 

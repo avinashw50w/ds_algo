@@ -25,9 +25,11 @@ This is O(sqrt(n)) memory and 2 sequential passes through the stream.*/
 
 int repeatedNumber(const vector<int> &a) {
     // n = no of unique elements
+    // 1 2 3 4 3 5 , n = 5, sq = 2, blocks = 3
     int n = a.size() - 1;
     int sq = sqrt(n);
     int blocks = n / sq + 1;
+    // 1 2 3 4 5 => (1,2) goes in the 1st block, (3,4) in the 2nd block and so on
     vector<int> count(blocks, 0);
     for (int i = 0; i <= n; ++i) count[(a[i] - 1) / sq]++;
 

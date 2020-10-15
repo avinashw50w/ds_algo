@@ -1,10 +1,9 @@
 // C program to print all permutations with duplicates allowed
-#include <stdio.h>
-#include <iostream>
-#include <string.h>
-using namespace std;
 
 // output: 123 132 213 321
+// NOTE: all the permutations will not be distinct if the input contains duplicate characters
+// for getting only distinct permutations, use the next_permutation func
+// or implement the function if asked by the interviewer
 void permute(string s, int pos, int N) {
   if (pos == N) {
     cout << s << " ";

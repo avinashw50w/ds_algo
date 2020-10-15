@@ -8,26 +8,29 @@ Could this be done with a complexity better than O(n^3) */
 /* keep an index i fixed and expand on both sides calculating the left and right sum respectively and check whether the left
 and right sum are the same, if same then update the maxlen*/
 
-void solve(vector<int> a, int K) {
+vector<int> solve(vector<int> a, int K) {
     int n = a.size();
-    if (K > n) return vector<int>();
-    int st, end;
+    vector<int> res;
+    if (K > n) return res;
+    int sum = 0, st;
     for (int i = 0; i < K; ++i) sum += a[i];
 
-    for (int i = K; i < n; ++i) {
+    for (int i = 0; i <= n - K; ++i) {
         int l = 0, r = sum;
-        for (int j = K; j > 0; --j) {
-            l += a[i-j];
-            r -= a[i-j];
+        for (int j = 0; j < K; ++j) {
+            l += a[i + j];
+            r -= a[i + j];
             if (l == r) {
-                st = i-j;
-                end = i-1;
+                st = i;
             }
         }
 
-        sum += a[i];
-        sum -= a[i-K];
+        sum -= a[i];
+        sum += a[i + K];
     }
 
-    for (int i = st; i <= end; ++i) cout << a[i] << " ";
+    for (int i = 0; i < K; ++i) res.push_back(a[i + st]);
+
+    return res;
 }
+

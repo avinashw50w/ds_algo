@@ -1,9 +1,22 @@
-/*Print all possible combinations of a string. 
+/*Print all possible combinations of a string.
 eg. AABC: '', A, AA, AAB, AABC, AAC, AA, AAB, AABC, AAC, AB, ABC, AC, A, AA, AAB, AABC, AAC, AB, ABC, AC, B, BC, C */
 
-#include <bits/stdc++.h>
-using namespace std;
+// we have to print all the subsets so use bitmask
 
+vector<string> solve(string s) {
+	int n = s.length();
+	vector<string> res;
+	for (int i = 0; i < 1 << n; ++i) {
+		string t = "";
+		for (int j = 0; j < n; ++j) {
+			if (i >> j & 1) t += s[j];
+		}
+		res.push_back(t);
+	}
+	return res;
+}
+
+////////////////////////////////////////////////////////////////
 unordered_map<char, int> f;
 
 void print(char s[], int n) {
@@ -12,7 +25,7 @@ void print(char s[], int n) {
 }
 
 void printCombinations(string s, char out[], int pos, int len) {
-	
+
 	print(out, len);
 
 	for (int i = pos; i < s.size(); ++i) {
@@ -22,7 +35,7 @@ void printCombinations(string s, char out[], int pos, int len) {
 
 		f[s[i]]--;
 
-		printCombinations(s, out, i, len+1);
+		printCombinations(s, out, i, len + 1);
 
 		f[s[i]]++;
 	}

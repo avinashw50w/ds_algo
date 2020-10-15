@@ -35,6 +35,33 @@ Time complexity of this solution is O(n2).
 An Efficient Solution is to prre-compute highest bar on left and right of every bar in O(n) time. Then use these pre-computed
 values to find the amount of water in every array element. Below is C++ implementation of this solution.*/
 
+// in place algo
+// idea: water trapped at index i = max(left_max, right_max) - a[i]
+// so instead of calculating the water trapped at index i,
+//  calcuate the water trapped at left_max and keep updating the left_max
+
+int solve(vector<int> a) {
+    int n = a.size();
+    int left_max = -1, right_max = -1;
+    int l = 0, r = n - 1, ans = 0;
+    while (l <= r) {
+        // note that left_max will always be less than a[r] and greater than a[l]
+        // coz we update left_max to max(left_max, a[l]) when a[l] < a[r]
+        if (a[l] < a[r]) {
+            if (a[l] > left_max) left_max = a[l];
+            else ans += left_max - a[l]; // water trapped at l
+        }
+        else {
+            if (a[r] > right_max) right_max = a[r];
+            else ans += right_max - a[r];
+        }
+    }
+
+    return ans;
+}
+
+///////////////////////////////////////////
+
 int findWater(int arr[], int n)
 {
     // left[i] contains height of tallest bar to the
@@ -66,27 +93,3 @@ int findWater(int arr[], int n)
 }
 
 ////////////////////////////////////////////////////////////////////////
-// in place algo
-// idea: water trapped at index i = max(left_max, right_max) - a[i]
-// so instead of calculating the water trapped at index i,
-//  calcuate the water trapped at left_max and keep updating the left_max
-
-int solve(vector<int> a) {
-    int n = a.size();
-    int left_max = -1, right_max = -1;
-    int l = 0, r = n - 1, ans = 0;
-    while (l <= r) {
-        // note that left_max will always be less than a[r]
-        // coz we update left_max to max(left_max, a[l]) when a[l] < a[r]
-        if (a[l] < a[r]) {
-            if (a[l] > left_max) left_max = a[l];
-            else ans += left_max - a[l]; // water trapped at l
-        }
-        else {
-            if (a[r] > right_max) right_max = a[r];
-            else ans += right_max - a[r];
-        }
-    }
-
-    return ans;
-}

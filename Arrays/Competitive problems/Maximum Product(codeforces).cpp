@@ -50,8 +50,10 @@ void solve() {
 	 */
 	int ans = INT_MIN;
 	for (int j = 0, p = 1; j < 5; ++j) {
-		for (int i = 0; i < 5 - j; ++i) p *= a[i];
-		for (int i = 0; i < j; ++i) p *= a[n - 1 - i];
+		// take j elements from the beginning
+		for (int i = 0; i < j; ++i) p *= a[i];
+		// take 5 - j elements from the end
+		for (int i = 0; i < 5 - j; ++i) p *= a[n - 1 - i];
 		ans = max(ans, p);
 	}
 

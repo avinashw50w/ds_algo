@@ -6,13 +6,14 @@
 */
 
 int solve(vector<int> a) {
-	int n = a.size();
-	unordered_map<int, int> mp;
-	int pre = 0, ans = 0;
-	for (int x : a) {
-		pre += x - 1;
-		ans += mp[pre];
-		mp[pre]++;
-	}
-	return ans;
+    int n = a.size();
+    unordered_map<int, int> mp;
+    int sum = 0, ans = 0;
+    for (int x : a) {
+        sum += x - 1;
+        ans += sum == 0;
+        ans += mp[sum];
+        mp[sum]++;
+    }
+    return ans;
 }

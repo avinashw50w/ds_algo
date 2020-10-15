@@ -4,6 +4,7 @@
 // output   : 2 4 3 2 0 1 0
 
 // time complexity: O(NlogN)
+// an interesting problem : new year chaos (in competitive problems folder in this directory)
 const int maxn = 1e5 + 5;
 int bit[maxn];
 

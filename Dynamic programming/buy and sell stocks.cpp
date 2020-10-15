@@ -95,6 +95,7 @@ int solve(int i, int own, int t, int N) {
 	}
 }
 
+// solve(0, 0, t, N)
 ////////////////////////////////////////////////////////////////
 // Another variation is that one can do any no of transation to obtain maximum profit
 // for that just keep adding the difference between the consecutive elements which are
@@ -137,17 +138,39 @@ int solve(vector<int> prices) {
 	int max_price = prices[n - 1];
 	// profit[i] = max profit after one transation for subarray [i+1...n-1]
 	for (int i = n - 2; i >= 0; --i) {
-		max_price = max(max_price, prices[i]);
 		profit[i] = max(profit[i + 1], max_price - prices[i]);
+		max_price = max(max_price, prices[i]);
 	}
 
 	int min_price = prices[0];
 	for (int i = 1; i < n; ++i) {
-		min_price = min(min_price, prices[i]);
 		profit[i] = max(profit[i - 1], prices[i] - min_price + profit[i]);
+		min_price = min(min_price, prices[i]);
 	}
 
 	return profit[n - 1];
+}
+
+// optimized one for atmost 2 transactions
+int solve(vector<int> prices) {
+	int n = prices.size();
+	int buy1 = INT_MAX, buy2 = INT_MAX;
+	int profit1 = 0, profit2 = 0;
+
+	for (int i = 0; i < n; ++i) {
+		// choose the minimum price to buy
+		buy1 = min(buy1, prices[i]);
+
+		// profit is maximum after we sell when the stock price is maximum
+		profit1 = max(profit1, prices[i] - buy1);
+
+		// use the profit made in previous transaction
+		// to lower the buying cost of the current stock
+		buy2 = min(buy2, profit[i] - profit1);
+
+		// profit made after selling the second stock
+		profit2 = max(profit2, prices[i] - buy2);
+	}
 }
 
 //////////////////////////////////////////////////

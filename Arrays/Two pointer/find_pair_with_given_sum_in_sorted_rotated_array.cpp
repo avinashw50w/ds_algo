@@ -5,19 +5,19 @@ There is a pair (6, 10) with sum 16
 */
 
 bool check(int a[], int n, int x) {
-
+    // find the index of the smallest no
     int i = 0;
     for (i = 0; i < n ++i) {
-        if (a[i] > a[i+1]) break;
+        if (a[i] > a[i + 1]) break;
     }
-
-    int l = (i+1)%n;
+    // set l to the index of the smallest no and r to the highest no
+    int l = (i + 1) % n;
     int r = i;
 
     while (l != r) {
         if (a[l] + a[r] == x) return true;
-        else if (a[l] + a[r] < x) l = (l+1)%n;
-        else r = (r-1+n)%n;
+        else if (a[l] + a[r] < x) l = (l + 1) % n;
+        else r = (r - 1 + n) % n;
     }
 
     return false;
@@ -28,10 +28,10 @@ bool check(int a[], int n, int x) {
 int count(int a[], int n, int x) {
     int i = 0;
     for (i = 0; i < n ++i) {
-        if (a[i] > a[i+1]) break;
+        if (a[i] > a[i + 1]) break;
     }
 
-    int l = (i+1)%n;
+    int l = (i + 1) % n;
     int r = i;
 
     int cnt = 0;
@@ -40,13 +40,13 @@ int count(int a[], int n, int x) {
         if (a[l] + a[r] == x) {
             cnt++;
 
-            if (l == (r-1+n)%n) return cnt;
+            if (l == (r - 1 + n) % n) return cnt;
 
-            l = (l+1)%n;
-            r = (r-1+n)%n;
+            l = (l + 1) % n;
+            r = (r - 1 + n) % n;
         }
-        else if (a[l] + a[r] < x) l = (l+1)%n;
-        else r = (r-1+n)%n;
+        else if (a[l] + a[r] < x) l = (l + 1) % n;
+        else r = (r - 1 + n) % n;
     }
 
     return cnt;
