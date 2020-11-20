@@ -24,10 +24,17 @@ int maxLen(int A[], int n)
 }
 
 
+// another variation: maximum subarray length with sum K
+// just a little modification in the above code
+if (m.count(sum - K))
+  max_len = max(max_len, i - m[sum]);
+else m[sum] = i;
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 // another variation of the problem :
-/*Given an array of 0's and 1's your task is to complete the function maxLen which returns  size of  the
-largest subarray with equal number of 0's and 1's .The function maxLen takes 2 arguments .
+/*Given an array of 0's and 1's your task is to complete the function maxLen which returns
+  size of the largest subarray with equal number of 0's and 1's .
+The function maxLen takes 2 arguments .
 The first argument is the array A[] and second argument is the size 'N' of the array A[] .
 
 solution: keep adding the prefix sum, in place of 0's add -1. when a sum of 0 appears, then update the max_len.

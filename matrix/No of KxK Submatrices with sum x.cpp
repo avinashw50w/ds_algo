@@ -11,8 +11,8 @@ int solve(vector<vector<int>> mat, int K, int X) {
 			dp[i + 1][j + 1] = mat[i][j] + dp[i + 1][j] + dp[i][j + 1] - dp[i][j];
 
 	int ans = 0;
-	for (int i = 0; i + K < n; ++i) {
-		for (int j = 0; j + K < m; ++j) {
+	for (int i = 1; i + K <= n; ++i) {
+		for (int j = 1; j + K <= m; ++j) {
 			int sum = dp[i + K][j + K] - dp[i + K][j] - dp[i][j + K] + dp[i][j];
 			ans += sum == X;
 		}

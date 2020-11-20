@@ -36,10 +36,9 @@ An Efficient Solution is to prre-compute highest bar on left and right of every 
 values to find the amount of water in every array element. Below is C++ implementation of this solution.*/
 
 // in place algo
-// idea: water trapped at index i = max(left_max, right_max) - a[i]
-// so instead of calculating the water trapped at index i,
-//  calcuate the water trapped at left_max and keep updating the left_max
-
+// idea: water trapped at index i = min(left_max, right_max) - a[i]
+// so suppose if left_max < right_max, then ans = left_max - a[i]
+// so we need to make sure that left_max < right_max and left_max >= a[i]
 int solve(vector<int> a) {
     int n = a.size();
     int left_max = -1, right_max = -1;
@@ -48,12 +47,14 @@ int solve(vector<int> a) {
         // note that left_max will always be less than a[r] and greater than a[l]
         // coz we update left_max to max(left_max, a[l]) when a[l] < a[r]
         if (a[l] < a[r]) {
-            if (a[l] > left_max) left_max = a[l];
-            else ans += left_max - a[l]; // water trapped at l
+            left_max = max(left_max, a[l]);
+            ans += left_max - a[l]; // water trapped at l
+            l++;
         }
         else {
-            if (a[r] > right_max) right_max = a[r];
-            else ans += right_max - a[r];
+            right_max = max(right_max, a[r]);
+            ans += right_max - a[r];
+            r--;
         }
     }
 

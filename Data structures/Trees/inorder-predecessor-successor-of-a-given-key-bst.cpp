@@ -5,10 +5,10 @@ output: predecessor node, successor node
       then return
 2. if key is found then
     a. If its left subtree is not null
-        Then predecessor will be the right most 
+        Then predecessor will be the right most
         child of left subtree or left child itself.
     b. If its right subtree is not null
-        The successor will be the left most child 
+        The successor will be the left most child
         of right subtree or right child itself.
     return
 3. If key is smaller then root node
@@ -18,35 +18,35 @@ output: predecessor node, successor node
         set the predecessor as root
         search recursively into right subtree
 Following is C++ implementation of the above algorithm:*/
- 
+
 // BST Node
 struct Node
 {
     int key;
     struct Node *left, *right;
 };
- 
+
 // This function finds predecessor and successor of key in BST.
 // It sets pre and suc as predecessor and successor respectively
 void findPreSuc(Node* root, Node*& pre, Node*& suc, int key)
 {
     // Base case
     if (root == NULL)  return ;
- 
+
     // If key is present at root
     if (root->key == key)
     {
         // the maximum value in left subtree is predecessor
-        if (root->left != NULL)
+        if (root->left)
         {
             Node* tmp = root->left;
             while (tmp->right)
                 tmp = tmp->right;
             pre = tmp ;
         }
- 
+
         // the minimum value in right subtree is successor
-        if (root->right != NULL)
+        if (root->right)
         {
             Node* tmp = root->right ;
             while (tmp->left)
@@ -55,7 +55,7 @@ void findPreSuc(Node* root, Node*& pre, Node*& suc, int key)
         }
         return ;
     }
- 
+
     // If key is smaller than root's key, go to left subtree
     if (key < root->key)
     {

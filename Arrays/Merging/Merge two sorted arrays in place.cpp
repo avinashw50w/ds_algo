@@ -18,7 +18,7 @@ void merge(vector<int> &a, vector<int> &b) {
 		int y = b[j] % M;
 		if (x <= y) {
 			if (k < n) a[k] += x * M;
-			else b[k - n] = x * M;
+			else b[k - n] += x * M;
 			i++;
 			k++;
 		}

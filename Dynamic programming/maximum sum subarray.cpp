@@ -29,12 +29,12 @@ cout << maxi;
 
 /////////////////////////////////////////////////////////////
 // a better one that handles handles the case when all numbers in array are negative. //
-int maxSubArraySum(int a[], int size)
+int maxSubArraySum(vector<int> a)
 {
-	int max_sum = a[0];
-	int curr_max = a[0];
+	int max_sum = INT_MIN;
+	int curr_max = INT_MIN;
 
-	for (int i = 1; i < size; i++)
+	for (int i = 0; i < a.size(); i++)
 	{
 		curr_max = max(a[i], curr_max + a[i]);
 		max_sum = max(max_sum, curr_max);

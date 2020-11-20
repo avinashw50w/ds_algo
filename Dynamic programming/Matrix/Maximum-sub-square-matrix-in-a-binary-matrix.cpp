@@ -1,4 +1,4 @@
-/* Given a binary matrix, find the largest square sub-matrix of 1's . */
+/* Given a binary matrix, find the largest square sub-matrix of all 1's . */
 
 // dp[i][j] : largest square sub-matrix with (i, j) as the bottom right corner
 // dp[i][j] = 1 + min(dp[i-1][j], d[i][j-1], dp[i-1][j-1]);

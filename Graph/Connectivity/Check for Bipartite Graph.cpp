@@ -21,45 +21,44 @@ int N;
 vi Color;
 vi *G;
 
+// using dfs
+bool IsBipartite(int u) {
+	color[u] = 1;
+	for (int v : G[u]) {
+		if (color[v] == -1) {
+			color[v] = !color[u];
+			return isBipartite(v);
+		}
+		else if (color[v] == color[u]) return false;
+	}
+
+	return true;
+}
+
 // using bfs
 bool IsBipartite(int s) {
-	Color.assign(N,-1);
+	Color.assign(N, -1);
 	queue<int> Q;
 	Color[s] = 1;
 	Q.push(s);
-	while(!Q.empty()) {
+	while (!Q.empty()) {
 		int u = Q.front();
 		Q.pop();
 
-		for(auto i : G[u]) {
-			if(Color[i] == -1){
+		for (auto i : G[u]) {
+			if (Color[i] == -1) {
 				Color[i] = !Color[u];
 				Q.push(i);
 			}
-			else if(Color[i] == Color[u])
+			else if (Color[i] == Color[u])
 				return false;
 		}
 	}
 	return true;
 }
 
-
-// using dfs
-bool IsBipartite(int u) {
-	color[u] = 1;
-	for (int v: G[u]) {
-		if (color[v] == -1) {
-			color[v] = !color[u];
-			return dfs(v);
-		}
-		else if (color[v] == color[u]) return false
-	}
-
-	return true;
-}
-
 int main() {
 	cin >> N;
-	G = new vi[N+1];
+	G = new vi[N + 1];
 
 }

@@ -5,87 +5,45 @@ Note: Closest here means abs(sum-k) should be minimal.
 sum(A[0..i-1]) - sum(A[0..j]) ~ K
 */
 
-int closestSubarraySumToK(int a[], int n, int k)
-{
-    set<int> s;
-    int presum = a[0];
-    s.insert(a[0]);
-    int mini = abs(a[0] - k);
-    int sum = presum;
+int solve(vector<int> a, int K) {
+    int n = a.size();
+    set<int> st;
+    int curr_sum = 0, ans, mini = INT_MAX;
 
-    // iterate for all the array elements
-    for (int i = 1; i < n; i++) {
+    for (int i = 0; i < n; ++i) {
+        curr_sum += a[i];
+        // find prev_sum >= curr_sum - K
+        auto it = st.lower_bound(curr_sum - K);
 
-        // calculate the prefix sum
-        presum += a[i];
-
-        // find the closest subarray sum to by using lower_bound
-        auto it = s.lower_bound(presum - k);
-
-        // if it is the first element in the set
-        if (it == s.begin()) {
-
-            // get the prefix sum till start of the subarray
-            int diff = *it;
-
-            // if the subarray sum is closest to K
-            // than the previous one
-            if (abs((presum - diff) - k) < mini) {
-
-                // update the minimal difference
-                mini = abs((presum - diff) - k);
-
-                // update the sum
-                sum = presum - diff;
-            }
-        }
-
-        // if the difference is
-        // present in between
-        else if (it != s.end()) {
-
-            int diff = *it;
-
-            if (abs((presum - diff) - k) < mini) {
-                mini = abs((presum - diff) - k);
-                sum = presum - diff;
+        if (it != st.end()) {
+            int prev_sum = *it;
+            if (abs(curr_sum - prev_sum - K) < mini) {
+                mini = abs(curr_sum - prev_sum - K);
+                ans = curr_sum - prev_sum;
             }
 
             // also check for the one before that
             // since the sum can be greater than
             // or less than K also
-            it--;
-
-            diff = *it;
-
-            if (abs((presum - diff) - k) < mini) {
-                mini = abs((presum - diff) - k);
-                sum = presum - diff;
+            if (it != st.begin()) {
+                --it;
+                prev_sum = *it;
+                if (abs(curr_sum - prev_sum - K) < mini) {
+                    mini = abs(curr_sum - prev_sum - K);
+                    ans = curr_sum - prev_sum;
+                }
             }
         }
-
-        // if there exists no such prefix sum
-        // then the current prefix sum is
-        // checked and updated
         else {
-
-            // if the subarray sum is closest to K
-            // than the previous one
-            if (abs(presum - k) < mini) {
-
-                // update the minimal difference
-                mini = abs(presum - k);
-
-                // update the sum
-                sum = presum;
+            if (abs(curr_sum - K) < mini) {
+                mini = abs(curr_sum - K);
+                ans = curr_sum;
             }
         }
-
-        // insert the current prefix sum
-        s.insert(presum);
+        st.insert(a[i]);
     }
 
-    return sum;
+    return ans;
 }
 
 // Driver Code
@@ -95,7 +53,7 @@ int main()
     int n = sizeof(a) / sizeof(a[0]);
     int k = 2;
 
-    cout << closestSubarraySumToK(a, n, k);
+    cout << solve(a, n, k);
     return 0;
 }
 

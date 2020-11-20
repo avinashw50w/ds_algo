@@ -18,10 +18,6 @@
   the median.
     Median = (max(ar1[0], ar2[0]) + min(ar1[1], ar2[1]))/2*/
 
-#include <iostream>
-#include <algorithm>
-using namespace std;
-
 int median(int a[], int n) {
     if (n & 1) return a[n / 2];
     else return (a[n / 2] + a[n / 2 - 1]) / 2;
@@ -51,17 +47,28 @@ int getMedian(int a1[], int a2[], int n) {
 ///////////////////////////////////////////
 // simple but use O(N) extra space
 int getMedian(int a1[], int a2[], int n) {
-    int t[n];
+    int i = 0, j = 0, m1 = -1, m2 = -1;
 
-    int i = 0, j = 0, k = 0;
-    while (i < n and j < n) {
-        if (a[i] < a[j]) t[k++] = a[i++];
-        else t[k++] = a[j++];
+    for (int k = 0; k <= n; ++k) {
+        if (i == n) {
+            m1 = m2;
+            m2 = a2[0];
+        }
+        else if (j == n) {
+            m1 = m2;
+            m2 = a1[0];
+        }
+
+        if (a1[i] < a2[j]) {
+            m1 = m2;
+            m2 = a1[i++];
+        }
+        else {
+            m1 = m2;
+            m2 = a2[j++];
+        }
+
+        return (m1 + m2) / 2;
     }
-    while (i < n) t[k++] = a[i++];
-    while (j < n) t[k++] = a[j++];
-
-    if (n & 1) return t[n / 2];
-    else return (t[n / 2] + t[n / 2 - 1]) / 2;
 }
 

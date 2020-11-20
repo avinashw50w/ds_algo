@@ -17,6 +17,26 @@ int solve(string s, set<string> dict) {
 	return false;
 }
 
+// using trie
+// Time complexity: O(2^n)
+Trie t;
+int go(string s) {
+	int n = s.length();
+	if (n == 0) return true;
+	for (int i = 0; i < n; ++i) {
+		if (t.search(s.substr(0, i + 1)) and go(s.substr(i + 1))) return true;
+	}
+
+	return false;
+}
+
+int solve(string s, set<string> dict) {
+	int n = s.size();
+	for (string str : dict) t.insert(str);
+
+	return go(s);
+}
+
 // DP, Time complexity: O(n^2)
 // Dp[i] denotes whether it is possible for substring s[0..i]
 int solve(string s, set<string> dict) {

@@ -1,18 +1,27 @@
 /*design the OOP classes for a chess game.*/
 
+enum Color {
+	WHITE, BLACK
+};
+
+enum PieceType {
+	KING, QUEEN, BISHOP, KNIGHT, ROOK, PAWN
+};
+
 class Piece {
-	bool isWhite;
+	Color color;
+	PieceType type;
 	bool isKilled;
 public:
-	Piece(bool white) {
-		this->setWhite(white);
+	Piece(Color color) {
+		this->setColor(color);
 		this->setKilled(false);
 	}
-	bool isWhite() {
-		return this->isWhite;
+	Color getColor() {
+		return this->color;
 	}
-	void setWhite(bool white) {
-		this->isWhite = white;
+	void setColor(Color color) {
+		this->color = color;
 	}
 	bool isKilled() {
 		return this->isKilled;
@@ -20,11 +29,11 @@ public:
 	void setKilled(bool killed) {
 		this->isKilled = killed;
 	}
-	bool isSafeMove(Piece start, Piece end) {
+	bool isSafeMove(Box start, Box end) {
 		Piece a = start.getPiece();
 		Piece b = end.getPiece();
 		return (b.isWhite() != a.isWhite())
-		       and (b.getX() >= 0 and b.getX() < 8 and b.getY() >= 0 and b.getY() < 8);
+		       and (end.getX() >= 0 and end.getX() < 8 and end.getY() >= 0 and end.getY() < 8);
 	}
 	pair<int, int> getCoordinateDifference(Box start, Box end) {
 		int x = abs(end.getPiece().getX() - start.getPiece().getX());
@@ -33,7 +42,7 @@ public:
 	}
 
 	virtual bool canMove(Board board, Box start, Box end) = 0;
-	virtual string getType() = 0;
+	virtual PieceType getType() = 0;
 };
 
 class Box {
@@ -116,7 +125,7 @@ public:
 		return (x + y == 1 or x + y == 2);
 	}
 
-	string getType() { return "KING"; }
+	PieceType getType() { return KING; }
 };
 
 class Queen: public Piece {
@@ -127,10 +136,10 @@ public:
 		int x = coord.first;
 		int y = coord.second;
 
-		return ((x != 0 and y == 0) or (x == 0 and y != 0) or abs(x - y) == 0);
+		return ((x != 0 and y == 0) or (x == 0 and y != 0) or (x == y));
 	}
 
-	string getType() { return "QUEEN"; }
+	PieceType getType() { return QUEEN; }
 };
 
 class Knight: public Piece {
@@ -144,10 +153,11 @@ public:
 		return x * y == 2;
 	}
 
-	string getType() { return "KNIGHT"; }
+	PieceType getType() { return KNIGHT; }
 };
 
 class Bishop: public Piece {
+public:
 	bool canMove(Board board, Box start, Box end) {
 		if (!isSafeMove(start, end)) return false;
 		pair<int, int> coord = this->getCoordinateDifference(Box start, Box end);
@@ -157,7 +167,7 @@ class Bishop: public Piece {
 		return x == y;
 	}
 
-	string getType() { return "BISHOP"; }
+	PieceType getType() { return BISHOP; }
 };
 
 class Rook: public Piece {
@@ -170,7 +180,7 @@ class Rook: public Piece {
 		return (x != 0 and y == 0) or (x  == 0 and y != 0);
 	}
 
-	string getType() { return "ROOK"; }
+	PieceType getType() { return ROOK; }
 };
 
 class Pawn: Public Piece {
@@ -183,22 +193,22 @@ class Pawn: Public Piece {
 		return (x + y == 1 or x + y == 2);
 	}
 
-	string getType() { return "PAWN"; }
+	PieceType getType() { return PAWN; }
 };
 
 class Player {
-	bool whiteSide;
+	Color color;
 	Person person;
 public:
-	Player(Person person, bool whiteSide) {
-		this->setWhiteSide(whiteSide);
+	Player(Person person, Color color) {
+		this->setColor(color);
 		this->setPerson(person);
 	}
-	void setWhite(bool whiteSide) {
-		this->whiteSide = whiteSide;
+	void setColor(Color color) {
+		this->color = color;
 	}
-	bool isWhiteSide() {
-		return this->whiteSide;
+	Color getColor() {
+		return this->color;
 	}
 	void setPerson(Person p) {
 		this->person = p;
@@ -208,20 +218,36 @@ public:
 	}
 };
 
+enum GameStatus {
+	ACTIVE, PAUSED, WHITE_WIN, BLACK_WIN
+};
+
 class Game {
 	Players players[2];
 	Board board;
-	Player currentTurn;
+	Player currentPlayer;
 	GameStatus gameStatus;
+
+	void changeTurn() {
+		if (currentPlayer == player[0]) {
+			currentPlayer = player[1];
+		}
+		else {
+			currentPlayer = player[0];
+		}
+	}
+	void setStatus(GameStatus status) {
+		this->gameStatus = status;
+	}
 
 public:
 	Game() {
 		this->initialise(Player p1, Player p2) {
-			if (p1.isWhiteSide()) {
-				currentTurn = p1;
+			if (p1.getColor() == WHITE) {
+				currentPlayer = p1;
 			}
 			else {
-				currentTurn = p2;
+				currentPlayer = p2;
 			}
 		}
 	}
@@ -236,19 +262,17 @@ public:
 		if (sourcePiece.canMove(board, start, end)) {
 			if (destPiece) {
 				destPiece.setKilled(true);
-				if (destPiece.getType == "KING") {
-					gameStatus.setStatus("WINNER");
+				if (destPiece.getType() == KING) {
+					if (this->currentPlayer == p1)
+						this->setStatus(WHITE_WIN);
+					else
+						this->setStatus(BLACK_WIN);
 				}
 			}
 			end.setPiece(sourcePiece);
 			start.setPiece(NULL);
 
-			if (currentTurn == player[0]) {
-				currentTurn = player[1];
-			}
-			else {
-				currentTurn = player[0];
-			}
+			this->changeTurn();
 
 			return true;
 		}

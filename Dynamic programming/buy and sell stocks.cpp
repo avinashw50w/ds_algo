@@ -62,7 +62,7 @@ int solve(vector<int> prices, int K) {
 	for (int t = 1; t <= K; ++t) {
 		int prev_diff = INT_MIN;
 		for (int i = 1; i < n; ++i) {
-			prev_diff = max(prev_diff, dp[K - 1][i - 1] - prices[i - 1]);
+			prev_diff = max(prev_diff, dp[t - 1][i - 1] - prices[i - 1]);
 			dp[t][i] = max(dp[t][i - 1], prices[i] + prev_diff);
 		}
 	}

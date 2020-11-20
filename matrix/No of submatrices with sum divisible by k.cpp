@@ -8,14 +8,12 @@ int count(vector<int> a, int K) {
 	int sum = 0;
 	for (int i = 0; i < n; ++i) {
 		sum += a[i];
-		m[(sum + K) % K]++;
+		while (sum < 0) sum += K;
+		ans += sum % K == 0;
+		ans += mp[sum % K];
+		m[sum % K]++;
 	}
 
-	int ans = 0;
-	ans += m[0];
-	for (int i = 1; i < K; ++i) {
-		ans += (m[i] * (m[i] - 1)) / 2;
-	}
 	return ans;
 }
 

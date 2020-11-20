@@ -1,4 +1,4 @@
-/*Given a boolean matrix mat[M][N] of size M X N, modify it such that if a matrix cell mat[i][j] is 0 (or true) 
+/*Given a boolean matrix mat[M][N] of size M X N, modify it such that if a matrix cell mat[i][j] is 0 (or true)
 then make all the cells of ith row and jth column as 0.*/
 
 void solve(vector<vector<int>> &a) {
@@ -26,23 +26,31 @@ void solve(vector<vector<int>> &a) {
     int r = a.size(), c = a[0].size();
 
     // iterate through all the rows and if jth column contains zero then make the jth column of the first row zero
+    bool first_row_contains_zero = false;
+
     for (int i = 0; i < r; ++i)
         for (int j = 0; j < c; ++j)
-            if (a[i][j] == 0)
+            if (a[i][j] == 0) {
                 a[0][j] = 0;
+                first_row_contains_zero = true;
+            }
 
     for (int i = 1; i < r; ++i) {
         // check if the ith row contains any zero
-        bool contains_zero = false;
+        bool row_contains_zero = false;
         for (int j = 0; j < c; ++j) {
             if (a[i][j] == 0) {
-                contains_zero = true;
+                row_contains_zero = true;
                 break;
             }
         }
         for (int j = 0; j < c; ++j) {
-            if (contains_zero || a[0][j] == 0)
+            if (row_contains_zero || a[0][j] == 0)
                 a[i][j] = 0;
         }
-    } 
+    }
+
+    if (first_row_contains_zero) {
+        for (int i = 0; i < c; ++i) mat[0][i] = 0;
+    }
 }
