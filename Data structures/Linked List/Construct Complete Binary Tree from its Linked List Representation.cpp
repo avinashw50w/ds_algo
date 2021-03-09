@@ -1,11 +1,12 @@
-/*Given Linked List Representation of Complete Binary Tree, construct the Binary tree. A complete binary tree can be represented in an array in the following approach.
-eg, 		10 -> 12 -> 15 -> 25 -> 30 -> 36
+/*Given Linked List Representation of Complete Binary Tree, construct the Binary tree.
+A complete binary tree can be represented in an array in the following approach.
+eg,         10 -> 12 -> 15 -> 25 -> 30 -> 36
 
-							10
-						   /   \
-						  12    15
-						/  \    /
-					   25  30  36
+                            10
+                           /   \
+                          12    15
+                        /  \    /
+                       25  30  36
 
 If root node is stored at index i, its left, and right children are stored at indices 2*i+1, 2*i+2 respectively.
 
@@ -112,10 +113,10 @@ TreeNode *newNode(int val) {
     return tmp;
 }
 /*You are required to complete this method*/
-void convert(node *head,TreeNode * &root)
+void convert(node *head, TreeNode * &root)
 {
     queue<TreeNode*> q;
-    if(head == NULL) {
+    if (head == NULL) {
         root = NULL;
         return;
     }
@@ -124,7 +125,7 @@ void convert(node *head,TreeNode * &root)
     head = head->next;
     q.push(root);
 
-    while(head) {
+    while (head) {
         TreeNode *parent = q.front();
         q.pop();
 
@@ -134,7 +135,7 @@ void convert(node *head,TreeNode * &root)
         head = head->next;
         q.push(lchild);
 
-        if(head) {
+        if (head) {
             rchild = newNode(head->data);
             head = head->next;
             q.push(rchild);

@@ -28,14 +28,13 @@ where sum[i] = A[0] + A[1] + ... + A[i]
 
 int solve(vector<int> a, int K) {
     int n = a.size();
-    vector<int> mp(K, 0);
+    unordered_map<int, int> mp;
     int sum = 0, ans = 0;
     for (int i = 0; i < n; ++i) {
-        sum += a[i];
-        int x = (sum + K) % K;
-        ans += x == K;
-        ans += mp[x];
-        mp[x]++;
+        sum = (sum + a[i] % K + K) % K;
+        ans += sum == 0; // if prefix sum is divisible by K
+        ans += mp[sum];
+        mp[sum]++;
     }
     return ans;
 }

@@ -1,4 +1,4 @@
-/*You are given an array of integers 𝑎1,𝑎2,…,𝑎𝑛. Find the maximum possible value of 𝑎𝑖𝑎𝑗𝑎𝑘𝑎𝑙𝑎𝑡 among all five indices (𝑖,𝑗,𝑘,𝑙,𝑡) (𝑖<𝑗<𝑘<𝑙<𝑡).
+/*You are given an array of integers 𝑎1,𝑎2,…,𝑎𝑛. Find the maximum possible value of 𝑎𝑖.𝑎𝑗.𝑎𝑘.𝑎𝑙.𝑎𝑡 among all five indices (𝑖,𝑗,𝑘,𝑙,𝑡) (𝑖<𝑗<𝑘<𝑙<𝑡).
 
 Input
 The input consists of multiple test cases. The first line contains an integer 𝑡 (1≤𝑡≤2⋅104) — the number of test cases. The description of the test cases follows.

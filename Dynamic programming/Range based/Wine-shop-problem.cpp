@@ -43,7 +43,7 @@ int solve2() {
     for (int l = 2; l <= N; ++l) {
         for (int i = 0; i <= N - l; ++i) {
             int j = i + l - 1;
-            int year = N - (j - i);
+            int year = N - l + 1;
             int left = price[i] * year + dp[i + 1][j];
             int right = price[j] * year + dp[i][j - 1];
             dp[i][j] = max(dp[i][j], max(left, right));

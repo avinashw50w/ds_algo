@@ -97,9 +97,11 @@ int main() {
 
     for (int i = 0; i < arr.size(); ++i) {
         int x = 0;
-        if (arr[i] - 1) {
+        if (arr[i] - 1 > 0) {
             x = query(arr[i] - 1);
         }
+        // update pos a[i] with the no of elements less than a[i]
+        // on its left including itself
         update(arr[i], 1 + x);
     }
 

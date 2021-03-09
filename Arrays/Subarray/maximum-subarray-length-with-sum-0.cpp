@@ -26,6 +26,7 @@ int maxLen(int A[], int n)
 
 // another variation: maximum subarray length with sum K
 // just a little modification in the above code
+if (sum == K) max_len = i + 1;
 if (m.count(sum - K))
   max_len = max(max_len, i - m[sum]);
 else m[sum] = i;

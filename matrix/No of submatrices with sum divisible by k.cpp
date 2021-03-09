@@ -4,14 +4,14 @@ Given a n x n matrix of integers and a positive integer k. The problem is to cou
 // returns the no of subarrays with sum divisible by K
 int count(vector<int> a, int K) {
 	int n = a.size();
-	vector<int> m(k, 0);
+	map<int, int> mp;
 	int sum = 0;
 	for (int i = 0; i < n; ++i) {
 		sum += a[i];
 		while (sum < 0) sum += K;
 		ans += sum % K == 0;
 		ans += mp[sum % K];
-		m[sum % K]++;
+		mp[sum % K]++;
 	}
 
 	return ans;
@@ -26,8 +26,8 @@ int solve(vector<vector<int>> mat, int K) {
 		for (int r = l; r < m; ++r) { // column end
 			for (int i = 0; i < n; ++i) {
 				a[i] += mat[i][r];
-				ans += count(a, K);
 			}
+			ans += count(a, K);
 		}
 	}
 

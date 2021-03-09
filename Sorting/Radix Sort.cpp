@@ -1,25 +1,29 @@
-void countSort(int arr[], int n, int place) {
-	int i, freq[10], output[n];
+/*radix sort
+keep sorting the array first by their units digit, then by the tens digit and so on
+Time complexity: O(N*k) where k is the no of digits in the largest no
+*/
 
-	for (i = 0; i < n; ++i)
-		freq[(arr[i]/place) % 10]++;
+void sort(vector<int> &a, int e) {
+	vector<int> res(a.size());
 
-	for (i = 1; i < 10; ++i)
-		freq[i] += freq[i-1];
+	int f[10] = {};
+	for (int x : a)
+		f[(x / e) % 10]++;
 
-	for (i = n-1; i >= 0; --i) {
-		int pos = (arr[i]/place) % 10;
-		output[freq[pos]- 1] = arr[i];
-		freq[pos]--;
+	for (int i = 1; i < 10; ++i)
+		f[i] += f[i - 1];
+
+	for (int i = a.size() - 1; i >= 0; --i) {
+		res[f[(a[i] / e) % 10] - 1] = a[i];
+		f[(a[i] / e) % 10]--;
 	}
 
-	for (i = 0; i < n; ++i)
-		arr[i] = output[i];
+	a = res;
 }
 
-void radixSort(int arr[], int n) {
-	int maxx = *max_element(arr, arr+n);
-
-	for (int mul = 1; maxx/mul > 0; mul *= 10)
-		countSort(arr, n, mul);
+void radixSort(vector<int> &a) {
+	int mx = *max_element(a.begin(), a.end());
+	for (int i = 1; mx / i > 0; i *= 10) {
+		sort(a, i);
+	}
 }

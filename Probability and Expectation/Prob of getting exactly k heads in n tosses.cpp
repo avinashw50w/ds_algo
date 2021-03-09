@@ -1,7 +1,9 @@
-/*Given n biased coins, with each coin giving heads with probability Pi, find the probability that on tossing the n coins I will obtain exactly k heads. write the formula for this (i.e. the expression that would give us P (n, k)).*/
+/*Given n biased coins, with each coin giving heads with probability Pi,
+find the probability that on tossing the n coins I will obtain exactly k heads.
+write the formula for this (i.e. the expression that would give us P (n, k)).*/
 
 /*
-prob of getting head  = p and tail is (1-p) say q, then a possible sequence in which k heads appear out of n tosses
+prob of getting head = p and tail is q = (1-p), then a possible sequence in which k heads appear out of n tosses
 is pqppqqpp... where p is k times and q is n-k times, ie, p^k * q^(n-k)
 Now all possible combination of this n length sequence where p appears k times and q appears n-k times
 will be n!/k!(n-k)! => nCk

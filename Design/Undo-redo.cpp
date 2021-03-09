@@ -28,12 +28,18 @@ public:
 
 class History {
 	vector<EditorState> states;
+	int top = 0;
 public:
 	void push(EditorState state) {
 		states.push_back(state);
+		top++;
 	}
-	EditorState pop() {
-		return states[states.size() - 1];
+	EditorState undo() {
+		if (top == 0) return NULL;
+		return states[--top];
+	}
+	EditorState redo() {
+		return states[++top];
 	}
 };
 
@@ -50,7 +56,11 @@ int main() {
 	editor.setContent("b");
 	history.push(editor.createState());
 
-	editor.restore(history.pop());
+	editor.restore(history.undo());
+
+	cout << editor.getContent() << endl;
+
+	editor.restore(history.redo());
 
 	cout << editor.getContent() << endl;
 }

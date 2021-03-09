@@ -10,15 +10,6 @@ Examples:
                  {20, 5, 10, 2, 80, 6, 100, 3} OR
                  any other array that is in wave form*/
 
-void solve(int a[], int n) {
-    for (int i = 0; i < n; i += 2) {
-        if (i > 0 and a[i - 1] > a[i]) swap(a[i - 1], a[i]);
-
-        if (i < n and a[i] < a[i + 1]) swap(a[i], a[i + 1]);
-    }
-}
-
-///////////// OR ///////////////
 void solve(vector<int> &a) {
     bool flag = true;
     for (int i = 0; i < a.size() - 1; ++i) {
@@ -29,5 +20,14 @@ void solve(vector<int> &a) {
         }
 
         flag ^= 1;
+    }
+}
+
+///////////// OR ///////////////
+void solve(int a[], int n) {
+    for (int i = 0; i < n; i += 2) {
+        if (i > 0 and a[i - 1] > a[i]) swap(a[i - 1], a[i]);
+
+        if (i < n and a[i] < a[i + 1]) swap(a[i], a[i + 1]);
     }
 }

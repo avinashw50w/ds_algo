@@ -17,21 +17,21 @@ Output:
 
 vector<int> solve(vector<vector<int>> mat) {
 
-	int N = mat.size();
-	int M = mat[0].size();
-	vector<int> res;
-	unordered_map<int, int> mp;
+    int N = mat.size();
+    int M = mat[0].size();
+    vector<int> res;
+    unordered_map<int, int> mp;
 
-	for (int i = 0; i < N; ++i) {
-		for (int j = 0; j < M; ++j) {
+    for (int i = 0; i < N; ++i) {
+        for (int j = 0; j < M; ++j) {
 
-			if (mp[mat[i][j]] == i) {
-				mp[mat[i][j]] = i + 1;
+            if (mp[mat[i][j]] == i) {
+                mp[mat[i][j]] = i + 1;
 
-				if (i == N - 1) res.push_back(mat[i][j]);
-			}
-		}
-	}
+                if (i == N) res.push_back(mat[i][j]);
+            }
+        }
+    }
 
-	return res;
+    return res;
 }

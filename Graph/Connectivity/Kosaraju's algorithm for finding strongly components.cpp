@@ -43,7 +43,8 @@ vector<vector<int>> SCC() {
 	vis.assign(maxn, 0);
 
 	while (!st.empty()) {
-		int u = st.top();
+		int u = st.back();
+		st.pop_back();
 		vector<int> tmp;
 		if (!vis[u]) {
 			dfs1(u, tmp);

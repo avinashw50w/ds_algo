@@ -65,7 +65,7 @@ int minSwapsUtil(int arr[], int pairs[], int index[], int i, int n)
     int one = arr[i+1];
     int indexone = index[pairs[arr[i]]]; 		// one should be placed at indexone and two should be placed at indextwo
     int indextwo = i+1;   
-    int two = arr[index[pairs[arr[i]]]];
+    int two = arr[indexone];
     swap(arr[i+1], arr[indexone]);
     updateindex(index, one, indexone, two, indextwo);
     int a = minSwapsUtil(arr, pairs, index, i+2, n);
@@ -74,12 +74,14 @@ int minSwapsUtil(int arr[], int pairs[], int index[], int i, int n)
     // previous indices, of one and two
     swap(arr[i+1], arr[indexone]);
     updateindex(index, one, indextwo, two, indexone);
-    one = arr[i], indexone = index[pairs[arr[i+1]]];
  
     // Now swap arr[i] with pair of arr[i+1] and recursively
     // compute minimum swaps required for the subproblem
     // after this move
-    two = arr[index[pairs[arr[i+1]]]], indextwo = i;
+    one = arr[i];
+    indexone = index[pairs[arr[i+1]]];
+    indextwo = i;
+    two = arr[indexone];
     swap(arr[i], arr[indexone]);
     updateindex(index, one, indexone, two, indextwo);
     int b = minSwapsUtil(arr, pairs, index, i+2, n);

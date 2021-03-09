@@ -1,4 +1,6 @@
-/*Given an integer array arr, you should partition the array into (contiguous) subarrays of length at most k. After partitioning, each subarray has their values changed to become the maximum value of that subarray.
+/*Given an integer array arr, you should partition the array into (contiguous) subarrays of
+length at most k. After partitioning, each subarray has their values changed to become the
+maximum value of that subarray.
 
 Return the largest sum of the given array after partitioning.
 
@@ -22,12 +24,9 @@ int solve(vector<int> a, int k) {
 	int n = a.size();
 	vector<int> dp(n, INT_MIN);
 	int mx = INT_MIN;
-	for (int i = 0; i < k; ++i) {
-		mx = max(mx, a[i]);
-		dp[i] = mx * (i + 1);
-	}
 
-	for (int i = k; i < n; ++i) {
+	dp[0] = a[0];
+	for (int i = 1; i < n; ++i) {
 		mx = a[i];
 		for (subsize = 1; subsize <= k; ++subsize) {
 			mx = max(mx, a[i - subsize + 1]);

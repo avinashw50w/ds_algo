@@ -36,8 +36,8 @@ vector<int> solve(vector<int> a) {
     update(a[N - 1], 1);
 
     for (int i = N - 2; i >= 0; --i) {
-        update(a[i], 1);
         res[i] = sum(a[i] - 1);
+        update(a[i], 1);
     }
 
     return res;

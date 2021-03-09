@@ -12,13 +12,14 @@ Node *reverse(Node *head, int k) {
 	int cnt = 0;
 
 	while (curr and cnt < k) {
+		Node *next = curr->next;
 		push(newHead, curr);
-		curr = curr->next;
+		curr = next;
 		cnt++;
 	}
 
-	if (curr) {
-		head->next = reverse(curr, k);
+	if (next) {
+		head->next = reverse(next, k);
 		head->next->prev = head;
 	}
 

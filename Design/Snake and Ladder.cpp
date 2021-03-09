@@ -111,7 +111,7 @@ public:
 		map<string, int> playerPositions;
 		for (Player p : players) {
 			this->players.push(p);
-			playerPositions[p.getId()] = 0;
+			board.playerPositions[p.getId()] = 0;
 		}
 		board.setPlayerPositions(playerPositions);
 	}
@@ -131,14 +131,14 @@ public:
 			prevPosition = currPosition;
 			for (Snake s : board.getSnakes()) {
 				if (currPosition == s.getStart()) {
-					currPosition = s.getStart();
+					currPosition = s.getEnd();
 					break;
 				}
 			}
 
 			for (Ladder l : board.getLadders()) {
 				if (currPosition == l.getStart()) {
-					currPosition = l.getStart();
+					currPosition = l.getEnd();
 					break;
 				}
 			}
@@ -154,7 +154,7 @@ public:
 		if (newPosition > board.getSize())
 			newPosition = oldPosition;
 		else
-			newPosition = getNewPositionIfSnakeOrLadder(oldPosition);
+			newPosition = getNewPositionIfSnakeOrLadder(newPosition);
 
 		board.updatePlayerPosition(player, newPosition);
 

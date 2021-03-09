@@ -14,7 +14,7 @@ void solve(vector<int> a) {
 	/*print the frequency of element i as a[i] / N. */
 	/*restore the previous number by doing a[i] = a[i] % N  and finally increment it by 1*/
 	for (int i = 0; i < N; ++i) {
-		cout << (i + 1) << " : " << a[i] << endl;
+		cout << (i + 1) << " : " << a[i] / N << endl;
 		a[i] %= N;
 		a[i] += 1;
 	}

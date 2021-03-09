@@ -19,12 +19,14 @@ int solve(vector<int> a, int K) {
 	unordered_map<int, int> mp;
 	for (int i = 0; i < n; ++i) mp[a[i] % K]++;
 
-	// case 0
+	// case 0: from all nos whose remainder is 0, choose any 2: nC2
 	int ans = (mp[0] * (mp[0] - 1)) / 2;
 	// case i and K - i
-	for (int i = 1; i <= K / 2 and i != K - i; ++i)
-		ans += mp[i] * mp[K - i];
+	for (int i = 1; i < K / 2; ++i)
+		if (i != K-i) 
+			ans += mp[i] * mp[K - i];
 	// case K/2 iff K is even
+	// from all the nos whose remainder is K/2, choose any 2: nC2
 	if (K & 1 ^ 1) ans += (mp[K / 2] * (mp[K / 2] - 1)) / 2;
 
 	return ans;

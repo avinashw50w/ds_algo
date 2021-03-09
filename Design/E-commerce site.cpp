@@ -201,23 +201,27 @@ class Message {
 };
 
 class Notification {
+	Message message;
 public:
-	virtual bool sendNotification(Message message) = 0;
+	virtual bool sendNotification() = 0;
 };
 
 class EmailNotification : public Notification {
+	string email;
 public:
-	bool sendNotification(Message message);
+	bool sendNotification();
 };
 
 class WhatsappNotification : public Notification {
+	strign whatsappNo;
 public:
-	bool sendNotification(Message message);
+	bool sendNotification();
 };
 
 class SMSNotification : public Notification {
+	string phoneNumber;
 public:
-	bool sendNotification(Message message);
+	bool sendNotification();
 };
 
 class PaymentService {

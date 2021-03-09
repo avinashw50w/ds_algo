@@ -52,11 +52,10 @@ Max no of 0s in the array = total no of 0s in the original array - No of 0s in A
 */
 
 
-Method 1 (Simple : O(n2))
+/*Method 1 (Simple : O(n2))
 
 A simple solution is to consider all subarrays and find a subarray with maximum value of (count of 1s) – (count of 0s).
-Let this value be max_diff. Finally return count of zeros in original array plus max_diff.
-        * /
+Let this value be max_diff. Finally return count of zeros in original array plus max_diff.*/
 int findMaxZeroCount(bool arr[], int n) {
 
     int max_diff = 0, orig_zero_count = 0;

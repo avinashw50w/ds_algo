@@ -16,11 +16,12 @@ int solve(string A, string B) {
 	int ret = 0;
 	int lA = unique(A.begin(), A.end()) - A.begin();
 	int lB = unique(B.begin(), B.end()) - B.begin();
+	// after applying unique fn A = rjrjj, B = rjjj
 
-	if(lA != lB) return ret;
+	if (lA != lB) return ret;
 
-	for(int i = 0; i < lA; ++i)
-		if(A[i] != B[i])
+	for (int i = 0; i < lA; ++i)
+		if (A[i] != B[i])
 			return ret;
 
 	return 1;

@@ -166,7 +166,7 @@ int solve(vector<int> prices) {
 
 		// use the profit made in previous transaction
 		// to lower the buying cost of the current stock
-		buy2 = min(buy2, profit[i] - profit1);
+		buy2 = min(buy2, prices[i] - profit1);
 
 		// profit made after selling the second stock
 		profit2 = max(profit2, prices[i] - buy2);

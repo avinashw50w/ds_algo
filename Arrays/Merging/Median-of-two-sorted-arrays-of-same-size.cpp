@@ -28,7 +28,7 @@ Algorithm:
   the median.
     Median = (max(ar1[0], ar2[0]) + min(ar1[1], ar2[1]))/2  */
 
-/* Function to get median of a sorted array */
+/* O(logn) */
 int median(int arr[], int n)
 {
     if (n % 2 == 0)
@@ -59,14 +59,14 @@ int getMedian(int ar1[], int ar2[], int n)
     if (m1 < m2)
     {
         if (n % 2 == 0)
-            return getMedian(ar1 + n / 2 - 1, ar2, n - n / 2 + 1);
+            return getMedian(ar1 + n / 2 - 1, ar2, n - (n / 2 - 1));
         return getMedian(ar1 + n / 2, ar2, n - n / 2);
     }
 
     /* if m1 > m2 then median must exist in ar1[....m1] and
         ar2[m2...] */
     if (n % 2 == 0)
-        return getMedian(ar2 + n / 2 - 1, ar1, n - n / 2 + 1);
+        return getMedian(ar2 + n / 2 - 1, ar1, n - (n / 2 - 1));
     return getMedian(ar2 + n / 2, ar1, n - n / 2);
 }
 

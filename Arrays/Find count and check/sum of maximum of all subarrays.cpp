@@ -1,6 +1,8 @@
 /*Given an array a or size n, find the sum of maximum of all possible subarrays
-idea: for any element at index i, find the range around i such that a[i] is the maximum in that range
-for that: traverse left of i until the elements are less than a[i] and also calculate the no of elements, say x.
+idea: for any element at index i, find the range around i such that a[i]
+is the maximum in that range for that:
+traverse left of i until the elements are less than a[i] and also calculate
+the no of elements, say x.
 Traverse to the right of i until the elements are less than a[i] and also calculate the no of elements, say y.
 
 Now a[i] will appear in x * y no of subarrays and a[i] will be maximum in those subarrays.
@@ -18,7 +20,7 @@ int solve(vector<int> a) {
 
 	for (int i = 0; i < n; ++i) {
 		while (!st.empty() and a[st.top()] <= a[i]) {
-			left[i] += left[st.top()] + 1;
+			left[i] += left[st.top()] + 1; // +1 to include the ele at st.top()
 			st.pop();
 		}
 		st.push(i);

@@ -6,7 +6,7 @@ int solve(vector<int> a, int K) {
 	int min_len = n;
 	while (end < n) {
 		while (sum <= K and end < n) sum += a[end++];
-		while (sum > K and start < n) {
+		while (sum > K and start < end) {
 			min_len = min(min_len, end - start);
 			sum -= a[start++];
 		}

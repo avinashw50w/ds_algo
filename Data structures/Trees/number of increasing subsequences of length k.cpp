@@ -1,5 +1,6 @@
-/*Given a sequence of N (1 ≤ N ≤ 10,000) integers S1, ..., SN (0 ≤ Si < 100,000), compute the number of increasing subsequences 
-of S with length K (1 ≤ K ≤ 50 and K ≤ N); that is, the number of K-tuples i1, ..., iK such that 1 ≤ i1 < ... < iK ≤ N and Si1 < ... < SiK.
+/*Given a sequence of N (1 ≤ N ≤ 10,000) integers S1, ..., SN (0 ≤ Si < 100,000), compute the 
+number of increasing subsequences of S with length K (1 ≤ K ≤ 50 and K ≤ N); that is, the number 
+of K-tuples i1, ..., iK such that 1 ≤ i1 < ... < iK ≤ N and Si1 < ... < SiK.
 
 Input
 
@@ -43,7 +44,7 @@ int main() {
 	int dp[51];
 	
 	for(int i=0; i < n; i++) {
-
+		// dp[j] = # of increasing subsequece of length j ending at a[i]
 		for(int j=0; j < k-1; j++) 
 			dp[j] = read(j, arr[i]);
 		

@@ -1,4 +1,4 @@
-/*Serialization is to store tree in a file so that it can be later restored. The structure of tree must be maintained. 
+/*Serialization is to store tree in a file so that it can be later restored. The structure of tree must be maintained.
 Deserialization is reading tree back from file.
 Following are some simpler versions of the problem:
 
@@ -25,100 +25,125 @@ Output: 12 13 -1 -1
 Input:
       20
     /   \
-   8     22 
-Output: 20 8 -1 -1 22 -1 -1 
+   8     22
+Output: 20 8 -1 -1 22 -1 -1
 
 Input:
          20
-       /    
-      8     
+       /
+      8
      / \
-    4  12 
+    4  12
       /  \
      10  14
-Output: 20 8 4 -1 -1 12 10 -1 -1 14 -1 -1 -1 
+Output: 20 8 4 -1 -1 12 10 -1 -1 14 -1 -1 -1
 
 Input:
           20
-         /    
-        8     
+         /
+        8
       /
     10
     /
    5
-Output: 20 8 10 5 -1 -1 -1 -1 -1 
+Output: 20 8 10 5 -1 -1 -1 -1 -1
 
 Input:
           20
             \
              8
-              \   
+              \
                10
                  \
-                  5   
-Output: 20 -1 8 -1 10 -1 5 -1 -1 
+                  5
+Output: 20 -1 8 -1 10 -1 5 -1 -1
 Deserialization can be done by simply reading data from file one by one.*/
 
+void serialize(Node *root, vector<string> &v) {
+  if (!root) {
+    v.push_back("$");
+    return;
+  }
+  v.push_back(to_string(root->data) );
+  serialize(root->left, v);
+  serialize(root->right, v);
+}
+
+Node *deserialize(vector<string> v, int &pos) {
+  if (v[pos] == "$" or pos == v.size()) {
+    pos++;
+    return NULL;
+  };
+
+  Node *root = new Node(stoi(v[pos++]));
+
+  root->left = deserialize(v, pos);
+  root->right = deserialize(v, pos);
+
+  return root;
+}
+
+/////////////////////////////////////////////////
 // A C++ program to demonstrate serialization and deserialiation of
 // Binary Tree
 #include <stdio.h>
 #define MARKER -1
- 
+
 /* A binary tree Node has key, pointer to left and right children */
 struct Node
 {
-    int key;
-    struct Node* left, *right;
+  int key;
+  struct Node* left, *right;
 };
- 
+
 /* Helper function that allocates a new Node with the
    given key and NULL left and right pointers. */
 Node* newNode(int key)
 {
-    Node* temp = new Node;
-    temp->key = key;
-    temp->left = temp->right = NULL;
-    return (temp);
+  Node* temp = new Node;
+  temp->key = key;
+  temp->left = temp->right = NULL;
+  return (temp);
 }
- 
+
 // This function stores a tree in a file pointed by fp
 void serialize(Node *root, FILE *fp)
 {
-    // If current node is NULL, store marker
-    if (root == NULL)
-    {
-        fprintf(fp, "%d ", MARKER);
-        return;
-    }
- 
-    // Else, store current node and recur for its children
-    fprintf(fp, "%d ", root->key);
-    serialize(root->left, fp);
-    serialize(root->right, fp);
+  // If current node is NULL, store marker
+  if (root == NULL)
+  {
+    fprintf(fp, "%d ", MARKER);
+    return;
+  }
+
+  // Else, store current node and recur for its children
+  fprintf(fp, "%d ", root->key);
+  serialize(root->left, fp);
+  serialize(root->right, fp);
 }
- 
+
 // This function constructs a tree from a file pointed by 'fp'
 void deSerialize(Node *&root, FILE *fp)
 {
-    // Read next item from file. If theere are no more items or next
-    // item is marker, then return
-    int val;
-    if ( !fscanf(fp, "%d ", &val) || val == MARKER)
-       return;
- 
-    // Else create node with this item and recur for children
-    root = newNode(val);
-    deSerialize(root->left, fp);
-    deSerialize(root->right, fp);
+  // Read next item from file. If theere are no more items or next
+  // item is marker, then return
+  int val;
+  if ( !fscanf(fp, "%d ", &val) || val == MARKER)
+    return;
+
+  // Else create node with this item and recur for children
+  root = newNode(val);
+  deSerialize(root->left, fp);
+  deSerialize(root->right, fp);
 }
- 
+
 // A simple inorder traversal used for testing the constructed tree
 void inorder(Node *root)
 {
-    if (root)
-    {
-        inorder(root->left);
-        printf("%d ", root->key);
-        inorder(root->right);
-    }
+  if (root)
+  {
+    inorder(root->left);
+    printf("%d ", root->key);
+    inorder(root->right);
+  }
 }

@@ -1,8 +1,8 @@
 /*Fractional Knapsack Problem
-Given weights and values of n items, we need to put these items in a knapsack of 
+Given weights and values of n items, we need to put these items in a knapsack of
 capacity W to get the maximum total value in the knapsack.
 
-In the 0-1 Knapsack problem, we are not allowed to break items. 
+In the 0-1 Knapsack problem, we are not allowed to break items.
 We either take the whole item or don’t take it.
 
 Input:
@@ -15,44 +15,30 @@ Output:
 
 /*sort the items in order of their val/weight ratio*/
 
-struct Item { 
-    int value, weight; 
-    Item(int value, int weight) : value(value), weight(weight) {} 
-}; 
-  
-// Comparison function to sort Item according to val/weight ratio 
-bool cmp(struct Item a, struct Item b) { 
-    return (double)a.value / a.weight > (double)b.value / b.weight; 
-} 
-  
-// Main greedy function to solve problem 
-double fractionalKnapsack(int W, struct Item arr[], int n) 
-{ 
-    //    sorting Item on basis of ratio 
-    sort(arr, arr + n, cmp); 
- 
-    int curWeight = 0;  // Current weight in knapsack 
-    double finalvalue = 0.0; // Result (value in Knapsack) 
-  
-    // Looping through all Items 
-    for (int i = 0; i < n; i++) 
-    { 
-        // If adding Item won't overflow, add it completely 
-        if (curWeight + arr[i].weight <= W) 
-        { 
-            curWeight += arr[i].weight; 
-            finalvalue += arr[i].value; 
-        } 
-  
-        // If we can't add current Item, add fractional part of it 
-        else
-        { 
-            int remain = W - curWeight; 
-            finalvalue += arr[i].value * ((double) remain / arr[i].weight); 
-            break; 
-        } 
-    } 
-  
-    // Returning final value 
-    return finalvalue; 
-} 
+struct Item {
+    int val;
+    int wt;
+    Item(int val, int wt) : val(val), wt(wt) {}
+};
+
+double fractionalKnapsack(vector<Item> items, int W) {
+    sort(items.begin(), items.end(),
+    [](auto & a, auto & b) { return (double)a.val / a.wt > (double)b.val / b.wt; });
+
+    double finalValue = 0;
+    int currWeight = 0;
+
+    for (int i = 0; i < items.size(); ++i) {
+        if (currWeight + items[i].wt <= W) {
+            currWeight += items[i].wt;
+            finalValue += items[i].val;
+        }
+        else {
+            int remaining = W - currWeight;
+            finalValue += items[i].val * ((double) remaining / items[i].wt);
+            break;
+        }
+    }
+
+    return finalValue;
+}

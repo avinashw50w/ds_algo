@@ -8,8 +8,8 @@ Algo:
 */
 
 for (int i = 0; i < n; ++i) {
-	sort(mat[i].begin(), mat[i].end());
-	transpose(mat);
-	sor(mat[i].begin(), mat[i].end());
-	transpose(mat);
+    sort(mat[i].begin(), mat[i].end());
+    transpose(mat);
+    sort(mat[i].begin(), mat[i].end());
+    transpose(mat);
 }

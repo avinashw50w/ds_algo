@@ -11,7 +11,7 @@ the third substring contains h, i and j
 vector<string> solve(string s) {
 	int n = s.size();
 	vector<string> res;
-	vector<string> last(26, -1);
+	vector<int> last(26, -1);
 
 	for (int i = n - 1; i >= 0; --i) {
 		char c = s[i];
@@ -25,7 +25,7 @@ vector<string> solve(string s) {
 		lp = last[s[i] - 'a'];
 		maxp = max(maxp, lp);
 
-		if (i == mp) {
+		if (i == maxp) {
 			str += s[i];
 			res.push_back(str);
 			maxp = -1;

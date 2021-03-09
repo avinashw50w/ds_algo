@@ -40,7 +40,7 @@ int solve(vector<int> a, int K) {
                 ans = curr_sum;
             }
         }
-        st.insert(a[i]);
+        st.insert(curr_sum);
     }
 
     return ans;

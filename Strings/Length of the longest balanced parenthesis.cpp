@@ -10,7 +10,7 @@ int solve(string s) {
 		else {
 			st.pop();
 
-			if (!st.empty()) mx = max(mx, i-st.top());
+			if (!st.empty()) mx = max(mx, i - st.top());
 
 			else st.push(i);
 		}
@@ -24,15 +24,15 @@ int solve(string s) {
 // eg : ))()(())
 int solve(string s) {
 	int n = s.size();
-
-	int dp[n+2]; // dp[i] stores the longest valid parentesis unto index i
+	// dp[i] stores the longest valid parenthesis sequence ending at index i
+	int dp[n + 2];
 
 	memset(dp, 0, sizeof(dp));
 
 	for (int i = 1; i < n; ++i) {
-		if (s[i] == ')' and i-dp[i-1]-1 >= 0 and s[i-dp[i-1]-1] == '(')
-			dp[i] = dp[i-1] + 2 + ((i-dp[i-1]-2 >= 0) ? dp[i-dp[i-1]-2] : 0);
+		if (s[i] == ')' and i - dp[i - 1] - 1 >= 0 and s[i - dp[i - 1] - 1] == '(')
+			dp[i] = dp[i - 1] + 2 + ((i - dp[i - 1] - 2 >= 0) ? dp[i - dp[i - 1] - 2] : 0);
 	}
 
-	return *max_element(dp, dp+n);
+	return *max_element(dp, dp + n);
 }

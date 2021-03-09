@@ -4,15 +4,15 @@ void inorder(Node *root) {
 	stack<Node*> st;
 	Node *curr = root;
 
-	while (curr and !st.empty()) {
+	while (curr or !st.empty()) {
 		while (curr) {
 			st.push(curr);
 			curr = curr->left;
 		}
 
-		Node *top = st.top(); st.pop();
+		curr = st.top(); st.pop();
 
-		cout << curr->data;
+		cout << curr->data << " ";
 
 		curr = curr->right;
 	}

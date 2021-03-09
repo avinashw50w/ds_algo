@@ -5,7 +5,7 @@ using namespace std;
 typedef long long ll;
 const int mod = 1e9 + 7;
 const int p = 29;
-
+// hash of abc = a*p^2 + b*p^1 + c*p^0
 void solve(string txt, string pat) {
 
 	int n = txt.length();

@@ -10,7 +10,7 @@ int height(Node *root) {
 	if (!root) return 0;
 	int mx = 0;
 
-	for (int i = 0; i < N; ++i) {
+	for (int i = 0; i < root->children.size(); ++i) {
 		mx = max(mx, height(root->children[i]));
 	}
 

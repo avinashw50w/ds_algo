@@ -36,7 +36,7 @@ int kadane(int arr[], int& start, int& finish, int n)
 // The main function that finds maximum sum rectangle in M[][]
 void findMaxSum(vector<vector<int>> M)
 {
-    int ROW = M.size(), col = M[0].size();
+    int ROW = M.size(), COL = M[0].size();
     // Variables to store the final output
     int maxSum = INT_MIN, finalLeft, finalRight, finalTop, finalBottom;
 

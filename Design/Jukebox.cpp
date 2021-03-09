@@ -22,7 +22,7 @@ public:
 		playlists.push_back(new Playlist(name));
 	}
 	void removePlaylist(Playlist playlist) {
-		list.erase(find(list.begin(), list.end(), playlist.id));
+		list.erase(find(list.begin(), list.end(), playlist->getId()));
 	}
 	void addSongToPlaylist(Playlist playlist, Song song) {
 		playlist.addSong(song);
@@ -43,7 +43,7 @@ class Song {
 	string title;
 	Artist artist;
 	Album album;
-	string duration;
+	int duration_in_seconds;
 	Lyrics lyrics;
 	SongFormat songFormat;
 public:
@@ -72,14 +72,14 @@ class Playlist {
 	int id;
 	string name;
 	list<Song> songs;
-	string created_at;
+	time_t created_at; // in unix timestamp
 public:
 	Playlist(string name) {
 		this->name = name;
 		songs = new vector<Song>();
-		auto timenow = chrono::system_clock::to_time_t(chrono::system_clock::now());
-		created_at = ctime(&timenow);
+		created_at = time(NULL);
 	}
+	int getId() { return id; }
 	void play();
 	bool addSong(Song song);
 	bool removeSong(Song song);

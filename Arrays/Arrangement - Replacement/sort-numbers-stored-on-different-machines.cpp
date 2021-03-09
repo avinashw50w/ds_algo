@@ -28,7 +28,7 @@ vector<int> solve(vector<vector<int>> A) {
     priority_queue<tiii, vector<tiii>, decltype(cmp)> Q(cmp);
 
     for (int i = 0; i < N; ++i) {
-        Q.push(make_tuple(a[i][0], i, 1));
+        Q.push(make_tuple(a[i][0], i, 0));
     }
 
     while (Q.size()) {
@@ -36,8 +36,8 @@ vector<int> solve(vector<vector<int>> A) {
         Q.pop();
         res.push_back(val);
 
-        if (j < A[i].size()) {
-            Q.push(make_tuple(A[i][j], i, j + 1));
+        if (j + 1 < A[i].size()) {
+            Q.push(make_tuple(A[i][j + 1], i, j + 1));
         }
     }
 }

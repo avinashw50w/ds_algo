@@ -19,6 +19,8 @@ Node *solve(vector<int> pre, int &i, int l, int r) {
         root->left = solve(pre, i, l, root->data);
         root->right = solve(pre, i, root->data, r);
     }
+
+    return root;
 }
 
 Node *construct(vector<int> preorder) {

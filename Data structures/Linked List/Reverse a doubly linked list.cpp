@@ -2,29 +2,33 @@ void reverse(Node *&head) {
 	Node *curr = head, *prev = NULL;
 
 	while (curr) {
-		prev = curr->prev;
-		curr->prev = curr->next;
+		Node *next = curr->next;
+		curr->prev = next;
 		curr->next = prev;
 
 		prev = curr;
-		curr = curr->prev;
+		curr = next;
 	}
-	if (prev) head = prev;
+
+	head = prev;
 }
 
 // recursive
-void swap(Node *node) {
-	Node *prev = node->prev;
-	node->prev = node->next;
-	node->next = prev;
-}
-void reverse(Node *&head, Node *curr) {
+void solve(Node *prev, Node *curr, Node *&head) {
 	if (!curr->next) {
-		swap(curr);
+		curr->prev = NULL;
+		curr->next = prev;
 		head = curr;
 		return;
 	}
 
-	swap(curr);
-	reverse(head, curr->prev);
+	Node *next = curr->next;
+	curr->prev = next;
+	curr->next = prev;
+
+	reverse(curr, next, head);
+}
+
+void reverse(Node *head) {
+	solve(head->prev, head, head);
 }

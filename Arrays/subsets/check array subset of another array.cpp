@@ -6,17 +6,14 @@ ans = yes
 // using sorting
 bool check(vector<int> a1, vector<int> a2) {
 	sort(a1.begin(), a1.end());
-	string ans = "YES";
+	sort(a2.begin(), a2.end());
+	int j = 0;
 
-	for (int i = 0; i < a2.size(); ++i) {
-		int id = lower_bound(a1.begin(), a1.end(), a2[i]) - a1.begin();
-		if (a1[id] != a2[i]) {
-			ans = "NO";
-			break;
-		}
+	for (int i = 0; i < a1.size(); ++i) {
+		if (a1[i] == a2[j]) j++;
 	}
 
-	return ans;
+	return j == a2.size();
 }
 
 // use hashing

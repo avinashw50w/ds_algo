@@ -2,6 +2,7 @@
 			a1 a2 a3|a4 a5 a6
 			   b1 b2|b3 b4
 
+|total elements on the left side - total elements on the right side| should be atmost 1
 we need to find a pivot in both arrays such that all the elements in the left side of
 the pivot is less than all the elements in the right side of the pivot and the
 difference in the no of elements in both sides is not greater than 1
@@ -28,7 +29,7 @@ int median(vector<int> a, vector<int> b) {
 		int j = halfLen - i;
 
 		if (i > l and a[i - 1] > b[j]) r = i - 1;
-		else if (i < r and j > 0 and b[j - 1] > a[i]) l = i - 1;
+		else if (i < r and j > 0 and b[j - 1] > a[i]) l = i + 1;
 		else {
 			int maxLeft = 0;
 			if (i == 0) maxLeft = B[j - 1];

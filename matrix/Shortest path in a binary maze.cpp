@@ -27,40 +27,66 @@ int dx[4] = {1, 0, -1, 0};
 int dy[4] = {0, 1, 0, -1};
 
 struct Point {
-	int x, y;
-	Point(int x, int y) : x(x), y(y) {}
+    int x, y;
+    Point(int x, int y) : x(x), y(y) {}
 };
 
 bool safe(int n, int m, int x, int y) {
-	return (x >= 0 and x < n and y >= 0 and y < m and mat[x][y] == 1 and !vis[x][y]);
+    return (x >= 0 and x < n and y >= 0 and y < m and mat[x][y] == 1 and !vis[x][y]);
 }
 
 int solve(vector<vector<int>> mat, Point src, Point dest) {
-	int n = mat.size(), m = mat[0].size();
-	queue<pair<Point, int>> q;
-	bool vis[n][m];
-	memset(vis, 0, sizeof(vis));
+    int n = mat.size(), m = mat[0].size();
+    queue<pair<Point, int>> q;
+    bool vis[n][m];
+    memset(vis, 0, sizeof(vis));
 
-	q.push({src, 0});
+    q.push({src, 0});
 
-	while (!q.empty()) {
-		auto top = q.top(); q.pop();
-		int x = top.first.x;
-		int y = top.first.y;
-		int d = top.second;
+    while (!q.empty()) {
+        auto top = q.top(); q.pop();
+        int x = top.first.x;
+        int y = top.first.y;
+        int d = top.second;
 
-		if (dest.x == x and dest.y == y) return d;
-		if (vis[x][y]) continue;
-		vis[x][y] = true;
+        if (dest.x == x and dest.y == y) return d;
+        if (vis[x][y]) continue;
+        vis[x][y] = true;
 
-		for (int i = 0; i < 4; ++i) {
-			int nx = x + dx[i];
-			int ny = y + dy[i];
-			if (safe(n, m, nx, ny)) {
-				q.push({Point(nx, ny), d + 1});
-			}
-		}
-	}
+        for (int i = 0; i < 4; ++i) {
+            int nx = x + dx[i];
+            int ny = y + dy[i];
+            if (safe(n, m, nx, ny)) {
+                q.push({Point(nx, ny), d + 1});
+            }
+        }
+    }
 
-	return -1;
+    return -1;
+}
+/////////////////////////////
+// the above using the distance array instead of visited array
+int solve(vector<vector<int>> mat, Point src, Point dest) {
+    int n = mat.size(), m = mat[0].size();
+    queue<Point> q;
+    int dist[n][m];
+    memset(dist, -1, sizeof(dist));
+    q.push(src);
+    dist[src.x][src.y] = 0;
+
+    while (!q.empty()) {
+        Point p = q.top(); q.pop();
+        int x = p.x, y = p.y;
+        if (dest.x == x and dest.y == y) return dist[x][y];
+
+        for (int i = 0; i < 4; ++i) {
+            int nx = x + dx[i];
+            int ny = y + dy[i];
+            if (safe(n, m, nx, ny) and dist[nx][ny] == -1) {
+                q.push(Point(nx, ny));
+            }
+        }
+    }
+
+    return -1;
 }

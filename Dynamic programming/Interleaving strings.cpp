@@ -75,8 +75,8 @@ bool interleaved(string a, string b, string c) {
     if (!a.size() and !b.size() and !c.size()) return true;
     if (!c.size()) return false;
 
-    bool x = a.size() and a[0] == c[0] and interleaved(a.substr(1), b, c.substr(1));
-    bool y = b.size() and b[0] == c[0] and interleaved(a, b.substr(1), c.substr(1));
+    bool x = a.size() && c.size() && a[0] == c[0] && interleaved(a.substr(1), b, c.substr(1));
+    bool y = b.size() && c.size() && b[0] == c[0] && interleaved(a, b.substr(1), c.substr(1));
 
     return x or y;
 }
@@ -113,7 +113,7 @@ bool solve(string A, string B, string C) {
             else if (j == 0 and A[i - 1] == C[i - 1]) dp[i][j] = dp[i - 1][j];
             else if (A[i - 1] == C[i + j - 1] and B[j - 1] != C[i + j - 1]) dp[i][j] = dp[i - 1][j];
             else if (A[i - 1] != C[i + j - 1] and B[j - 1] == C[i + j - 1]) dp[i][j] = dp[i][j - 1];
-            else if (A[i - 1] == C[i + 1j - 1] and B[j - 1] == C[i + j - 1]) dp[i][j] = dp[i - 1][j] || dp[i][j - 1];
+            else if (A[i - 1] == C[i + j - 1] and B[j - 1] == C[i + j - 1]) dp[i][j] = dp[i - 1][j] || dp[i][j - 1];
         }
     }
 }

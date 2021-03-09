@@ -28,9 +28,27 @@ Output:
 Explanation:
 Testcase 1:  The consecutive numbers here are 1, 2, 3, 4, 5, 6. These 6 numbers form the longest consecutive subsquence.
 
-Testcase2: 1, 2, 3, 4 is the longest consecutive subsequence.
+Testcase2: 1, 2, 3, 4 is the longest consecutive subsequence.*/
 
-IDEA: since the order of the subsequence doesn't matter, the problem reduces to
+int solve(vector<int> a) {
+	int n = a.size();
+	set<int> st;
+	for (int e : a) st.insert(a[i]);
+	int ans = 1;
+
+	for (int i = 0; i < n; ++i) {
+		// when the smallest element is found, find all other elements greater than it
+		if (st.count(a[i] - 1) == 0) {
+			int len = 1;
+			while (st.count(a[i] + len)) len++;
+			ans = max(ans, len);
+		}
+	}
+
+	return ans;
+}
+
+/*IDEA: since the order of the subsequence doesn't matter, the problem reduces to
 finding the longest subset with all consecutive nos.
 - sort the array
 - remove duplicates

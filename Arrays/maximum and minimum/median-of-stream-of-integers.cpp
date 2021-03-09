@@ -12,14 +12,12 @@ void addNumber(int n, maxHeap leftHeap, minHeap rightHeap)
 void rebalance(maxHeap leftHeap, minHeap rightHeap)
 {
 	if(leftHeap.size() - rightHeap.size() >= 2) {
-		int top = leftHeap.top();
+		rightHeap.push(leftHeap.top());
 		leftHeap.pop();
-		rightHeap.push(top);
 	}
 	else if(rightHeap.size() - leftHeap.size() >= 2) {
-		int top = rightHeap.top();
+		leftHeap.push(rightHeap.top());
 		rightHeap.pop();
-		leftHeap.push(top);
 	}
 }
 

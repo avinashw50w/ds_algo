@@ -10,11 +10,8 @@ char solve(string s) {
 
 	sort(index.begin(), index.end());
 
-	return s[index[0]];
+	return index[0] < n ? s[index[0]] : "";
 }
-
-
-
 
 
 /* Given a string, find the first non-repeating character in a single pass of the string.

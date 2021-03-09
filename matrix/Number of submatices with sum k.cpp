@@ -31,6 +31,38 @@ int solve(vector<vector<int>> mat, int K) {
 
 	return ans;
 }
+///////////////////////////////////
+// another way without calculating presum
+int count(vector<int> a, int k) {
+	map<int, int> mp;
+	int sum = 0, cnt = 0;
+	for (int i = 0; i < a.size(); ++i) {
+		sum += a[i];
+		cnt += sum == k;
+		cnt += mp[sum - k];
+		mp[sum]++;
+	}
+	return cnt;
+}
+
+int solve(vector<vector<int>> mat, int K) {
+	int n = mat.size(), m = mat[0].size();
+	if (n == 0 or m == 0) return 0;
+
+	int ans = 0;
+
+	for (int l = 0; l < m; ++l) {
+		vector<int> a(n, 0);
+		for (int r = l; r < m; ++r) {
+			for (int i = 0; i < n; ++i) {
+				a[i] += mat[i][r];
+			}
+			ans += count(a, K);
+		}
+	}
+
+	return ans;
+}
 
 /////////////////////////////////////////
 // doing the same thing above, but in row-wise manner

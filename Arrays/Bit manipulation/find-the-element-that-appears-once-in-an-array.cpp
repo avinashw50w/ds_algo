@@ -21,9 +21,11 @@ array increment the count of the element at the index 'i'.*/
 int find(int A[], int N, int K) {
 	int cnt[32] = {0};
 
-	REP(i, 0, N)
-	REP(j, 0, 32)
-	if (A[i] & (1 << j)) cnt[j]++;
+	REP(i, 0, N) {
+		REP(j, 0, 32) {
+			if (A[i] & (1 << j)) cnt[j]++;
+		}
+	}
 
 
 	int ans = 0;

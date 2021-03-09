@@ -1,5 +1,5 @@
 /*Given a binary tree, we need to find maximum value we can get by subtracting value of node B from value of node A,
-where A and B are two nodes of the binary tree and A is an ancestor of B. Expected time complexity is O(n).*/
+where A and B can be any two nodes of the binary tree where A is an ancestor of B. Expected time complexity is O(n).*/
 
 // IDEA: find the minimum valued node (mn) in the left and right subtree of A,
 // and calculate (A-mn). The ans will be the maximum of all such values for every node x.

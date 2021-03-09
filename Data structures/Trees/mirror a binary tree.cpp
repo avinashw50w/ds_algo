@@ -18,6 +18,16 @@ Node *solve(Node *n) {
 
 
 //////////////////////////////////
+//check if two trees are mirror images of each other
+
+bool checkMirror(Node *a, Node *b ) {
+    if (!a and !b) return true;
+    if (!a or !b) return false;
+    return a->val == b->val
+           and checkMirror(a->left, b->right)
+           and checkMirror(a->right, b->left);
+}
+/////////////////////////////////////
 
 // check if two trees a and b are similar or not
 bool sameTree(node* a, node* b) {

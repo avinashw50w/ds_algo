@@ -11,12 +11,13 @@ Output : 1 2 3 4 5 6 7 8 9 10*/
 vector<int> unique(int l, int r) {
 	vector<int> res;
 
-	vector<int> vis(10, 0);
 
 	for (int i = l; i <= r; ++i) {
+		vector<int> vis(10);
 		int n = i;
 		while (n) {
 			if (vis[n % 10]) break;
+			vis[n % 10]++;
 			n /= 10;
 		}
 		if (n == 0) res.push_back(i);

@@ -12,17 +12,17 @@ Node* XOR(Node *a, Node *b) {
 	return (Node*) ((uintptr_t)a ^ (uintptr_t)b);
 }
 
-void insert(Node **head, int data) {
+void insert(Node *&head, int data) {
 	Node *node = new Node();
 	node->data = data;
 
-	node->npx = *head;
+	node->npx = head;
 
-	if (*head) {
-		(*head)->npx = XOR((*head)->npx, node);
+	if (head) {
+		head->npx = XOR(head->npx, node);
 	}
 
-	*head = node;
+	head = node;
 }
 
 void print(Node *head) {
@@ -32,6 +32,6 @@ void print(Node *head) {
 		Node *next = XOR(prev, curr->npx);
 
 		prev = curr;
-		curr = curr->next;
+		curr = next;
 	}
 }

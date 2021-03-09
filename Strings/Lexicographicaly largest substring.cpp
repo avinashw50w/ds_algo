@@ -13,3 +13,8 @@ string maxSubstring(string s) {
 
     return *st.rbegin();
 }
+
+// another for loop variation
+for (int i = 0; i < n; ++i)
+    for (int j = i; j < n; ++j)
+        st.insert(s.substr(i, j - i + 1));

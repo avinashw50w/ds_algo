@@ -23,18 +23,18 @@ public:
 		tmp->next = head;
 		head = tmp;
 	}
-	
+
 	void print() {
 		Node *curr = head;
-		while(curr) cout << curr->data << " ", curr = curr->next;
+		while (curr) cout << curr->data << " ", curr = curr->next;
 		cout << endl;
 	}
-	
+
 	void reverse() {
 		Node *curr, *prev, *nxt;
 		curr = head;
 		prev = NULL;
-		
+
 		while (curr) {
 			nxt = curr->next;
 			curr->next = prev;
@@ -45,21 +45,21 @@ public:
 		head = prev;
 	}
 
-	void solveRec(Node *curr, Node *prev, Node **head) {
+	void solveRec(Node *prev, Node *curr, Node *&head) {
 		if (!curr->next) {
 			curr->next = prev;
-			*head = curr;
+			head = curr;
 			return;
 		}
 
 		Node *tmp = curr->next;
 		curr->next = prev;
-		solveRec(tmp, curr, head);
+		solveRec(curr, tmp, head);
 	}
 
 	void reverseRecur() {
 		if (!head) return;
-		solveRec(head, NULL, &head);
+		solveRec(NULL, head, head);
 	}
 
 };

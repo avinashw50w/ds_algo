@@ -4,7 +4,7 @@ We can find the maximum sum using single traversal of binary tree. The idea is t
 1) Maximum root to leaf path sum for the subtree rooted under current node.
 2) The maximum path sum between leaves (desired output).
 
-For every visited node X, we find the maximum root to leaf sum in left and right subtrees of X. We add the two values with X->data, 
+For every visited node X, we find the maximum root to leaf sum in left and right subtrees of X. We add the two values with X->data,
 and compare the sum with maximum path sum found so far.
 
 Following is the implementation of the above O(n) solution.*/
@@ -17,11 +17,10 @@ int solve(Node *root, int &res) {
 
     int ls = solve(root->left, res);
     int rs = solve(root->right, res);
-    
-    int ret = max(root->data, root->data + max(ls, rs));
-    res = max(res, max(ret, root->data + ls + rs));
 
-    return ret;
+    res = max(res, root->data + ls + rs);
+
+    return root->data + max(ls, rs);
 }
 
 int maxSum(Node *root) {

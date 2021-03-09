@@ -19,17 +19,17 @@ arr[] = {4, 8, 12, 7}
 // IDEA: Sort the heights and try every possible split into two halves [0, i-1]
 // and [i, n-1], where you add K to the left half and subtract K from the right half.
 // Then the difference for that split is
-// max(a[n-1] - K, a[i] + K) - min(a[0] + K, a[i] - K);
+// max(a[n-1] - K, a[i-1] + K) - min(a[0] + K, a[i] - K);
 
 int solve(vector<int> a, int K) {
-	int n = a.size();
-	sort(a.begin(), a.end());
+    int n = a.size();
+    sort(a.begin(), a.end());
 
-	int ans = a[n - 1] - a[0];
-	for (int i = 1; i < n; ++i) {
-		int diff = max(a[n - 1] - K, a[i - 1] + K) - min(a[0] + K, a[i] - K);
-		ans = min(ans, diff);
-	}
+    int ans = a[n - 1] - a[0];
+    for (int i = 1; i < n; ++i) {
+        int diff = max(a[i - 1] + K, a[n - 1] - K) - min(a[i] - K, a[0] + K);
+        ans = min(ans, diff);
+    }
 
-	return ans;
+    return ans;
 }

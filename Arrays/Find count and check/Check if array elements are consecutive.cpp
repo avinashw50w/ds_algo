@@ -35,7 +35,12 @@ It is an extension of method 2 and it has the same two steps.
 In this method, the implementation of step 2 differs from method 2. Instead of creating a new array,
 we modify the input array arr[] to keep track of visited elements. The idea is to traverse the array
 and for each index i (where 0 <= i < n), make arr[arr[i] – min]] as a negative value.
-If we see a negative value again then there is repetition.*/
+If we see a negative value again then there is repetition.
+
+NOTE: if array also contains -ve nos, then find the min in the array and add that min to
+every element of the array so that all elements become +ve. And then proceed as follows
+
+*/
 
 bool solve(int a[], int N)
 {

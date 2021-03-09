@@ -5,8 +5,9 @@ Sample Input:
 
 [3 4 1 4 1]
 Sample Output:
-
 1
+
+NOTE: we could have used Floy's hare and tortoise algo to solve this;
 If there are multiple possible answers ( like in the sample case above ), output any one.
 
 If there is no duplicate, output -1

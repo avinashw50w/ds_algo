@@ -1,73 +1,53 @@
-/*You are given n pairs of numbers. In every pair, the first number is always smaller than the second number. A pair (c, d) 
-can follow another pair (a, b) if b < c. Chain of pairs can be formed in this fashion. Find the longest chain which can be formed 
-from a given set of pairs. Source: Amazon Interview | Set 2
+/*You are given n pairs of numbers. In every pair, the first number is always smaller than the second number.
 
-For example, if the given pairs are {{5, 24}, {39, 60}, {15, 28}, {27, 40}, {50, 90} }, then the longest chain that can be formed 
-is of length 3, and the chain is {{5, 24}, {27, 40}, {50, 90}}
+Now, we define a pair (c, d) can follow another pair (a, b) if and only if b < c. Chain of pairs can be formed in this fashion.
 
-This problem is a variation of standard Longest Increasing Subsequence problem. Following is a simple two step process.
-1) Sort given pairs in increasing order of first (or smaller) element.
-2) Now run a modified LIS process where we compare the second element of already finalized LIS with the first element of new LIS being constructed.
-*/
-int maxChainLen(vector<pair<int,int> > v){
-	int n = v.size();
-	int *DP = new int[n];
-	for(int i=0;i<n;i++) DP[i]=1;
-	
-	sort(v.begin(),v.end());
-	for(int i=1;i<n;i++)
-	for(int j=0;j<i;j++){
-		if(v[j].second < v[i].first)
-		DP[i] = max(DP[i] , DP[j]+1);
-	}
-	int ans = *max_element(DP,DP+n);
-	delete DP;
-	return ans;
-}
+Given a set of pairs, find the length longest chain which can be formed. You needn't use up all the given pairs. You can select pairs in any order.
 
-/*
-struct pair{
-  int a;
-  int b;
+Example 1:
+Input: [[1,2], [2,3], [3,4]]
+Output: 2
+Explanation: The longest chain is [1,2] -> [3,4]
+Note:
+The number of given pairs will be in the range [1, 1000].*/
+// dp: O(N^2)
+class Solution {
+public:
+  int findLongestChain(vector<vector<int>>& pairs) {
+    sort(pairs.begin(), pairs.end(),
+    [](auto & a, auto & b) { return a[0] < b[0]; });
+
+    int n = pairs.size();
+    vector<int> dp(n, 1);
+    for (int i = 1; i < n; ++i) {
+      for (int j = 0; j < i; ++j) {
+        if (pairs[j][1] < pairs[i][0] and dp[i] < dp[j] + 1) {
+          dp[i] = dp[j] + 1;
+        }
+      }
+    }
+
+    return dp[n - 1];
+  }
 };
-int maxChainLength( struct pair arr[], int n)
-{
-   int i, j, max = 0;
-   int *mcl = (int*) malloc ( sizeof( int ) * n );
- 
-   // Initialize MCL (max chain length) values for all indexes 
-   for ( i = 0; i < n; i++ )
-      mcl[i] = 1;
- 
-   /* Compute optimized chain length values in bottom up manner 
-   for ( i = 1; i < n; i++ )
-      for ( j = 0; j < i; j++ )
-         if ( arr[i].a > arr[j].b && mcl[i] < mcl[j] + 1)
-            mcl[i] = mcl[j] + 1;
- 
-   // mcl[i] now stores the maximum chain length ending with pair i
- 
-   /* Pick maximum of all MCL values 
-   for ( i = 0; i < n; i++ )
-      if ( max < mcl[i] )
-         max = mcl[i];
- 
-   /* Free memory to avoid memory leak 
-   free( mcl );
- 
-   return max;
-}
- 
- 
-/* Driver program to test above function 
-int main()
-{
-    struct pair arr[] = { {5, 24}, {15, 25},
-                          {27, 40}, {50, 60} };
-    int n = sizeof(arr)/sizeof(arr[0]);
-    printf("Length of maximum size chain is %d\n",
-           maxChainLength( arr, n ));
-    return 0;
-}
-*/
 
+////////////////////////////////////////////////////
+// Greedy : O(NlogN)
+class Solution {
+  const int INF = 1e9;
+public:
+  int findLongestChain(vector<vector<int>>& pairs) {
+    // for getting the longest chain, sort according to the end of the chain
+    sort(pairs.begin(), pairs.end(),
+    [](vector<int> &a, vector<int> &b) { return a[1] < b[1]; });
+
+    int n = pairs.size(), ans = 0, curr = -INF;
+
+    for (auto p : pairs) if (curr < p[0]) {
+        curr = p[1];
+        ans++;
+      }
+
+    return ans;
+  }
+};

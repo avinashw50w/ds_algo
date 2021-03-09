@@ -1,4 +1,4 @@
-
+/*Given a parethesis sequence, find the longest prefix which is balanced.*/
 int solve(string s) {
 	int n = s.size();
 
@@ -13,11 +13,9 @@ int solve(string s) {
 
 		if (sum == 0) {
 			pos = i;
-			pos++;
 		}
 	}
 
-	if (i != n and left == 0) pos = i;
 
 	return pos;
 }

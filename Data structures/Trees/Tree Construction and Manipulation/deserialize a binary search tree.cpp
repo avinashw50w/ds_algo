@@ -1,10 +1,10 @@
 /*eg. if preorder traversal is given { 5,2,1,3,4,7,6,8 }. Then construct the bst from it. */
-/* the tree is contructed by breaking the list into left and right subtree : 
+/* the tree is contructed by breaking the list into left and right subtree :
 
 			5
 		 /     \
 	 2,1,3,4   7,6,8
-{nodes less  {nodes greater 
+{nodes less  {nodes greater
 than 5}			than 5 }
 */
 
@@ -20,9 +20,9 @@ Node* deserialize(int preorder[], int l, int h) {
 
 	Node *root = newNode(preorder[l]);
 
-	int divIndex = findDivision(preorder, l+1, h, root->val);
+	int divIndex = findDivision(preorder, l + 1, h, root->val);
 
-	root->left = deserialize(preorder, l+1, divIndex-1);
+	root->left = deserialize(preorder, l + 1, divIndex - 1);
 
 	root->right = deserialize(preorder, divIndex, h);
 
@@ -32,8 +32,8 @@ Node* deserialize(int preorder[], int l, int h) {
 /////////////////////////////////////////////////////////////
 /* O(n) solution */
 
-Node *deserialize(vector<int> preorder, int currIdx, int mini, int maxx) {
-	if (currIdx > preorder.size()) return NULL;
+Node *deserialize(vector<int> preorder, int &currIdx, int mini, int maxx) {
+	if (currIdx >= preorder.size()) return NULL;
 
 	Node *root = NULL;
 
@@ -52,6 +52,6 @@ Node *deserialize(vector<int> preorder, int currIdx, int mini, int maxx) {
 
 
 int main() {
-
-	deserialize(preorder, 0, INT_MIN, INT_MAX);
+	int i = 0;
+	deserialize(preorder, i, INT_MIN, INT_MAX);
 }

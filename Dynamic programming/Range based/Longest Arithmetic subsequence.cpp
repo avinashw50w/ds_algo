@@ -25,5 +25,5 @@ int solve(vector<int> a) {
 		index[a[i]] = i;
 	}
 
-	return dp[]
+	return ans;
 }

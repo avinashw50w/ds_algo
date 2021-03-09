@@ -22,7 +22,7 @@ class LRU {
             list.push_front(key);
         }
         else {
-            if (list.size() == cache_size()) {
+            if (list.size() == cache_size) {
                 mp.erase(list.back());
                 list.pop_back();
             }

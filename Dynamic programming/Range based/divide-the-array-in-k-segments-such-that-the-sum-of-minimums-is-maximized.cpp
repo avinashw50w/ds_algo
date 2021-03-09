@@ -23,7 +23,7 @@ vector<vector<int>> dp;
 
 int solve(int pos, int k) {
 	if (k == 0) {
-		return *min_element(a.begin(), a.end());
+		return *min_element(a.begin() + pos, a.end());
 	}
 	if (pos == n) return -INF;
 
@@ -51,7 +51,7 @@ int main() {
 // another varation is to find the minimum sum of the maximum of all the partitions
 
 int solve(int pos, int k) {
-	if (k == 0) return *max_element(a.begin(), a.end());
+	if (k == 0) return *max_element(a.begin() + pos, a.end());
 	if (pos == n) return INF;
 
 	if (dp[pos][k] != -1) return dp[pos][k];

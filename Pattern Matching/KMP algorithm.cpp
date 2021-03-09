@@ -4,7 +4,7 @@ using namespace std;
 // also a proper suffix for substring [0,i] , 0 <= i <= N-1
 /*
 Algo: j = 0, i = 1.
-If pattern at i matches pattern at j then f[i] = j+1, i++, j++;
+If char at i matches char at j then f[i] = j+1, i++, j++;
 Otherwise, while pat[i] doesn't match pat[j], do j = f[j-1];
  */
 vector<int> LPS(string pat) {

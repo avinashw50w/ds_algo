@@ -24,14 +24,16 @@ Input : x = 5, arr[] = {2, 6, 8, 3}
 Output :  arr[] = {6, 3, 2, 8}*/
 
 void solve(int a[], int n, int x) {
-    multimap<int, int> m;
+    map<int, vector<int>> mp;
 
     for (int i = 0; i < n; ++i)
-        m.insert(make_pair(abs(a[i] - x), a[i])); // m[abs(a[i]-x)] = a[i]; will not work in multimap
+        mp[abs(a[i] - x)].push_back(a[i]);
 
     int k = 0;
 
-    for (auto e : m) a[k++] = e.second;
+    for (auto p : m) {
+        for (int e : p.second) a[k++] = e;
+    }
 }
 
 /////////// using array

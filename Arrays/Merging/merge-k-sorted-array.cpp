@@ -41,7 +41,7 @@ struct cmp {
 
 vector<int> solve(vector<vector<int>> a, int n, int k) {
 
-	vector<int> output;
+	vector<int> res;
 	priority_queue<Node, vector<Node>, cmp> pq;
 	//priority_queue<Node, vector<Node>, decltype(comp)> pq(comp);
 
@@ -52,7 +52,7 @@ vector<int> solve(vector<vector<int>> a, int n, int k) {
 		Node top = pq.top();
 		pq.pop();
 
-		output.push_back(top.elem);
+		res.push_back(top.elem);
 
 		if (top.j < n) {
 			top.elem = a[top.i][top.j];
@@ -62,7 +62,7 @@ vector<int> solve(vector<vector<int>> a, int n, int k) {
 		}
 	}
 
-	return output;
+	return res;
 }
 
 int main() {

@@ -19,10 +19,10 @@ int findLength(string str, int n)
     int ans = 0;
  
     // Consider all possible midpoints one by one
-    for (int i = 0; i <= n-2; i++)
+    for (int pivot = 0; pivot <= n-2; pivot++)
     {
 
-        int l = i, r = i + 1;
+        int l = pivot, r = pivot + 1;
  
         int lsum = 0, rsum = 0;
  

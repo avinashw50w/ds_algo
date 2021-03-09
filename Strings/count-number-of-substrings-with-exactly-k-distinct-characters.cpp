@@ -5,6 +5,29 @@ The implementation below assume that the input string contains only characters f
 
 int solve(string s, int K) {
 	int n = s.length();
+	map<char, int> mp;
+	int cnt = 0, ans = 0, start = 0;
+	for (int i = 0; i < n; ++i) {
+		mp[s[i]]++;
+		while (mp.size() > K) {
+			mp[s[i - start]]--;
+			if (mp[s[i - start]] == 0) {
+				mp.erase(s[i - start]);
+				start++;
+			}
+		}
+
+		if (mp.size() == K) {
+			cnt++;
+			ans += cnt;
+		}
+	}
+
+	return ans;
+}
+
+int solve(string s, int K) {
+	int n = s.length();
 	unordered_map<int, int> mp;
 	int cnt = 0;
 	for (int i = 0; i < n; ++i) {

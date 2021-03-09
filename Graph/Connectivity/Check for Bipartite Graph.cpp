@@ -18,10 +18,12 @@ Following is a simple algorithm to find out whether a given graph is Birpartite 
 using namespace std;
 #define vi vector<int>
 int N;
-vi Color;
+vi color;
 vi *G;
 
 // using dfs
+color.assign(N, -1);
+
 bool IsBipartite(int u) {
 	color[u] = 1;
 	for (int v : G[u]) {

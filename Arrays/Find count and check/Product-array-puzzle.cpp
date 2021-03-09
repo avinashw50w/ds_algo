@@ -1,5 +1,5 @@
 /*A Product Array Puzzle
-Given an array arr[] of n integers, construct a Product Array prod[] (of same size) such that prod[i] is equal to 
+Given an array arr[] of n integers, construct a Product Array prod[] (of same size) such that prod[i] is equal to
 the product of all the elements of arr[] except arr[i]. Solve it without division operator and in O(n).
 
 Example:
@@ -13,18 +13,18 @@ Algorithm:
 
 void productPuzzle(int a[], int n) {
 
-	int left[n], right[n], prod[n];
+    int left[n], right[n], prod[n];
 
-	left[0] = 1, right[n-1] = 1;
+    left[0] = 1, right[n - 1] = 1;
 
-	for(int i = 1; i < n; ++i) 
-		left[i] = a[i-1] * left[i-1];
+    for (int i = 1; i < n; ++i)
+        left[i] = a[i - 1] * left[i - 1];
 
-	for(int i = n-2; i >= 0; --i) 
-		right[i] = a[i+1] * right[i+1];
+    for (int i = n - 2; i >= 0; --i)
+        right[i] = a[i + 1] * right[i + 1];
 
-	for(int i = 0; i < n; ++i) 
-		prod[i] = left[i] * right[i];
+    for (int i = 0; i < n; ++i)
+        prod[i] = left[i] * right[i];
 
-	for(int i = 0; i < n; ++i) cout << prod[i] <<" ";
+    for (int i = 0; i < n; ++i) cout << prod[i] << " ";
 }

@@ -1,5 +1,6 @@
 /*Find zeroes to be flipped so that number of consecutive 1’s is maximized
-Given a binary array and an integer m, find the position of zeroes flipping which creates maximum number of consecutive 1s in array, if we are allowed to flip maximum of m zeroes
+Given a binary array and an integer m, find the position of zeroes flipping which creates maximum number of consecutive 1s in array,
+NOTE: we are allowed to flip maximum of m zeroes
 
 Examples:
 
@@ -19,7 +20,10 @@ void solve(int a[], int n, int m) {
 
 	for (int i = 0; i < n; ++i) {
 
-		while (zeroes > m and a[l++] == 0) zeroes--;
+		while (zeroes > m) {
+			if (a[l] == 0) zeroes--;
+			l++;
+		}
 
 		zeroes += a[i] == 0;
 

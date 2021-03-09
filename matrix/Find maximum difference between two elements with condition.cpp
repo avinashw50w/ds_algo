@@ -13,7 +13,9 @@ Output: 18
 The maximum value is 18 as mat[4][2]
 - mat[1][0] = 18 has maximum difference.
 
-IDEA: mat(a,b) should lie below the diagonal where mat(c, d) lies
+IDEA: if c = a+1 and d = b+1, and mat[c][d] contains the maximum element so far,
+then ans = mat[c][d] - mat[a][b]. So to achieve to this, we need to start from the bottom right
+to top left and keep updating mat[i][j] to the maximum element so far
 */
 
 int solve(vector<vector<int>> mat) {
