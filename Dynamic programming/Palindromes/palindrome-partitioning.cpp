@@ -86,8 +86,8 @@ int main()
 // time complexity : O(n^3)
 /////////////////////////////////////////////////////////////////////////////////////////////////
 /*An optimization to above approach
-In above approach, we can calculating minimum cut while finding all palindromic substring. 
-If we finding all palindromic substring 1st and then we calculate minimum cut, time complexity will reduce to O(n2).*/
+In above approach, we r calculating minimum cut while finding all palindromic substring. 
+If we find all palindromic substring 1st and then we calculate minimum cut, time complexity will reduce to O(n2).*/
 
 int minPalPartion(char *str)
 {

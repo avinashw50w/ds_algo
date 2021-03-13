@@ -31,6 +31,45 @@ Output: true
 Explanation: ".*" means "zero or more (*) of any character (.)".*/
 
 // dp[i][j] : true if s[i:] can be repsented by the regular expression p[j:], otherwise false
+// a* - can be either "" or multiples of a
+// so if * appears after a char, then we can either skip it or repeat it
+// case 1: i+1 th char of p is '*'
+//      if s[i] doesn't match with p[j]: then skip the '*' : (i, j) -> (i, j+2)
+//      if s[i] matches with p[j]: then repeat '*' : (i, j) -> (i+1, j)
+// case 2: ith char is '.'
+//      if s[i] matches with p[j]: (i, j) -> (i+1, j+1)
+
+class Solution {
+    static const int maxn = 1e3+1;
+    int dp[maxn][maxn];
+public:
+    bool solve(string s, string p, int i, int j) {
+        if (i >= s.length() and j >= p.length()) return true;
+        if (j >= p.length()) return false;
+
+        if (dp[i][j] != -1) return dp[i][j];
+        bool first_char_match = i < s.length() ? (s[i] == p[j] or p[j] == '.') : false;
+
+        if (j + 1 < p.length() and p[j + 1] == '*') {
+            return dp[i][j] = solve(s, p, i, j + 2) or (first_char_match and solve(s, p, i + 1, j));
+        }
+
+        if (first_char_match) {
+            return dp[i][j] = solve(s, p, i + 1, j + 1);
+        }
+
+        return dp[i][j] = 0;
+    }
+    
+    bool isMatch(string s, string p) {
+        memset(dp, -1, sizeof(dp));
+        return solve(s, p, 0, 0);
+    }
+};
+
+////////////////////////////////////////////
+// bottom up
+
 class Solution {
 public:
     bool isMatch(string s, string p) {

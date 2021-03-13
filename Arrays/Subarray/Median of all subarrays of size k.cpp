@@ -3,7 +3,7 @@
 
 const int maxe = 202;
 int f[maxe];
-
+// median is the position such that the # of elements before it equals the # elements after it
 double median(int k) {
 	int cnt = 0;
 	for (int i = 0; i < maxe; ++i) {
@@ -32,47 +32,88 @@ vector<double> solve(vector<int> a, int k) {
 	return ans;
 }
 //////////////////////////////////////////////////////////////////
-set<int> big, small;
+class Solution {
+    set<array<int, 2>> minheap;
+    set<array<int, 2>, greater<array<int, 2>>> maxheap;
+public:
+    void rebalance() {
+        if (maxheap.size() > minheap.size()) {
+            minheap.insert(*maxheap.begin());
+            maxheap.erase(*maxheap.begin());
+        }
+    }
+    
+    double getMedian(int k, vector<int> nums) {
+        if (k & 1) {
+            return (double) nums[(*minheap.begin())[1]];
+        }
+        else {
+            return ((double) nums[(*minheap.begin())[1]] + nums[(*maxheap.begin())[1]]) / 2;
+        }
+    }
+    
+    vector<double> medianSlidingWindow(vector<int>& nums, int k) {
+        vector<double> res;
+        
+        for (int i = 0; i < nums.size(); ++i) {
+            if (i >= k) {
+                minheap.erase({ nums[i-k], i - k });
+                maxheap.erase({ nums[i-k], i - k });
+            }
+            
+            minheap.insert({ nums[i], i });
+            maxheap.insert(*minheap.begin()); minheap.erase(*minheap.begin());
+            
+            rebalance();
+            
+            if (i >= k - 1) res.push_back(getMedian(k, nums));
+        }
+            
+        return res;
+    }
+};
 
-void rebalance() {
-	if (small.size() > big.size()) {
-		big.insert(*small.rbegin());
-		small.erase(--small.end());
-	}
-	else if (big.size() > small.size()) {
-		small.insert(*big.begin());
-		big.erase(big.begin());
-	}
+/////////////////////////////////////////////////////////////////
+/*Find the median of all subarrays of size k*/
+
+double median(auto &it, bool isOdd) {
+	if (isOdd) return (double) * it;
+	int a = *it;
+	--it;
+	int b = *it;
+	++it;
+	return (a + b) / 2.0;
 }
 
-void add(int x) {
-	small.insert(x);
-	rebalance();
-}
-
-void rem(int x) {
-	if (small.count(x)) small.erase(small.find(x));
-	else big.erase(big.find(x));
-	rebalance();
-}
-
-double getMedian() {
-	if (small.size() == big.size())
-		return (*small.rbegin() + *big.begin()) / 2.0;
-	else if (small.size() > big.size())
-		return (double) * small.rbegin();
-	else
-		return (double) * big.begin();
-}
-
-vector<double> median(vector<int> a, int k) {
+vector<double> getMedian(vector<int> a, int k) {
 	int n = a.size();
 	vector<double> res;
-	for (int i = 0; i < k - 1; ++i) add(a[i]);
-	for (int i = k - 1; i < n; ++i) {
-		add(a[i]);
-		res.push_back(getMedian());
-		rem(a[i - k]);
+	multiset<int> st;
+	for (int i = 0; i < k; ++i)
+		st.insert(a[i]);
+
+	auto it = st.begin();
+	for (int i = 0; i < k / 2; ++i)
+		++it;
+
+	bool isOdd = k & 1;
+
+	res.push_back(median(it, isOdd););
+
+	for (int i = k; i < n; ++i) {
+		// remove a[i-k]
+		// eg. 1 2 3 4 5, med = 3, it at index 2,
+		//  after 1 is removed med = (3+4)/2, it at index 3
+		if (a[i - k] < *it)
+			++it;
+		st.erase(st.find(a[i - k]));
+		// insert a[i]
+		st.insert(a[i]);
+
+		if (a[i] < *it)
+			--it;
+
+		res.push_back(median(it, isOdd));
 	}
 
 	return res;
@@ -142,50 +183,7 @@ vector<double> median(vector<int> a, int k) {
 }
 
 // Approach 2
-/*Find the median of all subarrays of size k*/
 
-double median(auto &it, bool isOdd) {
-	if (isOdd) return (double) * it;
-	int a = *it;
-	--it;
-	int b = *it;
-	++it;
-	return (a + b) / 2.0;
-}
-
-vector<double> getMedian(vector<int> a, int k) {
-	int n = a.size();
-	vector<double> res;
-	multiset<int> st;
-	for (int i = 0; i < k; ++i)
-		st.insert(a[i]);
-
-	auto it = st.begin();
-	for (int i = 0; i < k / 2; ++i)
-		++it;
-
-	bool isOdd = k & 1;
-
-	res.push_back(median(it, isOdd););
-
-	for (int i = k; i < n; ++i) {
-		// remove a[i-k]
-		// eg. 1 2 3 4 5, med = 3, it at index 2,
-		//  after 1 is removed med = (3+4)/2, it at index 3
-		if (a[i - k] < *it)
-			++it;
-		st.erase(st.find(a[i - k]));
-		// insert a[i]
-		st.insert(a[i]);
-
-		if (a[i] < *it)
-			--it;
-
-		res.push_back(median(it, isOdd));
-	}
-
-	return res;
-}
 ////////////////////////////////////////
 // inefficient one
 multiset<int> st;

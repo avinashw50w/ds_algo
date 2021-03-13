@@ -44,7 +44,7 @@ int solve(vector<int> a) {
     int left_max = -1, right_max = -1;
     int l = 0, r = n - 1, ans = 0;
     while (l <= r) {
-        // note that left_max will always be less than a[r] and greater than a[l]
+        // note that left_max will always be less than a[r] and <= a[l]
         // coz we update left_max to max(left_max, a[l]) when a[l] < a[r]
         if (a[l] < a[r]) {
             left_max = max(left_max, a[l]);

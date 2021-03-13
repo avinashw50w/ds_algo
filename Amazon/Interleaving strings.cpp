@@ -25,22 +25,22 @@ int count(string a, string b) {
 
 // print all interleavings of two strings
 int n, m;
-void solve(string a, string b, string res, int p, int q) {
+void solve(string a, string b, string res, int i, int j) {
 
-    if (p == n and q == m) {
+    if (i == n and j == m) {
         cout << res << endl;
         return;
     }
 
-    if (p != n) {
-        res += a[p];
-        solve(a, b, res, p + 1, q);
+    if (i != n) {
+        res += a[i];
+        solve(a, b, res, i + 1, j);
         res.pop_back();
     }
 
-    if (q != m) {
-        res += b[q];
-        solve(a, b, res, p, q + 1);
+    if (j != m) {
+        res += b[j];
+        solve(a, b, res, i, j + 1);
         res.pop_back();
     }
 }
