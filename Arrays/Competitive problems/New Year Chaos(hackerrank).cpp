@@ -46,6 +46,7 @@ void minimumBribes(vector<int> a) {
             cnt++;
             swap(a[i - 1], a[i]);
         }
+        // 5 3 4
         else if (i - 2 >= 0 and a[i - 2] == i + 1) {
             cnt += 2;
             a[i - 2] = a[i - 1];

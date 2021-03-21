@@ -1,4 +1,7 @@
-/*Given a binary matrix of N x M, containing at least a value 1. The task is to find the distance of nearest 1 in the matrix for each cell. The distance is calculated as |i1 – i2| + |j1 – j2|, where i1, j1 are the row number and column number of the current cell and i2, j2 are the row number and column number of the nearest cell having value 1.
+/*Given a binary matrix of N x M, containing at least a value 1. The task is to find the 
+distance of nearest 1 in the matrix for each cell. The distance is calculated as 
+|i1 – i2| + |j1 – j2|, where i1, j1 are the row number and column number of the current cell 
+and i2, j2 are the row number and column number of the nearest cell having value 1.
 
 Examples:
 
@@ -24,7 +27,7 @@ int dy[4] = { 1, 0, -1, 0 };
 vector<vector<int>> solve(vector<vector<int>> mat) {
 	int n = mat.size(), m = mat[0].size();
 
-	int vis[n][m], dist[n][m];
+	int dist[n][m];
 	queue<pair<int, int>> q;
 
 	for (int i = 0; i < n; ++i) {
@@ -45,7 +48,8 @@ vector<vector<int>> solve(vector<vector<int>> mat) {
 
 		for (int i = 0; i < 4; ++i) {
 			int nx = x + dx[i], ny = y + dy[i];
-			if (nx >= 0 and nx < n and ny >= 0 and ny < m and !vis[nx][ny] and mat[nx][ny] != 1) {
+			if (nx >= 0 and nx < n and ny >= 0 and ny < m 
+				and dist[nx][ny] == INT_MAX and mat[nx][ny] != 1) {
 				dist[nx][ny] = min(dist[ny][ny], dist[x][y] + abs(nx - x) + abs(ny - y));
 				q.push({ nx, ny });
 			}
@@ -57,6 +61,11 @@ vector<vector<int>> solve(vector<vector<int>> mat) {
 
 ////////////////////////////////////////////////
 // below method is the same as above, just the 2d array is implemented as 1d
+// NOTE: there is no need to use visited array, cuz here distance array can be used as a
+// visited array too. Since we are doind bfs, each cell will be visited only once, and so 
+// its distance will also be updated only once. So we can put a check that if 
+// dist[nx][ny] == INT_MAX then it means that (nx, ny) is beign visited for the fist time,
+// and then we update dist[nx][ny], so that the next time its not visited again
 vector<vector<int>> solve(vector<vector<int>> mat) {
 	int n = mat.size(), m = mat[0].size();
 

@@ -4,9 +4,6 @@ The idea is that for a number to be median there should be exactly (n/2) numbers
 than this number. So, do a binary search on the median and count the no of elements less than
 the current chosen median. For counting the no of elements less than median, use upper_bound.
 There are N*M elements, so the median is the ((N*M + 1) / 2)th element
-
-NOTE: this problem is also similar to finding the Kth smallest element in the array.
-So, for this problem K = (N*M+1)/2
 */
 
 int median(vector<vector<int>> mat) {

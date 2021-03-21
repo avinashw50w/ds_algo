@@ -28,3 +28,18 @@ void zigzag(vector<int> &a) {
 		flag ^= 1;
 	}
 }
+
+/// Follow up: what if the elements are not distinct 
+/// eg. [1,3,2,2,3,1], ans = [2,3,1,3,1,2]
+void wiggleSort(vector<int>& a) {
+    vector<int> b(a.begin(), a.end());
+    sort(b.begin(), b.end());
+    int k = b.size()-1;
+    
+    for (int i = 1; i < a.size(); i += 2) {
+        a[i] = b[k--];
+    }
+    for (int i = 0; i < a.size(); i += 2) {
+        a[i] = b[k--];
+    }
+}

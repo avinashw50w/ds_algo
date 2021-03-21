@@ -10,8 +10,10 @@ int solve(vector<vector<int>> mat, int k) {
 
 	for (int i = 0; i < n; ++i)
 		for (int j = 0; j < m; ++j) {
-			dp[i][j] = mat[i][j] + dp[i-1][j] + dp[i][j-1];
-			if (i > 0 and j > 0) dp[i][j] -= dp[i-1][j-1];
+			dp[i][j] = mat[i][j];
+			if (i) dp[i][j] += dp[i-1][j];
+			if (j) dp[i][j] += dp[i][j-1];
+			if (i and j) dp[i][j] -= dp[i-1][j-1];
 		}
 
 	int ans = 0;

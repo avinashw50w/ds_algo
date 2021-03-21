@@ -16,25 +16,27 @@ Example 2:
 Input: arr = [1,4,1,5,7,3,6,1,9,9,3], k = 4
 Output: 83*/
 
-/*IDEA: if a subarray [i..j] has a[k] as the maximum element then after replacing all the elements of that
-subarray to a[k], the sum of elements of that subarray will be a[k] * (i-j+1)
-Let dp[i] be the maximum sum after partitioning the subarray [0..i] into subarrays of lenght atmost k
+/*IDEA: if a subarray [i..j] has x as the maximum element then after replacing all the elements 
+of that subarray to x, the sum of elements of that subarray will be x * (i-j+1)
+Let dp[i] be the maximum sum after partitioning the subarray [0..i] into subarrays of length 
+atmost k.
+so if we know the answer for dp[i], then dp[j+1] = max(dp[j+1], dp[i] + (j-i+1) * x)
 */
 int solve(vector<int> a, int k) {
 	int n = a.size();
-	vector<int> dp(n, INT_MIN);
-	int mx = INT_MIN;
-
-	dp[0] = a[0];
-	for (int i = 1; i < n; ++i) {
-		mx = a[i];
-		for (subsize = 1; subsize <= k; ++subsize) {
-			mx = max(mx, a[i - subsize + 1]);
-			dp[i] = max(dp[i], mx * subsize + dp[i - subsize]);
+	vector<int> dp(n + 1, INT_MIN);
+	dp[0] = 0;
+	
+	for (int i = 0; i < n; ++i) {
+		int mx = a[i];
+		for (int j = i; j < n and j - i + 1 <= k; ++j) {
+			mx = max(mx, a[j]);
+			dp[j+1] = max(dp[j+1], dp[i] + (j - i + 1) * mx);
 		}
 	}
+	
 
-	return dp[n - 1];
+	return dp[n];
 }
 
 /////////////////////////////////////////////////////////////

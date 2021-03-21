@@ -47,7 +47,7 @@ int main() {
 		// dp[j] = # of increasing subsequece of length j ending at a[i]
 		for(int j=0; j < k-1; j++) 
 			dp[j] = read(j, arr[i]);
-		
+		// update dp[j] such that it ends with a[i] + 1	
 		update(0, arr[i]+1, 1);
 		
 		for(int j=1; j < k; j++)

@@ -2,7 +2,19 @@
 For Example:
 ab: Number of insertions required is 1. bab or aba
 aa: Number of insertions required is 0. aa
-abcd: Number of insertions required is 3. dcbabcd */
+abcd: Number of insertions required is 3. dcbabcd 
+
+IDEA: 
+let's say we have the string : avinash
+here the first and the last char don't match, so we can either insert a at end OR h at the front 
+to make it a palindrome
+avinasha OR havinash
+_vinash_ OR _avinas_
+
+so dp[i][j] = 0 if i == j // cuz a single character is always a palindrome
+            = 1 if i+1 == j and s[i] != s[j]
+            = 1 + dp[i+1][j-1]
+*/
 
 int findMinInsertions(char str[], int l, int h)
 {
@@ -39,6 +51,38 @@ int findMinInsertionsDP(char str[], int n)
  
     // Return minimum number of insertions for str[0..n-1]
     return table[0][n-1];
+}
+
+// another way using push dp
+int minInsertion(string s) {
+    int n = s.size();
+    vector<vector<int>> dp(n, vector<int>(n, INF));
+    dp[0][n-1] = 0;
+    int ans = INF;
+    for (int L = 0; L < n; ++L) {
+        for (int R = n-1; R >= 0; --R) {
+            int curr = dp[L][R];
+            // for odd length palindrome
+            if (L == R) {
+                ans = min(ans, curr);
+                continue;
+            }
+            // for even length palindrome
+            if (L + 1 == R and s[L] == s[R]) {
+                ans = min(ans, curr);
+                continue;
+            }
+            if (s[L] == s[R]) {
+                dp[L+1][R-1] = min(dp[L+1][R-1], curr);
+            }
+            else {
+                dp[L][R-1] = min(dp[L][R-1], curr);
+                dp[L+1][R] = min(dp[L+1][R], curr);
+            }
+        }
+    }
+
+    return ans;
 }
  
 // Driver program to test above function.

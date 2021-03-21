@@ -1,48 +1,50 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    void breakIntoHalf(ListNode *&head, ListNode *&a, ListNode *&b) {
+        
+    }
+    
+    ListNode *merge(ListNode *a, ListNode *b) {
+        if (!a) return b;
+        if (!b) return a;
+        ListNode *res = NULL;
+        if (a->val <= b->val) {
+            res = a;
+            res->next = merge(a->next, b);
+        }
+        else {
+            res = b;
+            res->next = merge(a, b->next);
+        }
+        
+        return res;
+    }
 
-struct Node {
-	int data;
-	Node *next;
+    
+    ListNode* sortList(ListNode* head) {
+        if (!head or !head->next) return head;
+        ListNode *p = head, *s = head, *f = head;
+        while (f and f->next) {
+            p = s;
+            s = s->next;
+            f = f->next->next;
+        }
+        p->next = NULL;
+        
+        ListNode *a = sortList(head);
+        ListNode *b = sortList(s);
+        
+        return merge(a, b);
+    }
+        
 };
-
-Node* merge(Node *a, Node *b) {
-	Node *res;
-
-	if (!a) return b;
-	if (!b) return a;
-
-	if (a->data < b->data) {
-		res = a;
-		res->next = merge(a->next, b);
-	}
-	else {
-		res = b;
-		res->next = merge(a, b->next);
-	}
-
-	return res;
-}
-
-void breakIntoHalf(Node *head, Node *&a, Node *&b) {
-	Node *slow = head, *fast = head;
-	while (fast and fast->next) {
-		slow = slow->next;
-		fast = fast->next->next;
-	}
-	a = head;
-	b = slow->next;
-	slow->next = NULL;
-}
-
-void mergeSort(Node *&head) {
-	if (!head or !(head->next)) return NULL;
-
-	Node *h = head;
-	Node *a, *b;
-
-	breakIntoHalf(h, a, b);
-
-	mergeSort(a);
-	mergeSort(b);
-
-	head = merge(a, b);
-}

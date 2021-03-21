@@ -1,4 +1,4 @@
-/*Given an array of elements and cost of each element ai which is ci, Find the sum of 
+/*Given an array of elements a and cost of each element which is ci, Find the sum of 
 the increasing subsequence of size k such that its sum is maximum*/
 // dp[i][len] - maximum subsequence sum of size len upto index i
 int solve(vector<int> a, vector<int> cost, int k) {

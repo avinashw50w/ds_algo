@@ -12,19 +12,18 @@ The maximum sum path is 20-30-4-20.*/
 
 int solve(vector<vector<int>> mat) {
 	int n = mat.size(), m = mat[0].size();
+	const int inf = 1e9;
 	for (int i = 1; i < n; ++i) {
 		for (int j = 0; j < m; ++j) {
-			if (j > 0 and j < m - 1) {
-				mat[i][j] += max(mat[i - 1][j], max(mat[i - 1][j - 1], mat[i - 1][j + 1]));
-			}
-			else if (j > 0) {
-				mat[i][j] += max(mat[i - 1][j], mat[i - 1][j - 1]);
-			}
-			else {
-				mat[i][j] += max(mat[i - 1][j], mat[i - 1][j + 1]);
-			}
+			// find the maximum of the up, up-left and up-right
+			int mx = -inf;
+			mx = max(mx, mat[i-1][j]);
+			if (j) mx = max(mx, mat[i-1][j-1]);
+			if (j + 1 < m) mx = max(mx, mat[i-1][j+1]);
+			mat[i][j] += mx;
 		}
 	}
+
 	int ans = INT_MIN;
 	for (int i = 0; i < m; ++i) {
 		ans = max(ans, mat[n - 1][i]);

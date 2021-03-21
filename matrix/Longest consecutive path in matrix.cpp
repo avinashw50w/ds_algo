@@ -27,16 +27,16 @@ int solve(int i, int j) {
 
     if (res != -1) return res;
 
-    res = 1;
+    int len = 0;
 
     for (int k = 0; k < 4; ++k) {
         int nx = i + dx[k];
         int ny = j + dy[k];
         if (nx >= 0 and nx < N and ny >= 0 and ny < M and (grid[i][j] + 1) == grid[nx][ny])
-            return res = 1 + solve(nx, ny);
+            len = max(len, solve(nx, ny));
     }
 
-    return res;
+    return res = 1 + len;
 }
 
 int longestPath() {
@@ -50,9 +50,7 @@ int longestPath() {
 
     for (int i = 0; i < N; ++i) {
         for (int j = 0; j < M; ++j) {
-            if (dp[i][j] == -1)
-                solve(i, j);
-            res = max(res, dp[i][j]);
+            res = max(res, solve(i, j));
         }
     }
 

@@ -76,15 +76,16 @@ struct Node {
 	}
 };
 
-int findRange(int a[K][N]) {
+int findRange(vector<vector<int>> a) {
+	int K = a.size(), N = a[0].size();
 	set<Node> st;
 
 	for(int i = 0; i < K; ++i)
-		st.insert(Node(a[i][0], i, 1));
+		st.insert(Node(a[i][0], i, 0));
 
 	int ans = INT_MAX;
 	
-	while(st.size()) {
+	while(st.size() == K) {
 		Node top = st.begin();
 		Node bottom = st.end();
 
@@ -96,7 +97,8 @@ int findRange(int a[K][N]) {
 		int nextNumber = a[r][c];
 
 		st.erase(top);
-		if (c+1 < N)
+
+		if (c+1 < a[r].size())
 			st.insert(Node(nextNumber, r, c+1));
 
 	}

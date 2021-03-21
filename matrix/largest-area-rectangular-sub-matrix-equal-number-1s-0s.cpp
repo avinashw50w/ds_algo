@@ -50,10 +50,10 @@ void solve(vector<vector<int>> mat) {
 	int maxArea = 0;
 	int x1, y1, x2, y2; // coordinates of the final sub-matrix
 
-	for (int l = 0; l < c; ++l) {
+	for (int left = 0; left < c; ++left) {
 		vector<int> t(r);
-		for (int r = l; r < c; ++r) {
-			for (int i = 0; i < r; ++i) t[i] += mat[i][r];
+		for (int right = left; right < c; ++right) {
+			for (int i = 0; i < r; ++i) t[i] += mat[i][right];
 			int startRow, endRow;
 			if (kadane(t, startRow, endRow)) {
 				int area = (endRow - startRow + 1) * (right - left + 1);

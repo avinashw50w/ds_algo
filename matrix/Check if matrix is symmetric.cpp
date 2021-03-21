@@ -13,3 +13,9 @@ IDEA:
 1. create transpose of the matrix
 2. check if it's equal to the original one
 */
+// transpose of matrix
+for (int i = 0; i < n; ++i) 
+    for (int j = 0; j < m; ++j) 
+        if (i < j) 
+            swap(a[i][j], a[j][i]);
+        

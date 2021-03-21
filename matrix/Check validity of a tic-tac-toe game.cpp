@@ -3,9 +3,9 @@ A marks X and B marks O.
 Note that the first one to play marks X in the board. So after any move the count of X must be 
 either equal to or 1 greater than the count of O
 1. Only one player can win.
-2. Let count of X and O be cntX and cntY, then either cntX == cntY or cntX == cntY + 1
-3. If O wins then cntX == cntY
-4. if X wins then cntX == cntY + 1
+2. Let count of X and O be cntX and cntO, then either cntX == cntO or cntX == cntO + 1
+3. If O wins then cntX == cntO
+4. if X wins then cntX == cntO + 1
 */
 
 #include <iostream> 
@@ -24,7 +24,7 @@ int win[8][3] = {{0, 1, 2}, // Check first row.
   
 // Returns true if character 'c' wins. c can be either 
 // 'X' or 'O' 
-bool isCWin(char *board, char c) 
+bool isWinner(char *board, char c) 
 { 
     // Check all possible winning combinations 
     for (int i=0; i<8; i++) 
@@ -47,11 +47,11 @@ bool isValid(char board[9])
   
     if (xCount==oCount || xCount==oCount+1) { 
         // Check if 'O' is winner 
-        if (isCWin(board, 'O')) 
+        if (isWinner(board, 'O')) 
         { 
             // Check if 'X' is also winner, then 
             // return false 
-            if (isCWin(board, 'X')) 
+            if (isWinner(board, 'X')) 
                 return false; 
   
             // Else return true xCount and yCount are same 
@@ -59,7 +59,7 @@ bool isValid(char board[9])
         } 
   
         // If 'X' wins, then count of X must be greater 
-        if (isCWin(board, 'X') && xCount != oCount + 1) 
+        if (isWinner(board, 'X') && xCount != oCount + 1) 
         return false;  
   
         // If 'O' is not winner, then return true 

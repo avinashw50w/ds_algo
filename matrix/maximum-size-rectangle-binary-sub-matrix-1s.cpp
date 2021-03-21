@@ -15,9 +15,9 @@ The largest rectangle with only 1's is from
 1 1 1 1
 1 1 1 1 */
 
-int maxHist(int hist[], int n) {
+int maxHist(vector<int> hist) {
     stack<int> s;
-    int area, max_area = 0, i = 0, top;
+    int area, max_area = 0, i = 0, top, n = hist.size();
 
     while (i < n) {
 
@@ -38,8 +38,9 @@ int maxHist(int hist[], int n) {
 }
 /*----------------------------------------------------*/
 /*You are required to complete this method*/
-int maxArea(int M[MAX][MAX], int n, int m)
+int maxArea(vector<vector<int>> mat)
 {
+    int n = mat.size(), m = mat[0].size();
     int res = maxHist(M[0], m);
 
     for (int i = 1; i < n; ++i) {
@@ -54,3 +55,17 @@ int maxArea(int M[MAX][MAX], int n, int m)
     return res;
 }
 /*----------------------------------------------------*/
+// if matrix is not allowed to change
+int maxArea(vector<vector<int>> mat) {
+    int n = mat.size(), m = mat[0].size();
+    vector<int> t(m);
+    int ans = -inf;
+    
+    for (int i = 0; i < n; ++i) {
+        for (int j = 0; j < m; ++j) {
+            if (mat[i][j]) t[j] += 1;
+            else t[j] = 0;
+        }
+        ans = max(ans, maxHist(t));
+    }
+}

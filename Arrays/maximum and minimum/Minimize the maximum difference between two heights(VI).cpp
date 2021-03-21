@@ -18,9 +18,12 @@ arr[] = {4, 8, 12, 7}
 */
 // IDEA: Sort the heights and try every possible split into two halves [0, i-1]
 // and [i, n-1], where you add K to the left half and subtract K from the right half.
-// Then the difference for that split is
-// max(a[n-1] - K, a[i-1] + K) - min(a[0] + K, a[i] - K);
-
+/// [0..i-1] [i..n-1]
+//    +K      -K
+// means we add K to the all the elements int the range [0..i-1]
+// and subtract K to the elements in the range [i..n-1]
+//  after such operation the maximum possible no can be either a[i-1] + K or a[n-1] - K
+//  and the minimum possible value can be either a[0] + K or a[i] - K
 int solve(vector<int> a, int K) {
     int n = a.size();
     sort(a.begin(), a.end());
