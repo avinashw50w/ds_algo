@@ -12,14 +12,13 @@ Output: 3
 An empty digit sequence is considered to have one decoding. It may be assumed that the input contains valid 
 digits from 0 to 9 and there are no leading 0’s, no extra trailing 0’s and no two or more consecutive 0’s.
 
-We strongly recommend to minimize the browser and try this yourself first.
-
-This problem is recursive and can be broken in sub-problems. We start from end of the given digit sequence. 
-We initialize the total count of decodings as 0. We recur for two subproblems.
-1) If the last digit is non-zero, recur for remaining (n-1) digits and add the result to total count.
-2) If the last two digits form a valid character (or smaller than 27), recur for remaining (n-2) digits and add the result to total count.*/
-
-// Given a digit sequence of length n, returns count of possible
+IDEA: let dp[i] - # of possible decodings upto index i
+let say the string is 3 2 4 1 3
+3 2 4 1 _ : decode 3 as C and add the previous answer which is dp[i-1]
+3 2 4 _ _ : decode  1 3 as M and add the previous answer which is dp[i-2]
+so dp[i] += dp[i-1] if ith digit > 0
+and dp[i] += dp[i-2] if the i-1th and ith digit lies btw 10 to 26
+*/
 // decodings by replacing 1 with A, 2 woth B, ... 26 with Z
 int countDecoding(char *digits, int n)
 {
@@ -75,26 +74,28 @@ int countDecodingDP(char *digits, int n)
 
 // space optimized //
 
-int countDecodings(char* str){
-	int n = strlen(str);
-	if(n<=1) return 1;
-
-	// a = dp[i-2], b = dp[i-1], c = dp[i]
-	int a=1,b=1,c=0;
-	for(int i=1; i<n; i++){
-		if(str[i]=='0'){
-			c = a;
-		} else {
-			c = b;
-			if(str[i-1]=='1' || (str[i-1]=='2' && str[i] < '7')) {
-				c += a;
-			}
-		}
-
-		a = b;
-		b = c;
-	}
-	return c;
+int numDecodings(string s) {
+    if (s.empty()) return 0;
+    
+    int a, b, c;
+    a = b = c = s[0] != '0';
+    
+    for (int i = 1; i < s.length(); ++i) {
+        // if curr digit is 0, then the prev digit should be either 1 or 2
+        if (s[i] == '0') {
+            if (s[i-1] != '1' and s[i-1] != '2') return 0;
+            c = a;
+        }
+        else {
+            c = b;
+            if (s[i-1] == '1' or (s[i-1] == '2' and s[i] < '7')) c += a;
+        }
+        
+        a = b;
+        b = c;
+    }
+    
+    return c;
 }
 
 int main(){

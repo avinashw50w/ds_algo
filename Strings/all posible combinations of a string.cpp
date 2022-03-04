@@ -7,7 +7,7 @@ void solve(string s) {
     for (int i = 0; i < mask; ++i) {
         string res = "";
         for (int j = 0; j < n; ++j) {
-            if (i & (1 << j)) res += s[j];
+            if (i>>j&1) res += s[j];
         }
         cout << res << endl;
     }

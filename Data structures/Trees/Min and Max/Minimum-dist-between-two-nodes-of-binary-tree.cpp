@@ -77,7 +77,7 @@ int findDistance(Node *root, int n1, int n2)
  
     // If n1 is ancestor of n2, consider n1 as root and find level 
     // of n2 in subtree rooted with n1
-    if (d1 != -1)
+    if (d2 == -1)
     {
         dist = findLevel(lca, n2, 0);
         return dist;
@@ -85,7 +85,7 @@ int findDistance(Node *root, int n1, int n2)
  
     // If n2 is ancestor of n1, consider n2 as root and find level 
     // of n1 in subtree rooted with n2
-    if (d2 != -1)
+    if (d1 == -1)
     {
         dist = findLevel(lca, n1, 0);
         return dist;

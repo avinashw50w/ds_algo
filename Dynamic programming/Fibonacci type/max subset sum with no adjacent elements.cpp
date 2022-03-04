@@ -8,7 +8,7 @@ constraints:
 int maxSubsetSum(vector<int> a) {
     int n = a.size();
     vector<int> dp(n+1);
-    int x = 0, y = a[0] > 0 ? a[0] : 0, z = max(x, y);
+    int x = 0, y = 0, z = 0;
     
     for (int i = 1; i < n; ++i) {
         if (a[i] >= 0) z = max(y, a[i] + x);

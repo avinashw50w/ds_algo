@@ -6,11 +6,11 @@ Output: 64
 
 vector<int> price;
 
-int solve(int s, int e, int year) {
-    if (s == e) return price[s] * year;
+int solve(int l, int r, int year) {
+    if (l == r) return price[l] * year;
 
-    int left = price[s] * year + solve(s + 1, e, year + 1);
-    int right = price[e] * year + solve(s, e - 1, year + 1);
+    int left = price[l] * year + solve(l + 1, r, year + 1);
+    int right = price[r] * year + solve(l, r - 1, year + 1);
 
     return max(left, right);
 }
@@ -22,15 +22,15 @@ solve(0, N - 1, 1);
 int dp[N][N];
 memset(dp, -1, sizeof(dp));
 
-int solve(int s, int e, int year) {
-    if (dp[s][e] != -1) return dp[s][e];
+int solve(int l, int r, int year) {
+    if (dp[l][r] != -1) return dp[l][r];
 
-    if (s == e) return dp[s][e] = price[s] * year;
+    if (l == r) return dp[l][r] = price[l] * year;
 
-    int left = price[s] * year + solve(s + 1, e, year + 1);
-    int right = price[e] * year + solve(s, e - 1, year + 1);
+    int left = price[l] * year + solve(l + 1, r, year + 1);
+    int right = price[r] * year + solve(l, r - 1, year + 1);
 
-    return dp[s][e] = max(left, right);
+    return dp[l][r] = max(left, right);
 }
 
 // bottom up

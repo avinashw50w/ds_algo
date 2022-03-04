@@ -1,10 +1,25 @@
 /* Given an array containing both positive and negative numbers, find the subsets whose sum is equal to x. */
 
-#include <iostream>
-#include <cmath>
-#include <vector>
-using namespace std;
+// iterate over all possible subsets
+void solve(vector<int> a, int x) {
+	int n = a.size();
+	int mask = 0;
+	for (int i = 0; i < (1<<n); ++i) {
+		int sum = 0;
+		for (int j = 0; j < n; ++j) {
+			if (i>>j&1) sum += a[i];
+		}
+		if (sum == x) {
+			mask = i; break;
+		}
+	}
 
+	// print the mask
+	for (int i = 0; i < n; ++i) {
+		if (mask>>i&1)  cout << a[i] << " ";
+	}
+}
+//////////////////////////////////////////////////////////
 void print(int arr[], int sz, int k) 
 {
 	int idx = 0;

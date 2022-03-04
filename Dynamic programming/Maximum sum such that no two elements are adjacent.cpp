@@ -29,13 +29,12 @@ int solve(vector<int> a) {
 }
 
 //// using three variables
+// it also handles all -ve nos : returns 0 
 int solve(vector<int> arr) {
 	int n = arr.size();
-	int a = 0,
-	    b = a[0],
-	    c = max(a, b);
+	int a = 0, b = 0, c = 0;
 
-	for (int i = 1; i < n; ++i) {
+	for (int i = 0; i < n; ++i) {
 		c = max(b, a[i] + a);
 		a = b;
 		b = c;

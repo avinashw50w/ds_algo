@@ -42,12 +42,13 @@ both of the two cases. We consider the max of above two cases for every floor an
                  x in {1, 2, ..., k}}
 2) Overlapping Subproblems
 Following is recursive implementation that simply follows the recursive structure mentioned above.*/
+int dp[maxn][maxk];
 
 int solve(int n, int k) {
 	if (k <= 1) return k;
 
 	if (n == 1) return k;
-
+    if (dp[n][k] != -1) return dp[n][k];
 	int ans = INT_MAX, res;
 
 	// Consider all droppings from 1st floor to kth floor and 
@@ -57,7 +58,7 @@ int solve(int n, int k) {
 		ans = min(ans, res);
 	} 
 
-	return ans + 1; // 1 is added coz we have dropped the egg
+	return dp[n][k] = ans + 1; // 1 is added coz we have dropped the egg
 }
 
 // DP solution

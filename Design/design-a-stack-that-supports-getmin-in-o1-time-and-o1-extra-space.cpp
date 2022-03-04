@@ -9,6 +9,8 @@ If stack is empty, insert x into the stack and make minEle equal to x.
 If stack is not empty, compare x with minEle. Two cases arise:
 If x is greater than or equal to minEle, simply insert x.
 If x is less than minEle, insert (2*x – minEle) into the stack and make minEle equal to x. For example, let previous minEle was 3. Now we want to insert 2. We update minEle as 2 and insert 2*2 – 3 = 1 into the stack.
+x < minEle => 2*x < 2*minEle => 2*x - minEle < minEle
+
 Pop() : Removes an element from top of stack.
 
 Remove element from top. Let the removed element be y. Two cases arise:

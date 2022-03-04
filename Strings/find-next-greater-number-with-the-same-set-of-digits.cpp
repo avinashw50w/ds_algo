@@ -81,7 +81,5 @@ int main()
     findNext(digits, n);
     return 0;
 }
-Run on IDE
-Output:
 
-Next number with same set of digits is 536479
+//Next number with same set of digits is 536479

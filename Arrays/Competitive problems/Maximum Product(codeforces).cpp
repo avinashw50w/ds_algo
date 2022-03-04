@@ -49,7 +49,8 @@ void solve() {
 	 * whichever combination has the maximum product is the answer
 	 */
 	int ans = INT_MIN;
-	for (int j = 0, p = 1; j < 5; ++j) {
+	for (int j = 0 j < 5; ++j) {
+		int p = 1;
 		// take j elements from the beginning
 		for (int i = 0; i < j; ++i) p *= a[i];
 		// take 5 - j elements from the end

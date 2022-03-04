@@ -27,10 +27,15 @@ void dfs(int u, int par) {
 int LCA(int a, int b) {
 	if(depth[a] < depth[b]) 
 		swap(a, b);
-
-	for (int i = LOGN - 1; i >= 0; i--)
-        if (depth[dp[i][a]] >= depth[b]) 
+    
+    int diff = depth[a] - depth[b];
+    for (int i = 0; i < LOGN; ++i) {
+        if (diff>>i&1)
             a = dp[i][a];
+    }
+	// for (int i = LOGN - 1; i >= 0; i--)
+ //        if (depth[dp[i][a]] >= depth[b]) 
+ //            a = dp[i][a];
 
 	if(a != b) {
 		for(int i = LOGN - 1 ; i >= 0 ; --i){
@@ -66,7 +71,9 @@ int main() {
 	dist[1] = 0;
 
 	dfs(1, 0);
-
+    // let x = 2^i th parent of j
+    // let y = 2^(i-1) th parent of j
+    // then x = 2^(i-1) th parent of y
 	for(int i = 1; i < LOGN; ++i)
 		for(int j = 1; j <= N; ++j)
 			dp[i][j] = dp[i-1][dp[i-1][j]];

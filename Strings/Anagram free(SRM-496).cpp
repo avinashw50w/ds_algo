@@ -34,7 +34,7 @@ Here is an example of a short C++ implementation: */
    for(int i = 0; i < S.size(); ++i)
    {
    		sort(S[i].begin(), S[i].end());
-   		if(M.count(S)) M[S]++;
+   		M[S]++;
    }
 
    int ans = INF;

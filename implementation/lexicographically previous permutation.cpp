@@ -8,7 +8,9 @@ using namespace std;
 prevPermutation(string &str) {
 	// Find index of the last element of the string
 	int n = str.length() - 1;
-	// Find largest index i such that str[i ? 1] > str[i]
+	// Find largest index i such that str[i - 1] > str[i]
+	// 64541234
+	//     ^
 	int i = n;
 	while (i && str[i - 1] <= str[i])
 		i--;
@@ -17,10 +19,9 @@ prevPermutation(string &str) {
 	// if string is sorted in ascending order
 	// we're at the last permutation if (i <= 0) return false;
 	// Note - str[i..n] is sorted in ascending order
-	// Find rightmost element's index that is less
-	// than str[i - 1]
+	// Find the largest element in [i..n-1] that is less than str[i - 1]
 	int j = i - 1;
-	while (j + 1 <= n && str[j + 1] <= str[i - 1])
+	while (j + 1 < n && str[j + 1] <= str[i - 1])
 		j++;
 	// Swap character at i-1 with j
 	swap(str[i - 1], str[j]);

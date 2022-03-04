@@ -20,3 +20,19 @@ int solve(int n) {
 
 	return dp[n];
 }
+
+////////////////////////////////////////////////////////////////
+// another way
+int solve(int n) {
+	int dp[n + 1];
+	dp[0] = 0;
+	for (int i = 1; i <= n; ++i) {
+		dp[i] = 1e9;
+		string s = to_string(i);
+		for (char c: s) {
+			dp[i] = min(dp[i], 1 + dp[i - (c - '0')]);
+		}
+	}
+
+	return dp[n];
+}

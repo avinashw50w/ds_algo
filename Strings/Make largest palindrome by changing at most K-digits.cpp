@@ -28,7 +28,7 @@ string solve(string s, int k) {
 	r = n - 1;
 	while (l <= r) {
 		if (l == r) {
-			if (k > 0) palin[l] = '9';
+			if (k) palin[l] = '9', k--;
 		}
 
 		if (palin[l] != '9') {

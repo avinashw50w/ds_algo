@@ -48,8 +48,6 @@ int solve(string s, set<string> dict) {
 		if (dict.count(s.substr(0, i + 1))) dp[i] = true;
 
 		if (dp[i]) {
-			if (i == N - 1) return true;
-
 			for (j = i + 1; j < N; ++j) {
 				if (dict.count(s.substr(i + 1, j - i))) dp[j] = true;
 			}

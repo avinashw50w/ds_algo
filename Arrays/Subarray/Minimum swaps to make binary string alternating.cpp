@@ -1,5 +1,4 @@
 /*Minimum swaps required to make a binary string alternating
-Last Updated: 28-12-2018
 You are given a binary string of even length and equal number of 0’s and 1’s. What is the
 minimum number of swaps to make the string alternating. A binary string is alternating if no two consecutive elements are equal.
 

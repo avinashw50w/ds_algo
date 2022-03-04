@@ -3,29 +3,15 @@ Return false if no such path can be found.
 Algorithm:
 Recursively check if left or right child has path sum equal to ( number – value at current node)*/
 
-bool hasPathSum(struct node* node, int sum)
-{
-  	/* return true if we run out of tree and sum==0 */
-  	if (node == NULL)
-	 	return (sum == 0);
-  
-	bool ans = 0;  
+bool solve(Node *root, int sum) {
+	if (!root) return sum == 0;
 
-	/* otherwise check both subtrees */
-	int subSum = sum - node->data;
+	sum -= root->data;
+	if (isLeaf(root) and sum == 0) return true;
 
-	/* If we reach a leaf node and sum becomes 0 then return true*/
-	if ( subSum == 0 && node->left == NULL && node->right == NULL )
-	 	return 1;
-
-	if(node->left)
-	  	ans = ans || hasPathSum(node->left, subSum);
-	if(node->right)
-	  	ans = ans || hasPathSum(node->right, subSum);
-
-	return ans;
-  
+	return solve(root->left, sum) or solve(root->right, sum);
 }
+
 
 ///////////////////////////////////////////////////////////////////////////////
 // to print the path also , we need to do some changes //

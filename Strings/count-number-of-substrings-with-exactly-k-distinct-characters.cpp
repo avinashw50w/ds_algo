@@ -1,8 +1,9 @@
 /*Given a string of lowercase alphabets, count all possible substrings (not necessarily distinct) that has exactly k distinct characters.
-The problem can be solved in O(n*n). Idea is to maintain a hash table while generating substring
+The problem can be solved in O(n). Idea is to maintain a hash table while generating substring
 and checking the number of unique characters using that hash table.
 The implementation below assume that the input string contains only characters from ‘a’ to ‘z’.*/
-
+// T: O(n)
+// S: O(26) => O(1)
 int solve(string s, int K) {
 	int n = s.length();
 	map<char, int> mp;
@@ -26,6 +27,9 @@ int solve(string s, int K) {
 	return ans;
 }
 
+////////////////////////////////////////////////////////////////
+// inefficient
+// O(n*n)
 int solve(string s, int K) {
 	int n = s.length();
 	unordered_map<int, int> mp;

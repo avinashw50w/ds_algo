@@ -1,8 +1,8 @@
 /*Count the # of subarray having sum less than k*/
 // IDEA: use merge sort
 // prefix[i] : prefix sum upto index i
-// prefix[j] - prefix[i] <= k for any subarray [i+1, j]
-// prefix[i] - prefix[j] >= k for any subarray [i+1, j]
+// prefix[j] - prefix[i] < k for any subarray [i+1, j]
+// prefix[i] - prefix[j] > k for any subarray [i+1, j]
 
 int ans;
 int k;
@@ -12,8 +12,8 @@ void merge(vector<int> &a, int l, int mid, int r) {
     vector<int> t(r-l+1);
 
     while (i <= mid and j <= r) {
-        if (a[i] >= a[j]) {
-            if (a[i] >= a[j] + k) {
+        if (a[i] > a[j]) {
+            if (a[i] > a[j] + k) {
                 ans += mid - i + 1;
                 t[k++] = a[j++];
             }
@@ -54,9 +54,8 @@ int solve(vector<int> a, int k) {
     int start = 0, end = 0;
     while (start < n and end < n) {
         if (sum < k) {
-            end++;
-            if (end >= start) cnt += end - start;
-            if (end < n) sum += a[end];
+            if (end < n) sum += a[end++];
+            if (end >= start) cnt += end - start + 1;
         }
         else {
             sum -= a[start++];

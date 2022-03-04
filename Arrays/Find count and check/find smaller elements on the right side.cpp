@@ -30,13 +30,11 @@ vector<int> solve(vector<int> a) {
         a[i] = d + 1;
     }
 
+    memset(bit, 0, sizeof(bit));
     vector<int> res(N);
-    res[N - 1] = 0;
 
-    update(a[N - 1], 1);
-
-    for (int i = N - 2; i >= 0; --i) {
-        res[i] = sum(a[i] - 1);
+    for (int i = N - 1; i >= 0; --i) {
+        res[i] = a[i] > 1 ? sum(a[i] - 1) : 0;
         update(a[i], 1);
     }
 

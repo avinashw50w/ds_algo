@@ -31,10 +31,11 @@ int dx[] = {1, 0, -1, 0};
 int dy[] = {0, 1, 0, -1};
 
 int mat[R][C], vis[R][C];
+int dist[R][C];
 
-bool valid(int x, int y) { return (x >= 0 and x<R and y >= 0 and y < C); }
+bool valid(int x, int y) { return (x >= 0 and x < R and y >= 0 and y < C); }
 
-bool safe(int x, int y) { return (mat[x][y] == 1 and !vis[x][y]); }
+bool safe(int x, int y) { return (mat[x][y] == 1 and dis[x][y] == -1); }
 
 void markUnsafeCells() {
 	rep(i, 0, R) {
@@ -50,6 +51,49 @@ void markUnsafeCells() {
 	}
 	rep(i, 0, R) rep(j, 0, C) if (mat[i][j] == -1) mat[i][j] = 0;
 }
+
+// using bfs (efficient: whenever shortest distance is asked use bfs or dijkshra algo)
+// it's an example of multisource bfs
+struct Point {
+	int x, y;
+	Point(int i, j) {
+		x = i;
+		y = j;
+	}
+};
+
+int shortestPath() {
+	markUnsafeCells();
+	queue<Point> q;
+	for (int i = 0; i < R; ++i) {
+		if (mat[i][0] == 1) {
+			q.push(Point(i, 0));
+			dist[i][0] = 0;
+		}
+	}
+
+	while (q.size()) {
+		auto top = q.front(); q.pop();
+		int x = top.x, y = top.y;
+		for (int i = 0; i < 4; ++i) {
+			int nx = x + dx[i], ny = y + dy[i];
+			if (valid(nx, ny) and safe(nx, ny)) {
+				dist[nx][ny] = dist[x][y] + 1;
+				q.push(Point(nx, ny));
+			}
+		}
+	}
+	int ans = INF;
+	for (int i = 0; i < R; ++i) {
+		if (dist[i][C-1] != -1) ans = min(ans, dist[i][C-1]);
+	}
+}
+
+/////////////////////////////////////////////////////////
+// using dfs (inefficient : takes exponential time)
+bool valid(int x, int y) { return (x >= 0 and x<R and y >= 0 and y < C); }
+
+bool safe(int x, int y) { return (mat[x][y] == 1 and !vis[x][y]); }
 
 void findShortestPathUtil(int x, int y, int &minDist, int dist) {
 	if (y == C - 1) {

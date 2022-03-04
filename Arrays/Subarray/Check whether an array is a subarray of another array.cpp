@@ -9,22 +9,16 @@ also keep track of the index where the matching starts
 
 bool solve(int A[], int B[], int n, int m) {
 
-	int i = 0, j = 0, start = -1;
-
-	while (i < n and j < m) {
-
-		if (A[i] == B[j]) {
-
-			if (start == -1) start = i;
-			i++; j++;
-
-			if (j == m) return true;
+	int l, r;
+	for (int i = 0; i < n; ++i) {
+		int cnt = 0;
+		for (int j = 0; j < m; ++j) {
+			if (A[i+j] == B[j]) cnt++;
 		}
-		else {
-
-			i = ++start;
-			start = -1;
-			j = 0;
+		if (cnt == m) {
+			l = i;
+			r = i + m - 1
+			return true
 		}
 	}
 

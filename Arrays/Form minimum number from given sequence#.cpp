@@ -19,7 +19,7 @@ string solve(string s) {
 	int cnt = 1;
 
 	for (int i = 0; i <= n; ++i) {
-		if (i == n or i == 'I') {
+		if (i == n or s[i] == 'I') {
 			for (int j = i; j >= 0; --j) {
 				res[j] = '0' + (cnt++);
 				if (j - 1 >= 0 and s[j - 1] == 'I') break;

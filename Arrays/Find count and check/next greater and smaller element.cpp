@@ -5,14 +5,9 @@ vector<int> nextGreater(vector<int> a) {
     vector<int> res(n, -1);
     stack<int> st;
 
-    for (int i = 0; i < n; ++i) {
-        while (!st.empty() and a[st.top()] < a[i]) {
-            // here we store the index of next greater element,
-            // we can also store the next greater element, res[st.top()] = a[i]
-            res[st.top()] = i;
-            st.pop();
-        }
-
+    for (int i = n-1; i >= 0; --i) {
+        while (!st.empty() and a[st.top()] <= a[i]) st.pop();
+        res[i] = st.empty() ? -1 : st.top();
         st.push(i);
     }
 
@@ -24,12 +19,10 @@ vector<int> nextSmaller(vector<int> a) {
     vector<int> res(n, -1);
     stack<int> st;
 
-    for (int i = 0; i < n; ++i) {
-        while (!st.empty() and a[st.top()] > a[i]) {
-            res[st.top()] = i;
-            st.pop();
-        }
-
+    for (int i = n-1; i >= 0; --i) {
+        while (!st.empty() and a[st.top()] >= a[i]) st.pop();
+        
+        res[i] = st.empty() ? -1 : st.top();
         st.push(i);
     }
 
@@ -41,12 +34,9 @@ vector<int> prevGreater(vector<int> a) {
     vector<int> res(n, -1);
     stack<int> st;
 
-    for (int i = n - 1; i >= 0; --i) {
-        while (!st.empty() and a[i] < a[st.top()]) {
-            res[st.top()] = i;
-            st.pop();
-        }
-
+    for (int i = 0; i < n; ++i) {
+        while (!st.empty() and a[st.top()] <= a[i]) st.pop();
+        res[i] = st.empty() ? -1 : st.top();
         st.push(i);
     }
 
@@ -58,12 +48,10 @@ vector<int> prevSmaller(vector<int> a) {
     vector<int> res(n, -1);
     stack<int> st;
 
-    for (int i = n - 1; i >= 0; --i) {
-        while (!st.empty() and a[i] > a[st.top()]) {
-            res[st.top()] = i;
-            st.pop();
-        }
+    for (int i = 0; i < n; ++i) {
+        while (!st.empty() and a[st.top()] >= a[i]) st.pop();
 
+        res[i] = st.empty() ? -1 : st.top();
         st.push(i);
     }
 

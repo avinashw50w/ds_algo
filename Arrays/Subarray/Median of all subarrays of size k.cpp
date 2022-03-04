@@ -43,12 +43,12 @@ public:
         }
     }
     
-    double getMedian(int k, vector<int> nums) {
+    double getMedian(int k) {
         if (k & 1) {
-            return (double) nums[(*minheap.begin())[1]];
+            return (double) (*minheap.begin())[0];
         }
         else {
-            return ((double) nums[(*minheap.begin())[1]] + nums[(*maxheap.begin())[1]]) / 2;
+            return ((double) (*minheap.begin())[0] + (*maxheap.begin())[0]) / 2.0;
         }
     }
     
@@ -66,7 +66,7 @@ public:
             
             rebalance();
             
-            if (i >= k - 1) res.push_back(getMedian(k, nums));
+            if (i >= k - 1) res.push_back(getMedian(k));
         }
             
         return res;

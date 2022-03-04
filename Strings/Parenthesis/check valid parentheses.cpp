@@ -27,7 +27,8 @@ int main() {
 
 /////////////////////////////////////
 // without stack
-
+// if at point of time, the #of closed brackets is greater than the #of open brackets
+// then it is not valid
 bool solve(string s) {
 	int l = 0, r = 0;
 	for (char c : s) {

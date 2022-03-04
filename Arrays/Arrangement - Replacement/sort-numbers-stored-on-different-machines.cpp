@@ -19,8 +19,8 @@ the linked list or by replacing the head of the minHeap with the last number in 
 
 3. Repeat the above step 2 until heap is not empty.*/
 
-typedef tuple<int, int, int> tiii
-auto cmp = [] (const tiii &a, const tiii &b) { return get<0>(a) > get<0>(b); };
+typedef array<int, 3> tiii
+auto cmp = [] (const tiii &a, const tiii &b) { return a[0] > b[0]; };
 
 vector<int> solve(vector<vector<int>> A) {
     vector<int> res;
@@ -28,12 +28,13 @@ vector<int> solve(vector<vector<int>> A) {
     priority_queue<tiii, vector<tiii>, decltype(cmp)> Q(cmp);
 
     for (int i = 0; i < N; ++i) {
-        Q.push(make_tuple(a[i][0], i, 0));
+        Q.push({a[i][0], i, 0});
     }
 
     while (Q.size()) {
-        tie(val, i, j) = Q.top();
+        tiii top = Q.top();
         Q.pop();
+        val = top[0]; i = top[1]; j = top[2];
         res.push_back(val);
 
         if (j + 1 < A[i].size()) {

@@ -3,11 +3,11 @@ A wiggle sequence is such that the a1 > a2 < a3 > a4 < ... or a1 < a2 > a3 < a4 
 eg. [1, 17, 5, 10, 13, 15, 10, 5, 16, 8]
 ans = [1, 17, 5, 15, 5, 16, 8]
 
-IDEA: let up[i] = longest alternate subsequnce such that a[i] > a[i-1]
-down[i] = longest such subsequence such that a[i] < a[i-1]
+IDEA: let up[i] = longest alternate subsequnce such that it ends with a[i-1] < a[i]
+down[i] = longest such subsequence such that it ends with a[i-1] > a[i]
 So at each step, we can either take a[i] or not.
 So if we take a[i] the up[i] = down[i-1] + 1, and if we don't then up[i] = up[i-1]
-the up[i] = max(up[i-1], down[i-1] + 1) if a[i] > a[i-1] . eg a[i-2] > a[i-1] < a[i]
+So up[i] = max(up[i-1], down[i-1] + 1) if a[i] > a[i-1] . eg a[i-2] > a[i-1] < a[i]
 and down[i] = max(down[i-1], up[i-1] + 1) if a[i] < a[i-1]. eg a[i-2] < a[i-1] > a[i]
 */
 

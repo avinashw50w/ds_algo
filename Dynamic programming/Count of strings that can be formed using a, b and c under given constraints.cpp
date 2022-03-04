@@ -47,7 +47,8 @@ int solve(int n, int bCount = 1, int cCount = 2)
 }
 
 /// O(1) solution
-
+// if we have a (x times), b(y times) and c(z times)...
+// then the # of possible combinations are: (x + y + z)! / x! * y! * z!
 int solve(int n) {
 	return (n * (n - 1) * (n - 2) / 2) // a=n-b-c, b=1 c=2 => n!/(n-3)! * 1! * 2!
 	       + (n * (n - 1) / 2) // a=n-b-c, b=0 c=2 => n!/(n-2)! * 2!

@@ -24,7 +24,17 @@ dp(i) = Maximum possible Stack Height with box i at top of stack
 dp(i) = { Max ( dp(j) ) + height(i) } where j < i and width(j) > width(i) and depth(j) > depth(i).
 If there is no such j then dp(i) = height(i)
 
-4) To get overall maximum height, we return max(dp(i)) where 0 < i < n */
+4) To get overall maximum height, we return max(dp(i)) where 0 < i < n 
+
+NOTE that any rotation of a box will not be taken again, cuz we are taking boxes having strictly
+greater length and width than the prev box
+all combination of length and width of a box after rotation:
+l w | h
+h w | l
+l h | w
+if we pick any two boxes, say l w and h w, one of the dimension is matching, so it is not strictly increasing,
+and that's why we can take atmost one rotation of a box.
+*/
 struct Box {
 	int h, w, l;
 };

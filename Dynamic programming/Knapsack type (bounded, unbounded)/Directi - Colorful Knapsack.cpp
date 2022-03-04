@@ -56,7 +56,7 @@ int main() {
 
 		memset(dp, 0, sizeof(dp));
 
-		dp[1][0] = 1;
+		dp[0][0] = 1;
 
 		rep(i, 0, M + 1) v[i].clear();
 
@@ -68,7 +68,7 @@ int main() {
 			v[color].push_back(W[i]);
 		}
 
-		// iterate through stones of each color
+		// iterate through each color
 		rep(i, 1, M + 1) {
 
 			int sz = v[i].size();

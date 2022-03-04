@@ -17,22 +17,22 @@ Note that the function to find InOrder Successor is highlighted (with gray backg
 struct node
 {
     int data;
-    struct node* left;
-    struct node* right;
-    struct node* parent;
+    node* left;
+    node* right;
+    node* parent;
 };
  
-struct node * minValue(struct node* node); 
+node * minValue(node* node); 
  
-struct node * inOrderSuccessor(struct node *root, struct node *n)
+node * inOrderSuccessor(node *root, node *n)
 {
   // step 1 of the above algorithm 
-  if( n->right != NULL )
+  if( n->right)
     return minValue(n->right);
  
   // step 2 of the above algorithm
-  struct node *p = n->parent;
-  while(p != NULL && n == p->right)
+  node *p = n->parent;
+  while(p && n == p->right)
   {
      n = p;
      p = p->parent;
@@ -55,13 +55,13 @@ Travel down the tree, if a node’s data is greater than root’s data then go r
 node * inOrderSuccessor(node *root, node *n)
 {
     // step 1 of the above algorithm
-    if( n->right != NULL )
+    if( n->right)
         return minValue(n->right);
  
     node *succ = NULL;
  
     // Start from root and search for successor down the tree
-    while (root != NULL)
+    while (root)
     {
         if (n->data < root->data)
         {

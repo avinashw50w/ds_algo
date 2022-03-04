@@ -13,19 +13,34 @@ Output : For index 0, {1, -5, 1, -5} = 4
              index 2, {1, -5} = 2
              index 3, {-5} = 1.*/
 
-vector<int> solve(vector<int> a) {
+int solve(vector<int> a) {
     int n = a.size();
     vector<int> dp(n, 1);
-    dp[n - 1] = 1;
+    int ans = 1;
     for (int i = n - 2; i >= 0; --i) {
         if (a[i] * a[i + 1] < 0) dp[i] = 1 + dp[i + 1];
+        ans = max(ans, dp[i]);
     }
 
-    return dp;
+    return ans;
 }
 
 ///////////////////////////
 dp[0] = 1;
 for (int i = 1; i < n; ++i) {
     if (a[i] * a[i - 1] < 0) dp[i] = 1 + dp[i - 1];
+}
+
+////////////////////////////////
+// without using dp array
+int solve(vector<int> a) {
+    int n = a.size(), cnt = 1, ans = 1;
+    for (int i = 1; i < n; ++i) {
+        if (a[i] * a[i-1] < 0) {
+            cnt++;
+            ans = max(ans, cnt);
+        }
+        else cnt = 1;
+    }
+    return cnt;
 }
