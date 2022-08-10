@@ -18,7 +18,7 @@ int solve(vector<vector<int>> mat, int n, int m, int k) {
 	if (n < 0 or m < 0) return 0;
 	if (n == 0 and m == 0) return k == mat[n][m];
 	if (dp[n][m][k] != -1) return dp[n][m][k];
-	dp[n][m][k] = solve(mat, n, m - 1, k - 1) + solve(mat, n - 1, m, k - 1);
+	dp[n][m][k] = solve(mat, n, m - 1, k - mat[n][m]) + solve(mat, n - 1, m, k - mat[n][m]);
 	return dp[n][m][k];
 }
 

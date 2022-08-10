@@ -9,7 +9,7 @@ void invert(Node *root) {
     queue<Node*> nodes;
     stack<int> values;
 
-    int level = false;
+    int invert = false;
     q.push(root);
 
     while (!q.empty()) {
@@ -19,13 +19,13 @@ void invert(Node *root) {
             Node *curr = q.front();
             q.pop();
 
-            if (level) {
+            if (invert) {
                 nodes.push(curr);
                 values.push(curr->data);
             }
 
             if (n == 0) {
-                level ^= 1;
+                invert ^= 1;
 
                 while (!nodes.empty()) {
                     Node * tmp = nodes.front();

@@ -6,8 +6,8 @@ then ans = fun(k) - fun(k-1)
 int atmostK(vector<int> a, int k) {
     int n = a.size();
     map<int, int> mp;
-    int st = 0, end = 0, cnt = 0;
-    while (end < n) {
+    cnt = 0;
+    for (int st = 0, end = 0; end < n; ++end) {
         mp[a[end]]++;
         
         while (mp.size() > k) {
@@ -17,7 +17,6 @@ int atmostK(vector<int> a, int k) {
         }
 
         cnt += end - st + 1;
-        end++;
     }
 
     return cnt;

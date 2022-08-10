@@ -7,7 +7,7 @@ int solve(Node *root, int &res) {
 	int ls = solve(root->left, res);
 	int rs = solve(root->right, res);
 
-	res = max(res, 1 + ls + rs);
+	res = max(res, root->data + ls + rs);
 
 	return root->data + max(ls, rs);
 }

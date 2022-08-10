@@ -10,9 +10,6 @@
  */
 class Solution {
 public:
-    void breakIntoHalf(ListNode *&head, ListNode *&a, ListNode *&b) {
-        
-    }
     
     ListNode *merge(ListNode *a, ListNode *b) {
         if (!a) return b;

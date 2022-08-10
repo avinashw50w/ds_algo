@@ -15,9 +15,9 @@ int solve(vector<int> a) {
 		int l = 0, r = i - 1;
 		while (l < r) {
 			if (a[l] + a[r] > a[i]) {
-				// if a[l] + a[r] > a[i] then all the elements from index l+1 to r-1
-				// can be used to form the triangle because all those elements are
-				// greater than a[l] and can be used in place of a[l]
+				// If it is possible with a[l], a[r]
+                // and a[i] then it is also possible
+                // with a[l+1]..a[r-1], a[r] and a[i]
 				res += r - l;
 				r--;
 			}

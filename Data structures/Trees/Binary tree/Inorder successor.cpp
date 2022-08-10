@@ -5,11 +5,13 @@ node* Find(node* root,int data){
 	if(data < root->data) Find(root->left);
 	else Find(root->right);
 }
+
 node* findMin(node* root){
-while(root->left)
-root = root->left;
-return root;
+	while(root->left)
+		root = root->left;
+	return root;
 }
+
 node* getSuccessor(node* root,int data){
 	node* curr = Find(root,data);
 	if(curr==NULL) return NULL;

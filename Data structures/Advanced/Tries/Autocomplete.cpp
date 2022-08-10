@@ -1,3 +1,69 @@
+struct Node {
+    char c;
+    vector<Node*> children;
+    bool isLeaf;
+
+    Node (char c) {
+        this->c = c;
+        this->children = new vector<Node*>(26, NULL);
+        this->isLeaf = false;
+    } 
+};
+
+class Solution {
+    Node *trie;
+
+public:
+    Solution(vector<string> dict) {
+        this->trie = new Node("");
+        for (string word: dict) insert(word);
+    } 
+
+    void insert(string word) {
+        Node *curr = trie;
+        for (int i = 0; i < word.length(); ++i) {
+            char c = word[i];
+            if (curr->children[c-'a'] == NULL) {
+            	curr->chlildren[c-'a'] = new Node(c);
+            }
+        	curr = curr->children[c-'a'];
+        }
+
+        curr->isLeaf = true;
+    }
+
+    vector<string> getWords(string prefix) {
+        vector<string> res;
+
+        Node *curr = trie;
+
+        for (char c: prefix) {
+            if (curr->children[c-'a'] != NULL) {
+                curr = curr->children[c-'a'];
+            }
+            else return res;
+        }
+
+        getWordsRec(curr, res, prefix);
+
+        return res;
+    }
+
+    void getWordsRec(Node *curr, vector<stirng> &res, string prefix) {
+        if (curr->isLeaf) {
+            res.push_back(prefix);
+        }
+
+        for (int i = 0; i < 26; ++i ) {
+            if (curr->children[i] != NULL) {
+                prefix += curr->children[i]->c;
+                getWordsRec(curr->children[i], res, prefix);
+            }
+        }
+    }
+
+};
+
 #include <iostream>
 #include <map>
 #include <vector>

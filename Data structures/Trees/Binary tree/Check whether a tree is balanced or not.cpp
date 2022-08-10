@@ -24,6 +24,7 @@ bool isBalanced(Node *n)
     return false;
 }
 
+// returns the height of the subtree rooted at n if the subtree is balanced otherwise returns -1
 int balancedHeight(Node *n)
 {
     if (n == NULL) return 0;

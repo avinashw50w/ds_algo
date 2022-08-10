@@ -23,35 +23,23 @@ form of a list.
 IDEA: use serialization
 */
 
-void serialise(Node *root, unordered_set<string> &st, vector<string> &res) {
-    if (!root) return "$";
-    string s = "";
-    string l = serialise(root->left, st);
-    string r = serialise(root->right, st);
-    s += to_string(root->data) + l + r;
-
-    if (st.count(s)) res.push_back(s);
-    st.insert(s);
-}
-
 // another way to serialize
-string serialise(Node *root, auto &st, auto &res) {
-    if (!root) return "";
-    string s = "(";
-    s += serialise(root->left, st, res);
-    s += to_string(root->data);
-    s += serialise(root->right, st, res);
-    s += ")";
+unordered_map<string, int> mp;
+vector<string> res;
 
-    if (st.count(s)) res.push_back(s);
-    st.insert(s);
+string serialise(Node *root) {
+    if (!root) return "";
+    string s = to_string(root->val) + "(" + serialise(root->left) + ")" + "(" + serialise(root->right) + ")";
+    // push subtree only once if it's duplicate present
+    // that's why used map here instead of set
+    if(mp[s] == 1) res.push_back(root);
+    mp[s]++;
+    
     return s;
 }
 
-vector<string> solve(Node *root) {
-    unordered_set<string> st;
-    vector<string> res;
-    serialise(root, st, res);
-    for (string s : st) res.push_back(s);
+vector<Node*> solve(Node *root) {
+    
+    serialise(root);
     return res;
 }

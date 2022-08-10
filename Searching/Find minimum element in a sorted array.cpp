@@ -29,6 +29,27 @@ public:
     }
 };
 
+class Solution {
+public:
+    int findMin(vector<int>& nums) {
+        int l=0,h=nums.size()-1;
+        if(nums[l]<=nums[h])
+            return nums[l];
+        while(l<=h){
+            int mid=l+(h-l)/2;
+            if(nums[mid]>nums[mid+1])
+                return nums[mid+1];
+            else if(nums[mid]<nums[mid-1])
+                return nums[mid];
+            else if(nums[mid]>=nums[0])
+                l=mid+1;
+            else
+                h=mid-1;
+        }
+        return -1;
+    }
+};
+
 // recursive
 int solve(vector<int> a, int l, int r) {
     if (l == r) return a[l];

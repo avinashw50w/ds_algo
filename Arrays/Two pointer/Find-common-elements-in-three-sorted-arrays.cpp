@@ -19,7 +19,7 @@ vector<int> findCommon(vector<int> a, vector<int> b, vector<int> c) {
     // duplicates may come, so store the common elements in set
     set<int> st;
     vector<int> res;
-    while (i < n1 and j < n2 and c < n3) {
+    while (i < n1 and j < n2 and k < n3) {
         if (a[i] == b[j] and b[j] == c[k]) {
             st.insert(a[i]);
             i++; j++; k++;

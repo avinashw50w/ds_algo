@@ -66,6 +66,8 @@ pair<int,int> solve(Node *root) {
 // because when 2 is the root, all the nodes in the subtree of 2 will have their depths decreased by 1, and all the nodes outside the subtree
 // will have their depths increased by 1.
 
+// p.first = the DepthSum of the subtree rooted at n
+// p.second = the no of nodes in the subtree rooted at n
 int ans = 0;
 int totalSize = 0;
 
@@ -82,9 +84,9 @@ pair<int,int> dfs(Node *root) {
     pair<int,int> lchild = dfs(root->left);
     pair<int,int> rchild = dfs(root->right);
 
-    p.second += (lchild.second + lchild.first) + (rchild.second + rchild.first);
-    p.first += (lchild.first + rchild.first);
-    root->size = p.first;
+    p.first += (lchild.first + lchild.second) + (rchild.first + rchild.second);
+    p.second += (lchild.second + rchild.second);
+    root->size = p.second;
     return p;
 }
 
@@ -108,8 +110,8 @@ void dfs2(Node *root, Node *target, int sumDepth) {
 int solve(Node *root, Node *target) {
     pair<int,int> p = dfs(root);
 
-    int sumDepth = p.second;
-    totalSize = p.first;
+    int sumDepth = p.first;
+    totalSize = p.second;
 
     dfs2(root, target, sumDepth);
 

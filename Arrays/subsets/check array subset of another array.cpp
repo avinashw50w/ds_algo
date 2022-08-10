@@ -3,7 +3,7 @@ eg. a1 = 11 1 13 21 3 7
 a2 = 11 3 7 1
 ans = yes
 */
-// using sorting
+// using sorting and then check whether a2 is a subsequence of a1
 bool check(vector<int> a1, vector<int> a2) {
 	sort(a1.begin(), a1.end());
 	sort(a2.begin(), a2.end());

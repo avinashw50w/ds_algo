@@ -24,18 +24,18 @@ int main() {
 	G.resize(N + 1);
 
 	for (int i = 0; i < N; ++i) {
-		int u, v, w;
-		cin >> u >> v >> w;
+		int u, v;
+		cin >> u >> v;
 		G[u].push_back(v);
 		G[v].push_back(u);
 	}
 
 	int first = 1;
-	best = { -1, -1};
+	best = { -1, -1 };
 	DFS(first, -1, 0);
 
 	int second = best.second;
-	best = { -1, -1};
+	best = { -1, -1 };
 	DFS(second, -1, 0);
 
 	return best.first;

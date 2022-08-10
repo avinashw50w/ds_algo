@@ -37,6 +37,7 @@ public class Subscriber {
 
 	public void subscribeChannel(Channel channel) {
 		this.channel = channel;
+		this.channel.subscribe(this);
 	}
 
 

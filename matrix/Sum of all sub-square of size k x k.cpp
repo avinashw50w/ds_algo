@@ -1,6 +1,31 @@
 #include <bits/stdc++.h> 
-using namespace std; 
+using namespace std;
 
+vector<int> solve(vector<vector<int>> mat, int K) {
+	int N = mat.size();
+	int M = mat[0].size();
+	vector<int> res;
+	int dp[N + 1][M + 1];
+	memset(dp, 0, sizeof(dp));
+
+	for (int i = 0; i < N; ++i) {
+		for (int j = 0; j < M; ++j) {
+			dp[i+1][j+1] = mat[i][j] + dp[i+1][j] + dp[i][j+1] - dp[i][j];
+		}
+	}
+
+	for (int i = 1; i + K <= N; ++i) {
+		for (int j = 1; j + K <= M; ++j) {
+			int sum = dp[i+K][j+K] - dp[i+K][j] - dp[i][j+K] + dp[i][j];
+			res.push_back(sum);
+		}
+	}
+
+	return res;
+}
+
+////////////////////////////////////////////////
+// another way
 vector<int> solve(vector<vector<int>> mat, int K) {
 	int N = mat.size();
 	vector<int> res;

@@ -11,6 +11,24 @@ Input: mat[4][5] = { {1, 2, 3, 4, 5},
                     {1, 3, 5, 7, 9},
                   };
 Output: 5
+*/
+
+vector<int> solve(vector<vector<int>> mat) {
+	unordered_map<int, int> mp;
+	vector<int> res;
+	int n = mat.size(), m = mat[0].size();
+	for (int i = 0; i < n; ++i) {
+		for (int j = 0; j < m; ++j) {
+			if (mp[mat[i][j]] == i) {
+				mp[mat[i][j]] = i + 1;
+				if (i == n-1) res.push_back(mat[i][j]);
+			}
+		}
+	}
+	return res;
+}
+
+/*
 A O(m*n*n) simple solution is to take every element of first row and search it in all other rows, till we find a common element. 
 Time complexity of this solution is O(m*n*n) where m is number of rows and n is number of columns in given matrix. 
 This can be improved to O(m*n*Logn) if we use Binary Search instead of linear search.

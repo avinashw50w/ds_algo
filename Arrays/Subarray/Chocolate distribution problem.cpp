@@ -12,7 +12,7 @@ int solve(vector<int> a, int M) {
     int N = a.size();
     sort(a.begin(), a.end());
     int ans = 1e9;
-    for (int i = 0; i <= N - M; ++i) {
+    for (int i = 0; i + M - 1 < N; ++i) {
         ans = min(ans, a[i + M - 1] - a[i]);
     }
     return ans;

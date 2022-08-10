@@ -38,8 +38,8 @@ int main() {
 
 int zeroes = 0;
 for (int i = 0; i < n; ++i) {
+    if (a[i] == 0) zeroes++;
     int x = a[i] % n;
-    if (x == 0) zeroes++;
     else a[x] += n;
 }
 cout << "0 -> " << zeroes << "\n";

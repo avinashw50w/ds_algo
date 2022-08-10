@@ -1,18 +1,19 @@
 /*Method 2 (Linear Time)
-Find the length of the longest substring without repeating characters.*/
+Find the length of the longest substring without repeating characters.
+ie, longest substring with only unique characters*/
 
 int solve(string s) {
   int n = s.length();
   map<char, int> mp;
   int ans = 0;
-  for (int i = 0, j = 0; i < n; ++i) {
-    while (j < n and mp.count(s[j]) == 0) {
-      mp[s[j]]++;
-      j++;
+  for (int start = 0, end = 0; start < n; ++start) {
+    while (end < n and mp.count(s[end]) == 0) {
+      mp[s[end]]++;
+      end++;
     }
 
-    ans = max(ans, j - i);
-    mp[s[i]]--;
+    ans = max(ans, end - start);
+    mp[s[start]]--;
   }
 
   return ans;

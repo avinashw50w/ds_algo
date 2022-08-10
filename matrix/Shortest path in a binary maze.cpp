@@ -83,6 +83,7 @@ int solve(vector<vector<int>> mat, Point src, Point dest) {
             int nx = x + dx[i];
             int ny = y + dy[i];
             if (safe(n, m, nx, ny) and dist[nx][ny] == -1) {
+                dist[nx][ny] = dist[x][y] + 1;
                 q.push(Point(nx, ny));
             }
         }

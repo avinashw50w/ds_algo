@@ -14,28 +14,25 @@ Output : Yes */
 
 // use tree serialization
 
-unordered_set<string> st;
+unordered_map<string> mp;
 
 string check(Node *root) {
-    string s = "";
-
     if (!root) {
-        s += "$";
-        return s;
+        return ""
     }
 
-    string left = check(root->left);
-    if (left == "") return "";
+    string str = "(";
+    str += check(root->left);
+    str += to_string(root->data);
+    str += check(root->right);
+    str += ")";
 
-    string right = check(root->right);
-    if (right == "") return "";
+    if (mp[str] == 1) {
+        cout << root->data << " ";
+    }
 
-    s += root->data + left + right;
-
-    if (st.size() > 3 and st.count(s)) return "";
-
-    st.insert(s);
-    return s;
+    mp[str]++;
+    return str;
 }
 
 /* these are the strings returned by the children to their parent, so if the subtree rooted at v already exists in the set, then

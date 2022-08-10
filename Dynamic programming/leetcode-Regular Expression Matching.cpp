@@ -47,18 +47,22 @@ public:
         if (i >= s.length() and j >= p.length()) return true;
         if (j >= p.length()) return false;
 
-        if (dp[i][j] != -1) return dp[i][j];
-        bool first_char_match = i < s.length() ? (s[i] == p[j] or p[j] == '.') : false;
+        int &res = dp[i][j];
+        if (res != -1) return res;
+
+        bool first_char_match = i < s.length() and (s[i] == p[j] or p[j] == '.');
 
         if (j + 1 < p.length() and p[j + 1] == '*') {
-            return dp[i][j] = solve(s, p, i, j + 2) or (first_char_match and solve(s, p, i + 1, j));
+            return res = solve(s, p, i, j + 2) // replace x* with ''
+                        or 
+                        (first_char_match and solve(s, p, i + 1, j));
         }
 
         if (first_char_match) {
-            return dp[i][j] = solve(s, p, i + 1, j + 1);
+            return res = solve(s, p, i + 1, j + 1);
         }
 
-        return dp[i][j] = 0;
+        return res = 0;
     }
     
     bool isMatch(string s, string p) {

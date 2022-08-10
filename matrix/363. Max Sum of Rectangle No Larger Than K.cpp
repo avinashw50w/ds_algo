@@ -55,8 +55,8 @@ public:
 // O(m^2 * nlogn) which more optimised than the above one
 const int inf = 1e9;
 // find the maximum subarray sum <= k
-// prefixSum - x <= k
-// x >= prefixSum - k
+// prefixSum[j] - prefixSum[i-1] <= k
+// prefixSum[i-1] >= prefixSum[j] - k
 int solve(vector<int> a, int k) {
     int sum = 0, ans = -inf;
     set<int> st;

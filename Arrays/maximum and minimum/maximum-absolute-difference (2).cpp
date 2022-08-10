@@ -13,12 +13,32 @@ f(2, 3) = f(3, 2) = |3 - (-1)| + |2 - 3| = 5
 So, we return 5.
 
 
-a[i] - a[j] + i - j => a[i] + i - (a[j] + j)
+a[i] - a[j] + i - j => (a[i] + i) - (a[j] + j)
 a[i] - a[j] - i + j => (a[i] - i) - (a[j] - j)
 -a[i] + a[j] + i - j => -(a[i] - i) + (a[j] - j)
 -a[i] + a[j] - i + j => -(a[i] + i) + (a[j] + j)
 
 */
+
+// further improvement, no need to sort
+int Solution::maxArr(vector<int> &A) {
+    int n = A.size();
+
+    int maxL, minL, maxR, minR;
+    minL = minR = INT_MAX;
+    maxL = maxR = INT_MIN;
+
+    for (int i = 0; i < n; ++i) {
+        minL = min(minL, A[i] + i);
+        maxL = max(maxL, A[i] + i);
+        minR = min(minR, A[i] - i);
+        maxR = max(maxR, A[i] - i);
+    }
+
+    int ans = 0;
+
+    return max((maxL - minL), (maxR - minR));
+}
 
 int Solution::maxArr(vector<int> &A) {
     int n = A.size();
@@ -37,24 +57,4 @@ int Solution::maxArr(vector<int> &A) {
     ans = max(l[n-1] - l[0], r[n-1] - r[0]);
     
     return ans;
-}
-
-// further improvement, no need to sort
-int Solution::maxArr(vector<int> &A) {
-	int n = A.size();
-
-	int maxL, minL, maxR, minR;
-	minL = minR = INT_MAX;
-	maxL = maxR = INT_MIN;
-
-	for (int i = 0; i < n; ++i) {
-		minL = min(minL, A[i] + i);
-		maxL = max(maxL, A[i] + i);
-		minR = min(minR, A[i] - i);
-		maxR = max(maxR, A[i] - i);
-	}
-
-	int ans = 0;
-
-	return max((maxL - minL), (maxR - minR));
 }

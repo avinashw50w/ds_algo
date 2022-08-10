@@ -61,6 +61,6 @@ void correctBST(Node *root) {
 
 	inorder(root, x, y, z, prev);
 
-	if (x and z) swap(x - data, z->data);
+	if (x and z) swap(x->data, z->data);
 	else if (x and y) swap(x->data, y->data);
 }

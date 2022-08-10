@@ -4,31 +4,55 @@ other stack for printing from right to left. In every iteration, we have nodes o
 level in other stack.*/
  
 // Binary Tree node
-struct node
+struct Node
 {
     int data;
-    struct node *left, *right;
+    struct Node *left, *right;
 };
+
+void printSpiral(Node *root) {
+    queue<Node*> q;
+    q.push(root);
+    bool order = false;
+    while (!q.empty()) {
+        int cnt = q.size();
+        while (cnt--) {
+            Node *par = q.front(); q.pop();
+            cout << par->data << " ";
+            if (!order) {
+                if (par->left) q.push(par->left);
+                if (par->right) q.push(par->right);
+            } else {
+                if (par->right) q.push(par->right);
+                if (par->left) q.push(par->left);
+            }
+        }
+        order ^= 1;
+        cout << endl;
+    }
+}
+
+/////////////////////////////////////
  
-void printSpiral(struct node *root)
+void printSpiral(struct Node *root)
 {
     if (root == NULL)  return;   // NULL check
  
     // Create two stacks to store alternate levels
-    stack<struct node*> s1;  // For levels to be printed from right to left
-    stack<struct node*> s2;  // For levels to be printed from left to right
+    stack<struct Node*> s1;  // For levels to be printed from right to left
+    stack<struct Node*> s2;  // For levels to be printed from left to right
  
     // Push first level to first stack 's1'
     s1.push(root);
  
-    // Keep ptinting while any of the stacks has some nodes
+    // Keep ptinting while any of the stacks has some Nodes
     while (!s1.empty() || !s2.empty())
     {
-        // Print nodes of current level from s1 and push nodes of
+        // Print Nodes of current level from s1 and push Nodes of
         // next level to s2
         while (!s1.empty())
         {
-            struct node *temp = s1.top();
+            struct Node *temp = s1.top();
             s1.pop();
             cout << temp->data << " ";
  
@@ -39,11 +63,11 @@ void printSpiral(struct node *root)
                 s2.push(temp->left);
         }
  
-        // Print nodes of current level from s2 and push nodes of
+        // Print Nodes of current level from s2 and push Nodes of
         // next level to s1
         while (!s2.empty())
         {
-            struct node *temp = s2.top();
+            struct Node *temp = s2.top();
             s2.pop();
             cout << temp->data << " ";
  

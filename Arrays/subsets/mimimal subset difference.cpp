@@ -1,5 +1,5 @@
 /*Given an array, divide the array into two groups such that the difference between the sum of
-the two groups is minimal.
+the two groups is minimal. Return that difference
 
 the idea is to find the subset sum K closest to S/2 where S is the sum of all the elements in the array,
 then the ans will be S - 2*K */

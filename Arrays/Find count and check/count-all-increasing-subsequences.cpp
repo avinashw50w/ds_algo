@@ -1,5 +1,6 @@
-/*We are given an array of digits (values lie in range from 0 to 9). The task is to count all the sub sequences
-possible in array such that in each subsequence every digit is greater than its previous digits in the subsequence.
+/*We are given an array of digits (values lie in range from 0 to 9). 
+The task is to count all the sub sequences possible in array such that in each subsequence 
+every digit is greater than its previous digits in the subsequence.
 
 Examples:
 

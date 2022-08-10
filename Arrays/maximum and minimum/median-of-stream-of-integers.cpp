@@ -1,7 +1,7 @@
 typedef priority_queue<int> maxHeap; // max heap
 typedef priority_queue<int, vector<int>, greater<int>> minHeap; // min heap
 
-void addNumber(int n, maxHeap leftHeap, minHeap rightHeap)
+void addNumber(int n, maxHeap &leftHeap, minHeap &rightHeap)
 {
 	if(leftHeap.emtpy() || n < leftHeap.top())
 		leftHeap.push(n);
@@ -9,7 +9,7 @@ void addNumber(int n, maxHeap leftHeap, minHeap rightHeap)
 		rightHeap.push(n);
 }
 
-void rebalance(maxHeap leftHeap, minHeap rightHeap)
+void rebalance(maxHeap &leftHeap, minHeap &rightHeap)
 {
 	if(leftHeap.size() - rightHeap.size() >= 2) {
 		rightHeap.push(leftHeap.top());
@@ -21,7 +21,7 @@ void rebalance(maxHeap leftHeap, minHeap rightHeap)
 	}
 }
 
-int getMedian(maxHeap leftHeap, minHeap rightHeap) 
+int getMedian(maxHeap &leftHeap, minHeap &rightHeap) 
 {
 	if(leftHeap.size() == rightHeap.size())
 		return (leftHeap.top() + rightHeap.top()) >> 1;

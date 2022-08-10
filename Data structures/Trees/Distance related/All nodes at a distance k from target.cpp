@@ -9,20 +9,20 @@ method 2:
 	- find all the nodes at a distance of K which lies outside of subtree rooted at target.*/
 
 // get all the nodes in the subtree rooted at node
-void getNodesInSubtree(Node *node, int K, vector<int> &res) {
+void getNodesAtDistK(Node *node, int K, vector<int> &res) {
 	if (!node) return;
 	if (K == 0) {
 		res.push_back(node->data);
 		return;
 	}
-	getNodesInSubtree(node->left, K - 1, res);
-	getNodesInSubtree(node->right, K - 1, res);
+	getNodesAtDistK(node->left, K - 1, res);
+	getNodesAtDistK(node->right, K - 1, res);
 }
 
 int solve(Node *node, Node *target, int K, vector<int> &res) {
 	if (!node) return -1;
 	if (node == target) {
-		getNodesInSubtree(node, K, res);
+		getNodesAtDistK(node, K, res);
 		return 0;
 	}
 
@@ -30,14 +30,14 @@ int solve(Node *node, Node *target, int K, vector<int> &res) {
 	int dl = solve(node->left, K, res);
 	if (dl != -1) {
 		if (dl + 1 == K) res.push_back(node);
-		else getNodesInSubtree(node->right, K - dl - 2);
+		else getNodesAtDistK(node->right, K - dl - 2);
 		return dl + 1;
 	}
 
 	int dr = solve(node->right, K, res);
 	if (dr != -1) {
 		if (dr + 1 == K) res.push_back(node);
-		else getNodesInSubtree(node->right, K - dr - 2);
+		else getNodesAtDistK(node->right, K - dr - 2);
 		return dr + 1;
 	}
 
