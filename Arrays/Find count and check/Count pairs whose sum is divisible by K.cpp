@@ -39,7 +39,7 @@ int solve(vector<int> a, int K) {
 	int ans = 0;
 	for (int i = 0; i < n; ++i) {
 		int rem = a[i] % K;
-		ans += mp[(K - rem) % K];
+		ans += mp[(K - rem + K) % K];
 		mp[rem]++;
 	}
 
