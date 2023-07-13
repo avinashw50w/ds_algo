@@ -22,3 +22,18 @@ void solve(int a[], int n) {
 	if(n&1) // in case of odd no of elements print the middle leftout no at the last
 		cout << a[i];
 }
+
+// ---------------------------------------
+
+void solve(vector<int> a) {
+	sort(a.begin(), a.end());
+	int n = a.size(), i, j;
+	for (i = 0, j = n - 1, i < j; ++i, --j) {
+		cout << a[i] << " ";
+		cout << a[j] << " ";
+	}
+
+	if (n & 1) {
+		cout << a[i];
+	}
+}
