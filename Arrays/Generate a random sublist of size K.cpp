@@ -17,6 +17,7 @@ the function should return any one of these and the appearence of each one of th
 using namespace std;
 
 vector<int> solve(int a[], int n, int k) {
+	srand((unsigned int)time(NULL)); // set seed to generate random number
 	unordered_map<int,int> m;
 	vector<int> res;
 

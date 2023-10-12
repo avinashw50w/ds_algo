@@ -36,6 +36,7 @@ However, interviewbit seems to have no test cases for this scenario and the code
 // Approach 1: sorting
 // T: O(nlogn), S: O(1)
 int solve(vector<int> a) {
+	sort(a.begin(), a.end());
 	for (int i = 1; i < a.size(); ++i) if (a[i] == a[i - 1]) return a[i];
 	return -1;
 }

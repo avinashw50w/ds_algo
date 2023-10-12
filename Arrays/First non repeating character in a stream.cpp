@@ -20,11 +20,11 @@ repeated till now.
 void solve() {
 	char c;
 	queue<char> q;
-	int f[256] = {};
+	vector<int> f(256, 0);
 
 	while (cin >> c) {
 		q.push(c);
-		f[c]++;
+		f[c - 'a']++;
 
 		while (!q.empty() and f[q.front() - 'a'] > 1) q.pop();
 

@@ -1,4 +1,4 @@
-/*Given an unsorted array, find the lenght of the longest subsequence of consecutive numbers in the array.
+/*Given an unsorted array, find the maximum number of consecutive elements in the array.
 
 eg. [4, 1, 2, 5, 6],  ans = 3 [4,5,6] */
 

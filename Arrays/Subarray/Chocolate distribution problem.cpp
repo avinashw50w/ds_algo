@@ -9,11 +9,13 @@ IDEA: sort the array
 for each position i find the minimum of a[i+k-1] - a[i]*/
 
 int solve(vector<int> a, int M) {
-    int N = a.size();
+    int n = a.size();
     sort(a.begin(), a.end());
+
     int ans = 1e9;
-    for (int i = 0; i + M - 1 < N; ++i) {
+    for (int i = 0; i + M - 1 < n; ++i) {
         ans = min(ans, a[i + M - 1] - a[i]);
     }
+
     return ans;
 }

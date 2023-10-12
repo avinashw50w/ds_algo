@@ -8,6 +8,8 @@ Output : 2
 Explanation : Swap index 0 with 3 and 1 with 2 to
               form the sorted array {1, 2, 3, 4}.
 IDEA: find the cycle lengths, a cycle is formed when you link a[i] to a[a[i]] and keeps repeating it.
+NOTE: Such a cycle with n elements can be sorted by swapping n-1 element pairs
+SO ans = 
 */
 
 // when numbers are in the range [1...n]

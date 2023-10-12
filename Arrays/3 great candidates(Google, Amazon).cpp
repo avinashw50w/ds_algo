@@ -5,6 +5,9 @@ Find the maximum collective ability from the given pool of candidates.
 1 ≤ T ≤ 100
 3 ≤ N ≤ 1000
 -1000 ≤ ability ≤ 1000  */
+
+// sol 1: find first, second and third max say A,B and C, first and second min say a and b
+// then ans = max(A * B * C, A * a * b)
 /*
 IDEA: we need three max elements and two min elements,
 then maximum product = max(prod of 3 max elements, prod of two min elements and the max element)

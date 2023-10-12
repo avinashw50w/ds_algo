@@ -38,14 +38,12 @@ values to find the amount of water in every array element. Below is C++ implemen
 // in place algo
 // idea: water trapped at index i = min(left_max, right_max) - a[i]
 // so suppose if left_max < right_max, then ans = left_max - a[i]
-// so we need to make sure that left_max < right_max and left_max >= a[i]
+// so we need to make sure that left_max <= right_max and left_max >= a[i]
 int solve(vector<int> a) {
     int n = a.size();
     int left_max = -1, right_max = -1;
     int l = 0, r = n - 1, ans = 0;
     while (l <= r) {
-        // note that left_max will always be less than a[r] and <= a[l]
-        // coz we update left_max to max(left_max, a[l]) when a[l] < a[r]
         if (a[l] < a[r]) {
             left_max = max(left_max, a[l]);
             ans += left_max - a[l]; // water trapped at l

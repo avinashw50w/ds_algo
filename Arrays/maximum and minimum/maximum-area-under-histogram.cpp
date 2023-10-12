@@ -8,32 +8,27 @@ is previous (previous to tp) item in stack and ‘right index’ is ‘i’ (cur
 
 3) If the stack is not empty, then one by one remove all bars from stack and do step 2.b for every removed bar.*/
 
-int getMaxArea(int hist[], int n) {
-	stack<int> s;
-	int area, max_area = 0, top, i = 0;
+int getMaxArea(vector<int> hist) {
+	int n = hist.size();
+	stack<int> st;
+	int max_area = 0, i = 0;
 
-	while(i < n) {
+	while (i < n) {
+		while (st.empty() or hist[st.top()] <= hist[i]) st.push(i++);
 
-		if(s.empty() || hist[s.top()] <= hist[i]) 
-			s.push(i++);
+		int top = st.top();
+		st.pop();
+		int area = hist[top] * (st.empty() ? i : i - 1 - st.top());
 
-		else {
-			top = s.top();
-			s.pop();
-
-			area = hist[top] * (s.empty() ? i : i-1-s.top());
-
-			max_area = max(max_area, area);
-		}
+		max_area = max(max_area, area);
 	}
 
-	while(!s.empty()) {
-		top = s.top();
-		s.pop();
+	while (!st.empty()) {
+		int top = st.top();
+		st.pop();
+		int area = hist[top] * (st.empty() ? i : i - 1 - st.top());
 
-		area = hist[top] * (s.empty() ? i : i-1-s.top());
-
-		max_area = max(max_area, max);
+		max_area = max(max_area, area);
 	}
 
 	return max_area;

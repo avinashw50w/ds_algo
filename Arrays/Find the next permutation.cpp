@@ -1,4 +1,4 @@
-
+// find the next permutation, ie, find the next greated element
 int search(string s, int l, int r, char x) {
     int mid, ans = -1;
     while (l <= r) {

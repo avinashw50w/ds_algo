@@ -14,6 +14,46 @@ The objective is ﬁnding a path that produces the maximum sum of data you walke
 above example, the largest possible sum is 450, which is the result of
 adding 3, 5, 7, 9, 20, 25, 44, 47, 55, 56, 57, 60, and 62*/
 
+int solve(vector<int> a, vector<int> b) {
+	int n = a.size(), m = b.size();
+
+	int result = 0, suma = 0, sumb = 0;
+
+	int i = 0, j = 0;
+	while (i < n and j < m) {
+		if (a[i] < b[j]) {
+			suma += a[i];
+			i++;
+		}
+		else if (a[i] > b[j]) {
+			sumb += b[j];
+			j++;
+		}
+		else {
+			result = max(suma, sumb);
+			suma = sumb = 0;
+			while (i < n and a[i] == b[i]) {
+				result += a[i];
+				i++;
+				j++;
+			}
+		}
+	}
+
+	while (i < n) {
+		suma += a[i];
+		i++;
+	}
+	while (j < m) {
+		sumb += a[j];
+		j++;
+	}
+
+	result += max(suma, sumb);
+
+	return result;
+}
+
 #define all(x) x.begin(), x.end()
 
 int main() {

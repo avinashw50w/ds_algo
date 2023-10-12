@@ -1,6 +1,6 @@
 /*Check if an array can be Arranged in Left or Right Positioned Array
 Given an array arr[] of size n>4, the task is to check whether the given array can be arranged in the form of Left or Right positioned array?
-Left or Right Positioned Array means each element in the array is equal to the number of elements to its left or number of elements to its right.
+Left or Right Positioned Array means each element in the array is equal to the number of elements to its left or number of elements to its right including itself.
 
 Examples:
 
