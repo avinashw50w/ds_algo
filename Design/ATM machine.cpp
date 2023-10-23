@@ -33,31 +33,31 @@ public:
 };
 
 class CashDispenser {
-	map<CashType, Cash> cash;
+	map<CashDenomination, int> cashMap; // {cash denomination, quantity}
 public:
-	void dispenseCash(int amount) {
+	vector<vector<Cash>> dispenseCash(int amount) {
 		if (amount % 100 != 0) return;
 		vector<Cash> returnCash;
-		for (auto it = cash.rbegin(); it != cash.rend(); ++it) {
-			int amt = it->first;
-			int quantity = it->second->quantity;
-			if (amount >= amt and amount / amt <= quantity) {
-				int t = amount / amt;
-				returnCash.push_back(t);
-				amount -= amt * (t);
+		for (auto it = cashMap.rbegin(); it != cashMap.rend(); ++it) {
+			CashDenomination deno = (*it).first;
+			int quantity = (*it).second;
+			// int amt = deno * quantity;
+			if (amount >= deno and amount / deno <= quantity) {
+				int t = amount / deno;
+				returnCash.push_back(new vector<Cash>(t, new Cash(deno)));
+				amount -= deno * (t);
 				it->second->quantity -= t;
 			}
 		}
 	}
 };
 
-enum CashType {
+enum CashDenomination {
 	HUNDRED = 100, FIVE_HUNDRED = 500, TWO_THOUSAND = 2000
 };
 
 class Cash {
-	CashType cashType;
-	int quantity;
+	CashDenomination cashDeno;
 	int serialNumber;
 };
 
@@ -67,6 +67,11 @@ public:
 	CardInfo fetchCardDetails();
 };
 
+enum PaymentGateway {
+	VISA = "visa",
+	MASTERCARD = "mastercard",
+}
+
 class CardInfo {
 	CardType cardType;
 	Bank bank;
@@ -75,6 +80,7 @@ class CardInfo {
 	string expirationDate;
 	string cvv;
 	string cardHolderName;
+	PaymentGateway paymentGateway;
 };
 
 enum CardType {
@@ -108,10 +114,10 @@ class ICICI : public BankService {
 	TransactionDetail executeTransaction(Transaction transaction);
 }
 
-class BankServiceFactory {
+class BankServiceProvider {
 public:
 	// returns ICICI/or any other BankService obj
-	BankService getBankServiceObject(CardInfo cardInfo);
+	static BankService getBankServiceObject(CardInfo cardInfo);
 };
 
 class Customer {

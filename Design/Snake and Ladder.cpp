@@ -111,7 +111,7 @@ public:
 		map<string, int> playerPositions;
 		for (Player p : players) {
 			this->players.push(p);
-			board.playerPositions[p.getId()] = 0;
+			playerPositions[p.getId()] = 0;
 		}
 		board.setPlayerPositions(playerPositions);
 	}
@@ -126,23 +126,20 @@ public:
 
 	int getNewPositionIfSnakeOrLadder(int currPosition) {
 		int prevPosition;
+		vector<array<int,2>> allPositions;
+		for (Snake s: board.getSnakes()) {
+			allPositions.push_back({s.getStart(), s.getEnd()});
+		}
+		for (Ladder l: board.getLadders()) {
+			allPositions.push_back({l.getStart(), l.getEnd()});
+		}
 
-		do {
-			prevPosition = currPosition;
-			for (Snake s : board.getSnakes()) {
-				if (currPosition == s.getStart()) {
-					currPosition = s.getEnd();
-					break;
-				}
+		sort(allPositions.begin(), allPositions.end());
+		for (int i = 0; i < allPositions.size(); i++) {
+			if (currPostion == allPositions[i][0]) {
+				currPostion = allPositions[i][1];
 			}
-
-			for (Ladder l : board.getLadders()) {
-				if (currPosition == l.getStart()) {
-					currPosition = l.getEnd();
-					break;
-				}
-			}
-		} while (currPosition != prevPosition);
+		}
 
 		return currPosition;
 	}
@@ -185,7 +182,7 @@ public:
 	void startGame() {
 		while (!isGameCompleted()) {
 			int diceValue = getTotalValueAfterDiceRolls();
-			Player currPlayer = player.top(); player.pop();
+			Player currPlayer = players.top(); player.pop();
 
 			movePlayer(currPlayer, diceValue);
 
@@ -194,7 +191,7 @@ public:
 				board.removePlayerPosition(currPlayer);
 			}
 			else {
-				player.push(currPlayer);
+				players.push(currPlayer);
 			}
 		}
 	}

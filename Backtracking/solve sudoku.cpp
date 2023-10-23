@@ -12,7 +12,7 @@ bool findUnassignedLocation(vector<vector<int>> grid, int &r, int &c) {
 }
 
 bool usedInRow(vector<vector<int>> grid, int r, int x) {
-	for (int c = 0; c < grid[0].size(); ++c) if (grid[r][c] == x) return true;
+	for (int c = 0; c < grid[r].size(); ++c) if (grid[r][c] == x) return true;
 	return false;
 }
 

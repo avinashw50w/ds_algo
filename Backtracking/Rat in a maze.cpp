@@ -1,4 +1,5 @@
-
+// check if a rat can reach the bottom right of a maze if it starts from the top right corner.
+// It can move down or right.
 #include <iostream>
 #include <algorithm>
 #include <cstring>

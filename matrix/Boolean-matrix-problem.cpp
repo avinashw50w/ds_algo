@@ -32,7 +32,7 @@ void solve(vector<vector<int>> &a) {
         for (int j = 0; j < c; ++j)
             if (a[i][j] == 0) {
                 a[0][j] = 0;
-                first_row_contains_zero = true;
+                if (i == 0) first_row_contains_zero = true;
             }
 
     for (int i = 1; i < r; ++i) {
