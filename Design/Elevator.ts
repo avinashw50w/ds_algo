@@ -1,9 +1,8 @@
 // Elevator State Interface
 interface ElevatorState {
-  openDoors(): void;
-  closeDoors(): void;
-  moveUp(): void;
-  moveDown(): void;
+  openDoor(): void;
+  closeDoor(): void;
+  requestFloor(floor: number): void;
   stop(): void;
 }
 
@@ -14,20 +13,21 @@ enum Direction {
 
 // Concrete State: Elevator is Stopped
 class StoppedState implements ElevatorState {
-  openDoors() {
+
+  constructor(private elevator: Elevator) {}
+
+  openDoor() {
     console.log('Opening doors...');
   }
 
-  closeDoors() {
+  closeDoor() {
     console.log('Closing doors...');
   }
 
-  moveUp() {
-    console.log('Moving up...');
-  }
-
-  moveDown() {
-    console.log('Moving down...');
+  requestFloor(floor: number) {
+    this.elevator.addDestinationFloor(floor);
+    this.elevator.setState(new MovingState(this.elevator));
+    this.elevator.serverRequestedFloors();
   }
 
   stop() {
@@ -38,91 +38,104 @@ class StoppedState implements ElevatorState {
 // Concrete State: Elevator is Moving
 class MovingState implements ElevatorState {
 
-  constructor(private direction: Direction) {}
+  constructor(private elevator: Elevator) {}
 
-  openDoors() {
+  openDoor() {
     console.log('Cannot open doors while moving.');
   }
 
-  closeDoors() {
+  closeDoor() {
     console.log('Cannot close doors while moving.');
   }
 
-  moveUp() {
-    console.log('Continuing to move up...');
-  }
-
-  moveDown() {
-    console.log('Continuing to move down...');
+  requestFloor(floor: number) {
+    this.elevator.addDestinationFloor(floor);
   }
 
   stop() {
     console.log('Stopping elevator...');
+    this.elevator.setState(new StoppedState(this.elevator));
   }
 }
 
 // Context: Elevator
 class Elevator {
-  private state: ElevatorState = new StoppedState();
+  private state: ElevatorState;
   private currentFloor: number = 1;
-  private destinationFloors: number[] = [];
+  private requestedFloors: number[] = [];
+
+  constructor() {
+    this.state = new StoppedState(this);
+  }
 
   setState(state: ElevatorState) {
     this.state = state;
   }
 
-  openDoors() {
-    this.state.openDoors();
+  openDoor() {
+    this.state.openDoor();
   }
 
-  closeDoors() {
-    this.state.closeDoors();
+  closeDoor() {
+    this.state.closeDoor();
   }
 
-  moveUp() {
-    this.state.moveUp();
-  }
-
-  moveDown() {
-    this.state.moveDown();
+  requestFloor(floor: number) {
+    this.state.requestFloor(floor);
   }
 
   stop() {
     this.state.stop();
   }
 
-  requestFloor(floor: number) {
-    if (floor === this.currentFloor) {
-      console.log(`Already on floor ${floor}.`);
-    } else {
-      this.destinationFloors.push(floor);
-      this.moveElevator();
+  // requestFloor(floor: number) {
+  //   if (floor === this.currentFloor) {
+  //     console.log(`Already on floor ${floor}.`);
+  //   } else {
+  //     this.requestedFloors.push(floor);
+  //     this.moveElevator();
+  //   }
+  // }
+
+  private addDestinationFloor(floor: number) {
+    if (this.requestedFloors.indexOf(floor) !== -1) {
+      console.log('Floor already requested.');
     }
+    this.requestedFloors.push(floor);
+
   }
 
-  private moveElevator() {
-    if (this.destinationFloors.length === 0) {
+  private moveElevator(direction: Direction) {
+  }
+
+  private serverRequestedFloors() {
+    if (this.requestedFloors.length === 0) {
       this.setState(new StoppedState());
       console.log('Elevator is now idle.');
       return;
     }
 
-    const nextFloor = this.destinationFloors.shift()!;
+    const nextFloor = this.requestedFloors.shift()!;
 
     if (nextFloor > this.currentFloor) {
-      this.setState(new MovingState(Direction.UP));
-      console.log(`Moving up to floor ${nextFloor}...`);
+      while (nextFloor > this.currentFloor) {
+        console.log(`Moving up to floor ${this.currentFloor + 1}...`);
+        this.moveElevator(Direction.UP);
+        this.currentFloor += 1;
+      }
     } else {
-      this.setState(new MovingState(Direction.DOWN));
-      console.log(`Moving down to floor ${nextFloor}...`);
+      while (nextFloor < this.currentFloor) {
+        console.log(`Moving down to floor ${this.currentFloor - 1}...`);
+        this.moveElevator(Direction.DOWN);
+        this.currentFloor -= 1;
+      }
     }
 
-    setTimeout(() => {
-      this.currentFloor = nextFloor;
-      this.setState(new StoppedState());
-      console.log(`Arrived at floor ${this.currentFloor}.`);
-      this.moveElevator(); // Continue to the next floor
-    }, 2000);
+    this.stop();
+    this.openDoor();
+    delay(10000);
+    this.closeDoor();
+    this.serverRequestedFloors();
   }
 }
 
