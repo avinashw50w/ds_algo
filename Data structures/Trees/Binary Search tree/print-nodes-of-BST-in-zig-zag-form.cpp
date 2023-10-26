@@ -1,7 +1,3 @@
-/*Method 2 (Iterative)
-We can print spiral order traversal in O(n) time and O(n) extra space. The idea is to use two stacks. We can use one stack for printing from left to right and 
-other stack for printing from right to left. In every iteration, we have nodes of one level in one of the stacks. We print the nodes, and push nodes of next 
-level in other stack.*/
  
 // Binary Tree node
 struct Node
@@ -10,29 +6,41 @@ struct Node
     struct Node *left, *right;
 };
 
-void printSpiral(Node *root) {
-    queue<Node*> q;
-    q.push(root);
+vector<vector<Node>> printSpiral(Node *root) {
+    deque<Node*> q;
+    q.push_back(root);
     bool order = false;
+    vector<vector<Node>> res;
+    
     while (!q.empty()) {
+        vector<Node> level;
         int cnt = q.size();
+        
         while (cnt--) {
-            Node *par = q.front(); q.pop();
-            cout << par->data << " ";
             if (!order) {
+                Node *par = q.front(); q.pop_front();
+                level.push_back(par);
                 if (par->left) q.push(par->left);
                 if (par->right) q.push(par->right);
             } else {
+                Node *par = q.back(); q.pop_back();
+                level.push_back(par);
                 if (par->right) q.push(par->right);
                 if (par->left) q.push(par->left);
             }
         }
         order ^= 1;
-        cout << endl;
+        res.push_back(level);
     }
+
+    return res;
 }
 
 /////////////////////////////////////
+/*Method 2 (Iterative)
+We can print spiral order traversal in O(n) time and O(n) extra space. The idea is to use two stacks. We can use one stack for printing from left to right and 
+other stack for printing from right to left. In every iteration, we have nodes of one level in one of the stacks. We print the nodes, and push nodes of next 
+level in other stack.*/
  
 void printSpiral(struct Node *root)
 {

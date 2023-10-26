@@ -6,7 +6,7 @@ bool dfs(int i) {
 	if(i == dest) return true;
 	if(!V[i]){
 		V[i] = true;
-		for_each(ALL(G[i]), dfs);
+		for_each(G[i].begin(), G[i].end(), dfs);
 	}
 	return false;
 }

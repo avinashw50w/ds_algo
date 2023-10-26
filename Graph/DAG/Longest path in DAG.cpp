@@ -42,7 +42,7 @@ vector<int> shortestPathDAG(int src) {
 	while (!st.empty()) {
 		int u = st.back(); st.pop_back();
 
-		if (dist[u] != INF) {
+		if (dist[u] != -INF) {
 			for (auto e : G[u]) {
 				int v = e.first, w = e.second;
 				if (dist[v] < dist[u] + w) {

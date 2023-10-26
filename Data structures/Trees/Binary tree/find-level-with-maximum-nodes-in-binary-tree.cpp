@@ -1,5 +1,6 @@
 
 // level of root is 1 //
+// using BFS
 int findMax(node *root) {
 	if(root == NULL) return 0;
 
@@ -27,4 +28,16 @@ int findMax(node *root) {
 	}
 	
 	return ans;
+}
+
+
+// using DFS
+unordered_map<int, int> levelNodes; // levelNode[i] : the # of nodes at level i
+
+void findMax(node *root, int level = 0) {
+	if (!root) return;
+	levelNodes[level]++;
+
+	findMax(root->left, level + 1);
+	findMax(root->right, level + 1);
 }

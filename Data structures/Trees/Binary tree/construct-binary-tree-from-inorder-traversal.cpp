@@ -47,12 +47,19 @@ Algorithm: buildTree()
 /* Recursive function to construct binary of size len from
    Inorder traversal inorder[]. Initial values of start and end
    should be 0 and len -1.  */
+
+// Time: worst case T(n) = T(n-1) + n
+// gives: O(n^2)
+// Time when segment tree is used: T(n) = T(n-1) + logn
+// gives: O(nlogn)
 struct node* buildTree (int inorder[], int start, int end)
 {
     if (start > end)
         return NULL;
  
-    /* Find index of the maximum element from Binary Tree */
+    /* Find index of the maximum element from Binary Tree 
+    NOTE: to find max in range [start, end] in O(logn) use segment tree
+    */
     int i = max (inorder, start, end);
  
     /* Pick the maximum value and make it root */

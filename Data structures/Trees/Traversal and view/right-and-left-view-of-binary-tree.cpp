@@ -20,16 +20,16 @@ Whenever we see a node whose level is more than maximum level so far, we print t
 last node in its level (Note that we traverse the right subtree before left subtree).*/
 
 // Recursive function to print right view of a binary tree.
-void rightViewUtil(struct Node *root, int level, int *max_level)
+void rightViewUtil(struct Node *root, int level, int &max_level)
 {
     // Base Case
     if (root==NULL)  return;
  
     // If this is the last Node of its level
-    if (*max_level < level)
+    if (max_level < level)
     {
         printf("%d\t", root->data);
-        *max_level = level;
+        max_level = level;
     }
  
     // Recur for right subtree first, then left subtree
@@ -41,7 +41,7 @@ void rightViewUtil(struct Node *root, int level, int *max_level)
 void rightView(struct Node *root)
 {
     int max_level = 0;
-    rightViewUtil(root, 1, &max_level);
+    rightViewUtil(root, 1, max_level);
 }
 ////////////////////////////////////////////////////////////////////////
 // left view //

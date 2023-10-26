@@ -11,21 +11,21 @@ So, let us assume they meet at cell (i,j).
 
 Boy can come in from left or the top, i.e. (i,j-1) or (i-1,j). Now he can move right or down.That is, the sequence for the boy can be:
 
-(i,j-1)-->(i,j)-->(i,j+1)
-(i,j-1)-->(i,j)-->(i+1,j)
-(i-1,j)-->(i,j)-->(i,j+1)
-(i-1,j)-->(i,j)-->(i+1,j)
+right->right    : (i,j-1)-->(i,j)-->(i,j+1)
+right->down     : (i,j-1)-->(i,j)-->(i+1,j)
+down->right     : (i-1,j)-->(i,j)-->(i,j+1)
+down->down      : (i-1,j)-->(i,j)-->(i+1,j)
 Similarly, the girl can come in from the left or bottom, i.e. (i,j-1) or (i+1,j) and she can go up or right. The sequence for girl's movement can be:
 
-(i,j-1)-->(i,j)-->(i,j+1)
-(i,j-1)-->(i,j)-->(i-1,j)
-(i+1,j)-->(i,j)-->(i,j+1)
-(i+1,j)-->(i,j)-->(i-1,j)
+right->right : (i,j-1)-->(i,j)-->(i,j+1)
+right->up    : (i,j-1)-->(i,j)-->(i-1,j)
+up->right    : (i+1,j)-->(i,j)-->(i,j+1)
+up->up       : (i+1,j)-->(i,j)-->(i-1,j)
 Comparing the 4 sequences of the boy and the girl, the boy and girl meet only at one position (i,j), iff
-
+boy: right->right and girl: up->up
 Boy: (i,j-1)-->(i,j)-->(i,j+1) and Girl: (i+1,j)-->(i,j)-->(i-1,j)
 or
-
+boy: down->down and girl: right->right
 Boy: (i-1,j)-->(i,j)-->(i+1,j) and Girl:  (i,j-1)-->(i,j)-->(i,j+1)
 Convince yourself that in no other case will they meet at only one position.
 

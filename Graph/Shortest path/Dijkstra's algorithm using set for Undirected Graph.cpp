@@ -11,19 +11,18 @@ vi D;      // distance vector for storing min distance from the source.
 void dijkstra(int source, int N) {
     D.assign(N,INF);
     D[source] = 0;
-    set<pii> Q;
+    set<array<int, 2>> Q; // [weight, node]
     Q.insert({0,source});
     while(!Q.empty()) {
-        auto top = Q.begin();
-        int u = top->second;
+        auto top = *Q.begin();
+        int u = top[1];
         Q.erase(top);
         for(auto next: G[u])    {
             int v = next.first, weight = next.second;
             if( D[v] > D[u] + weight) {
-                if(Q.find( {D[v], v} ) != Q.end())
-                Q.erase(Q.find( {D[v], v} ));
                 D[v] = D[u] + weight;
-                Q.insert( {D[v], v} );
+                Q.erase(Q.find({ D[v], v }));
+                Q.insert({ D[v], v });
             }
         }
     }

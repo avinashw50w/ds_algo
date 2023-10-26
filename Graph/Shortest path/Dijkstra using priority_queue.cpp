@@ -17,8 +17,8 @@ void Dijkstra(int source, int N) {
         int u = Q.top().second;
         Q.pop();
         for(auto &c : G[u]){
-            int v = c.first;
-            int w = c.second;
+            int w = c.first;
+            int v = c.second;
             if(Dist[v] > Dist[u]+w){
                 Dist[v] = Dist[u]+w;
                 Q.push({Dist[v],v});

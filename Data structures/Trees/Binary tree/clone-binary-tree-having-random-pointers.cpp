@@ -24,12 +24,12 @@ from given tree node to clone tree node in a hashtable. In the following pseudo 
 
 // This function creates clone by copying key and left and right pointers
 // This function also stores mapping from given tree node to clone.
-Node *cloneTree(Node *treeNode, unordered_map<Node*, Node*> &mp) {
+Node *cloneNodes(Node *treeNode, unordered_map<Node*, Node*> &mp) {
     if (!treeNode) return NULL;
     Node *cloneNode = new Node(treeNode->data);
     mp[treeNode] = cloneNode;
-    cloneNode->left = cloneTree(treeNode->left, mp);
-    cloneNode->right = cloneTree(treeNode->right, mp);
+    cloneNode->left = cloneNodes(treeNode->left, mp);
+    cloneNode->right = cloneNodes(treeNode->right, mp);
     return cloneNode;
 }
 

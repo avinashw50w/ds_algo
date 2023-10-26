@@ -1,13 +1,10 @@
 
 bool isBST(node *root, int minval, int maxval) { //  set min= -oo  and max= +oo
     if (root == NULL) return true;
-    if (minval < root->data && root->data < maxval &&
-            isBST(root->left, minval, root->data) &&
-            isBST(root->right, root->data, maxval))
-
-        return true;
-
-    else return false;
+    return (minVal < root->data and root->data < maxVal)
+        && isBST(root->left, minVal, root->data)
+        && isBST(root->right, root->data, maxVal);
+   
 }
 
 isBST(root, INT_MIN, INT_MAX);

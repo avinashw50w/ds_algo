@@ -24,16 +24,13 @@ Trversals in the above example represents following tree
 #include <bits/stdc++.h>
 using namespace std;
 
-int search(vector<int> in, int x, int l, int r) {
-	for (int i = l; i <= r; ++i) if (in[i] == x) return i;
-	return 0;
-}
+unordered_map<int, int> mp;
 
 void solve(vector<int> in, vector<int> pre, int &i, int l, int r) {
 
 	if (l > r) return;
-	int idx = search(in, pre[i++], l, r);
-
+	int idx = mp[pre[i]];
+	i++;
 	solve(in, pre, i, l, idx - 1);
 	solve(in, pre, i, idx + 1, r);
 
@@ -41,6 +38,7 @@ void solve(vector<int> in, vector<int> pre, int &i, int l, int r) {
 }
 
 void print(vector<int> inorder, vector<int> preorder) {
+	for (int i = 0; i < inorder.size(); ++i) mp[inorder[i]] = i;
 	int i = 0;
 	solve(inorder, preorder, i, 0, inorder.size() - 1);
 }
