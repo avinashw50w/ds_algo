@@ -1,16 +1,5 @@
 //  check if a linked list is circular //
-
-int check(node* head) {
-	if (head == NULL) return true;
-
-	node* curr = head;
-
-	while (curr != NULL and curr != head) curr = curr->next;
-
-	return ( curr == head );
-}
-
-// another method
+// optimised
 bool check (Node *head) {
 	if (head == NULL or head->next == NULL) return false;
 	Node *slow = head, *fast = head;
@@ -24,3 +13,16 @@ bool check (Node *head) {
 
 	return false;
 }
+////////////////////////////////////////////////////////////////
+int check(node* head) {
+	if (head == NULL) return true;
+
+	node* curr = head;
+
+	while (curr != NULL and curr != head) curr = curr->next;
+
+	return ( curr == head );
+}
+
+// another method
+

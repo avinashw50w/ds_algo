@@ -17,26 +17,20 @@ if height[r] < height[l], then
 	decrement r
 */
 // time complexity : O(N)
-int solve(vector<int> height) {
-	int n = height.size();
-	int ans = 0, l = 0, r = n - 1;
-	while (l < r) {
-		if (height[l] < height[r]) {
-			ans = max(ans, height[l] * (r - l - 1));
-			l++;
-		}
-		else if (height[r] < height[l]) {
-			ans = max(ans, height[r] * (r - l - 1));
-			r--;
-		}
-		else {
-			ans = max(ans, height[l] * (r - l - 1));
-			l++;
-			r--;
-		}
-	}
+int maxArea(vector<int>& height) {
+        int n = height.size();
 
-	return ans;
-}
+        int l = 0, r = n - 1;
+        int water = 0;
+        while (l < r) {
+            int currWater = min(height[l], height[r]) * ( r - l );
+            water = max(water, currWater);
+
+            if (height[l] < height[r]) l++;
+            else r--;
+        }
+
+        return water;
+    }
 
 

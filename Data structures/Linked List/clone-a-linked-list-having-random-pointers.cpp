@@ -4,17 +4,22 @@ copy of this list.*/
 
 struct Node {
 	int data;
-	struct Node *next, *random;
+	Node *next, *random;
+
+	Node(int data) {
+		this->data = data;
+		this->next = this->random = NULL;
+	}
 }
 
 Node *head = NULL;
 
-Node* newNode(int data) {
+/*Node* newNode(int data) {
 	Node *tmp = new Node();
 	tmp->data = data;
 	tmp->next = tmp->random = NULL;
 	return tmp;
-}
+}*/
 
 Node* clone(Node *head) {
 	Node *original = head, copy = NULL;
@@ -22,7 +27,7 @@ Node* clone(Node *head) {
 	map<Node*, Node*> m;
 
 	while (original) {
-		m[original] = newNode(original->data);
+		m[original] = new Node(original->data);
 		original = original->next;
 	}
 
