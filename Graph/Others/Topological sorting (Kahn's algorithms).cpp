@@ -59,7 +59,7 @@ vector<int> topologicalSorting() {
 
 	queue<int> q;
 	for(int i = 0; i < N; ++i)
-		if(inDegree[i])
+		if(inDegree[i] == 0)
 			q.push(i);
 
 	int nodeCnt = 0;
