@@ -51,9 +51,7 @@ int dist[maxn][maxn];
 int N, M; // numbe of rows and colums
 
 void shortestPath(pii src) {
-	bool vis[N][M];
-	memset(vis, false, sizeof vis);
-	fill(&dist[0][0], &dist[N][0], INF);
+	fill(&dist[0][0], &dist[N][0], -1);
 
 	dist[src.first][src.second] = 0;
 
@@ -66,17 +64,13 @@ void shortestPath(pii src) {
 
 		int x = top.first, y = top.second;
 
-		vis[x][y] = true;
-
 		for(int i = 0; i < 4; ++i) {
 			int nx = x + dx[i];
 			int ny = y + dy[i];
-			if(!valid(nx, ny) and mat[nx][ny]==0 and vis[nx][ny])
+			if(!valid(nx, ny) and mat[nx][ny]==0 and dist[nx][ny] != -1)
 				continue;
-			if(dist[x][y] != INF and dist[nx][ny] > dist[x][y] + 1) {
-				dist[nx][ny] = dist[x][y] + 1;
-				Q.push({nx, ny});
-			}
+			dist[nx][ny] = dist[x][y] + 1;
+			Q.push({nx, ny});
 		}
 	}
 } 

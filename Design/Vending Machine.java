@@ -57,11 +57,11 @@ public class VendingMachine {
 
     public void addCash(int cash) {
         this.collectedCash += cash;
-        this.totalCollectedCash += this.collectedCash;
+        this.totalCollectedCash += cash;
     }
     public void minusCash(int cash) {
         this.collectedCash -= cash;
-        this.totalCollectedCash -= this.collectedCash;
+        this.totalCollectedCash -= cash;
     }
 
     public void setCollectedCash(int cash) {

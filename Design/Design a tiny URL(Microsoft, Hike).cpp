@@ -41,7 +41,7 @@ dnh
 #include <bits/stdc++.h>
 using namespace std;
 
-const char* toURL(int N) {
+strign toURL(int N) {
 
 	string l = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 	string res = "";
@@ -50,10 +50,10 @@ const char* toURL(int N) {
 		N /= 62;
 	}
 
-	return res.c_str();
+	return res;
 }
 
-int toID(const char *s) {
+int toID(string s) {
 	int mul = 1, res = 0;
 
 	for(int i = strlen(s)-1; i >= 0; --i) {
@@ -70,7 +70,7 @@ int toID(const char *s) {
 }
 
 int main() {
-	const char *s = toURL(12345);
+	string s = toURL(12345);
 	cout << s << endl;
 
 	int id = toID(s);

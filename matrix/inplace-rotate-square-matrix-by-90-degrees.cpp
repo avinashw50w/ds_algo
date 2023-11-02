@@ -15,6 +15,23 @@ Output:
 
  How to do without extra space?
 Below are some important observations.
+-> means replacey by
+(0,0) -> (0,2)
+(0,2) -> (2,2)
+(2,2) -> (2,0)
+(2,0) -> (0,0)
+
+similary
+(0,1) -> (1,2)
+(1,2) -> (2,1)
+(2,1) -> (1,0)
+(1,0) -> (0,1)
+
+So overall the transformations are:
+(x, y)         -> (y, N-1-x)
+(y, N-1-x)     -> (N-1-x, N-1-y)
+(N-1-x, N-1-y) -> (N-1-y, x)
+(N-1-y, x)     -> (x, y)
 
 First row of source –> First column of destination, elements filled in opposite order
 

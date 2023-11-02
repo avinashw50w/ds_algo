@@ -50,7 +50,7 @@ public:
 
 		for (Edge e: edges) {
 
-			removeEdge(e.u, e.v, e.weight);
+			removeEdge(e);
 
 			int dist = shortestPath(e.u, e.v);
 
@@ -69,7 +69,8 @@ public:
 		edges.push_back({u, v, w});
 	}
 
-	void removeEdge(int u, int v, int w) {
+	void removeEdge(Edge e) {
+		int u = e[0], v = e[1], w = e[2];
 		G[u].remove({v, w});
 		G[v].remove({u, w});
 	}

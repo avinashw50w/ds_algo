@@ -33,6 +33,8 @@ Screen should be changed to following.
                       };
 */
 
+int dx[4] = {1, 0, -1, 0};
+int dy[4] = {0, 1, 0, -1};
 bool safe(vector<vector<int>> grid, int x, int y) {
     return (x >= 0 and x < N and y >= 0 and y < M);
 }

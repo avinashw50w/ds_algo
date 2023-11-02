@@ -1,4 +1,4 @@
-/*       1
+/*     1
     /     \
    2       3
   /  \    / \
@@ -17,7 +17,7 @@ Top view of the above binary tree is
                6
 Top view of the above binary tree is
 2 1 3 6*/
-
+// for every horizontal dist d from middle, store the node which has the lowest depth from the root.
 unordered_map<int, array<int, 2>> mp;
 // mp[y axix] = { data, level }
 void topView(Node *root, int d, int l) {

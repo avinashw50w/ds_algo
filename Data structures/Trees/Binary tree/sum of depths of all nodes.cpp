@@ -36,7 +36,7 @@ int sumDepths(Node *root) {
 // p.first = the DepthSum of the subtree rooted at n
 // p.second = the no of nodes in the subtree rooted at n
 // eg. DepthSum(1) = (DepthSum(2) + no of nodes in subtree rooted at 2) + (DepthSum(3) + no of nodes in subtree rooted at 3)
-
+// basically when we move upward to the parent(v to u), the depth of all nodes in the subtree rooted at v increases by 1
 
 int ans = 0;
 
@@ -69,12 +69,12 @@ pair<int,int> solve(Node *root) {
 // p.first = the DepthSum of the subtree rooted at n
 // p.second = the no of nodes in the subtree rooted at n
 int ans = 0;
-int totalSize = 0;
+int totalNodes = 0;
 
 struct Node {
     int data;
     Node *left, *right;
-    int size;
+    int cnt;
 }
 
 pair<int,int> dfs(Node *root) {
@@ -86,7 +86,7 @@ pair<int,int> dfs(Node *root) {
 
     p.first += (lchild.first + lchild.second) + (rchild.first + rchild.second);
     p.second += (lchild.second + rchild.second);
-    root->size = p.second;
+    root->cnt = p.second;
     return p;
 }
 
@@ -97,12 +97,12 @@ void dfs2(Node *root, Node *target, int sumDepth) {
     }
 
     if (root->left) {
-        int newSumDepth = sumDepth - root->left->size + (totalSize - root->left->size);
+        int newSumDepth = sumDepth - root->left->cnt + (totalNodes - root->left->cnt);
         dfs2(root->left, target, newSumDepth);
     }
 
     if (root->right) {
-        int newSumDepth = sumDepth - root->right->size + (totalSize - root->right->size);
+        int newSumDepth = sumDepth - root->right->cnt + (totalNodes - root->right->cnt);
         dfs2(root->right, target, newSumDepth);
     }
 }
@@ -111,7 +111,7 @@ int solve(Node *root, Node *target) {
     pair<int,int> p = dfs(root);
 
     int sumDepth = p.first;
-    totalSize = p.second;
+    totalNodes = p.second;
 
     dfs2(root, target, sumDepth);
 

@@ -2,6 +2,17 @@
 // can be found by using both dfs and bfs
 
 
+void dfs(int u, int p, int lvl, int requiredLevel) {
+	if (requiredLevel == lvl) cnt++;
+	lvl++;
+
+	for (auto v: G[u]) {
+		if (v == p) continue;
+		dfs(v, u, lvl, requiredLevel);
+	}
+}
+
+// another way to store the levels of all the nodes
 const int maxn = 1e3;
 
 int level[maxn];

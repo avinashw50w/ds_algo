@@ -144,6 +144,7 @@ void preorder(Node *root, char a[], int &i) {
           /   \     ====================>  AB$$C$$
          B     c
  */
+// (A)(B)$$(C)$$
 string serialize(Node *root) {
   string s = "";
   if (!root) {
@@ -151,27 +152,7 @@ string serialize(Node *root) {
     return s;
   }
 
-  return s + to_string(root->data) + serialize(root->left) + serialize(root->right);
-}
-
-string check(Node *root, string str) {
-  string s = "";
-  if (!root) {
-    s += "$";
-    return s;
-  }
-
-  string left = check(root->left, str);
-  if (left == "") return "";
-
-  string right = check(root->right, str);
-  if (right == "") return "";
-
-  s += to_string(root->data) + left + right;
-
-  if (s == str) return "";
-
-  return s;
+  return s + "(" + to_string(root->data) + ")" + serialize(root->left) + serialize(root->right);
 }
 
 bool isSubtree(struct node *T, struct node *S)
@@ -184,7 +165,7 @@ bool isSubtree(struct node *T, struct node *S)
     return false;
 
   string subtree = serialize(S);
-  string chk = check(T, subtree);
-  if (chk == "") return true;
-  return false;
+  string tree = serialize(T);
+  
+  return tree.find(subtree) != string::npos;
 }

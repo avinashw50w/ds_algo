@@ -16,10 +16,10 @@ int GetMinDiceThrows(int move[], int N) {
     Q.push({0, 0});
     node u;
     while (!Q.empty()) {
-        u = Q.front();
+        u = Q.front(); Q.pop();
         int k = u.num;
         if (k == N - 1) break;
-        Q.pop();
+        
         for (int i = k + 1; i <= (k + 6) && i < N; ++i) {
             if (!vis[i]) {
                 vis[i] = 1;

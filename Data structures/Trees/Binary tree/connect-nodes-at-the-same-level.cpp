@@ -32,10 +32,10 @@ void connet(Node *root) {
 
     while (!q.empty()) {
         int cnt = q.size();
-        Node *prev = NULL;
+        Node *prev = NULL, *curr = NULL;
 
         while (cnt--) {
-            Node *curr = q.front(); q.pop();
+            *curr = q.front(); q.pop();
 
             if (prev) prev->nextRight = curr;
 

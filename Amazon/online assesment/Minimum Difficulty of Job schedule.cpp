@@ -20,12 +20,13 @@ then dp[i][d] = min(dp[i][d], mx + dp[k][d-1]), where mx is the maximum job diff
 
 int solve(vector<int> jobs, int days) {
 	int n = jobs.size();
+	if (n < days) return -1;
 	vector<vector<int>> dp(n + 1, vector<int>(days+1, INT_MAX));
 
 	dp[0][0] = 0;
 	for (int i = 1; i <= n; ++i) {
 		for (int d = 1; d <= days; ++d) {
-			int mx = INT_MIN;
+			int mx = 0;
 			for (int k = i-1; k >= d-1; --k) {
 				mx = max(mx, jobs[k]);
 				if (dp[k][d-1] != INT_MAX) {

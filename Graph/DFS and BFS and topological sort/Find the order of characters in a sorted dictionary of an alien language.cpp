@@ -29,25 +29,25 @@ and find the first mismatching characters.
 vector<int> G[26];
 int vis[26];
 
-void dfs(int u, stack<char> &s) {
+void dfs(int u, vector<char> &s) {
 	vis[u] = 1;
 
 	for (auto v: G[u]) {
 		if (!vis[v]) dfs(v, s);
 	}
 
-	s.push(u);
+	s.push_back(u);
 }
 
 void topologicalSort(vector<char> &res){
-	stack<char> st;
 	memset(vis, 0, sizeof(vis));
 
 	for (int i = 0; i < 26; ++i) {
 		if (!vis[i]) dfs(i, st);
 	}
 
-	while(!st.empty()) res.push_back(st.top()), st.pop();
+	reverse(res.begin(), res.end());
+	return res;
 }
 
 vector<char> getOrder(vector<string> words) {

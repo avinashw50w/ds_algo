@@ -87,14 +87,14 @@ void bottomView(Node *root)
 ///////////////////////////////////////////////////
 // using only map
 
-
+// for every horizontal dist d from middle, store the node which has the maximum height
 void bottomView(Node *root) {
 
     map<int, pair<int, int>> m; // m[d] = {a, b} , d = horizontal distance from root, a = root data, b = height from root
 
     solve(root, 0, 0, m);
 
-    for (int i : m) {
+    for (auto i : m) {
         cout << i.first << " ";
     }
 }

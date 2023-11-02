@@ -4,7 +4,7 @@ using namespace std;
 
 //void swap(int *a , int *b){if(a==b) return;int *t=a;a=b;b=t;}
 
-int partition(int *A,int left,int right){
+int partition(vector<int> &A,int left,int right){
 	int pivot = A[right];
 	int pIndex = left;
 	for(int i=left;i<right;i++){
@@ -17,13 +17,13 @@ int partition(int *A,int left,int right){
 	return pIndex;
 }
 
-int rand_partition(int *A,int left,int right){
+int rand_partition(vector<int> &A,int left,int right){
 	int randomIndex = left + rand()%(right-left+1);
 	swap(A[randomIndex],A[right]);
 	return partition(A,left,right);
 }
 
-void quickSort(int *A,int left,int right){
+void quickSort(vector<int> &A,int left,int right){
 	if(left<right){
 		int pIndex = rand_partition(A,left,right);
 		quickSort(A,left,pIndex-1);

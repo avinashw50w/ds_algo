@@ -3,7 +3,7 @@
 
 class Solution {
 	static const int maxn = 1e3;
-	int G[maxn][maxn];
+	int G[maxn][maxn]; // G[i][j]: dist btw i and j
 	int V;
 public:
 	int DFS(int u, int v, int k) {

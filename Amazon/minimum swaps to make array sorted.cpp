@@ -7,7 +7,12 @@ int solve(vector<int> a) {
 
     int ans = 0;
     for (int i = 0; i < n; ++i) {
-        if (a[i] != i+1) swap(a[i], a[index[i+1]]), cnt++;
+        if (a[i] != i+1) {
+            cnt++;
+            swap(a[i], a[index[i+1]]);
+            index[a[i]] = index[a[index[i+1]]];
+            index[a[index[i+1]]] = i;
+        }
     } 
 
     return cnt;

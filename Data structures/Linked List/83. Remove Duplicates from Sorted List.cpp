@@ -18,7 +18,9 @@ public:
         ListNode *curr = head;
         while (curr) {
             if (curr->next and curr->val == curr->next->val) {
+                ListNode *next = curr->next;
                 curr->next = curr->next->next;
+                delete next;
             }
             else
                 curr = curr->next;

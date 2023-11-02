@@ -1,10 +1,12 @@
+// list of all actions that a user can perform
 interface VendingMachineState {
-  insertMoney(amount: number): void;
-  selectProduct(code: string): void;
-  dispenseProduct(): void;
-  ejectMoney(): void;
+  insertCash(amount: number): void;
+  selectItem(code: string): void;
+  dispenceItem(): void;
+  cancelTxn(): void;
 }
 
+// These are the states of the vending machine
 class IdleState implements VendingMachineState {
   private vendingMachine: VendingMachine;
 
@@ -12,23 +14,23 @@ class IdleState implements VendingMachineState {
     this.vendingMachine = vendingMachine;
   }
 
-  insertMoney(amount: number): void {
+  insertCash(amount: number): void {
     this.vendingMachine.addMoney(amount);
     this.vendingMachine.changeState(new HasMoneyState(this.vendingMachine));
   }
 
-  selectProduct(code: string): void {
+  selectItem(code: string): void {
     this.vendingMachine.showMessage("Please insert money first.");
   }
 
-  dispenseProduct(): void {
+  dispenceItem(): void {
     this.vendingMachine.showMessage(
       "Please insert money and select a product.",
     );
   }
 
-  ejectMoney(): void {
-    this.vendingMachine.showMessage("No money to eject.");
+  cancelTxn(): void {
+    this.vendingMachine.showMessage("No Txn to cancel.");
   }
 }
 
@@ -39,11 +41,11 @@ class HasMoneyState implements VendingMachineState {
     this.vendingMachine = vendingMachine;
   }
 
-  insertMoney(amount: number): void {
+  insertCash(amount: number): void {
     this.vendingMachine.addMoney(amount);
   }
 
-  selectProduct(code: string): void {
+  selectItem(code: string): void {
     const item = this.vendingMachine.getItemByCode(code);
     if (!item) {
       this.vendingMachine.showMessage("Invalid product code.");
@@ -61,12 +63,12 @@ class HasMoneyState implements VendingMachineState {
     );
   }
 
-  dispenseProduct(): void {
+  dispenceItem(): void {
     this.vendingMachine.showMessage("Please select a product first.");
   }
 
-  ejectMoney(): void {
-    this.vendingMachine.returnMoney();
+  cancelTxn(): void {
+    this.vendingMachine.abortTxn();
     this.vendingMachine.changeState(new IdleState(this.vendingMachine));
   }
 }
@@ -78,15 +80,15 @@ class ProductSelectedState implements VendingMachineState {
     this.vendingMachine = vendingMachine;
   }
 
-  insertMoney(amount: number): void {
+  insertCash(amount: number): void {
     this.vendingMachine.addMoney(amount);
   }
 
-  selectProduct(code: string): void {
+  selectItem(code: string): void {
     this.vendingMachine.showMessage("Product already selected.");
   }
 
-  dispenseProduct(): void {
+  dispenceItem(): void {
     const selectedItem = this.vendingMachine.getSelectedItem();
     if (!selectedItem) {
       this.vendingMachine.showMessage("No product selected.");
@@ -98,38 +100,37 @@ class ProductSelectedState implements VendingMachineState {
       return;
     }
 
-    this.vendingMachine.dispenseProduct();
-    this.vendingMachine.changeState(new DispenseState(this.vendingMachine));
+    this.vendingMachine.dispenceItem();
+    this.vendingMachine.changeState(new ItemDispensedState(this.vendingMachine));
   }
 
-  ejectMoney(): void {
-    this.vendingMachine.returnMoney();
+  cancelTxn(): void {
+    this.vendingMachine.abortTxn();
     this.vendingMachine.changeState(new IdleState(this.vendingMachine));
   }
 }
 
-class DispenseState implements VendingMachineState {
+class ItemDispensedState implements VendingMachineState {
   private vendingMachine: VendingMachine;
 
   constructor(vendingMachine: VendingMachine) {
     this.vendingMachine = vendingMachine;
   }
 
-  insertMoney(amount: number): void {
+  insertCash(amount: number): void {
     this.vendingMachine.addMoney(amount);
   }
 
-  selectProduct(code: string): void {
+  selectItem(code: string): void {
     this.vendingMachine.showMessage("Product already selected.");
   }
 
-  dispenseProduct(): void {
+  dispenceItem(): void {
     this.vendingMachine.showMessage("Product already dispensed.");
   }
 
-  ejectMoney(): void {
-    this.vendingMachine.returnMoney();
-    this.vendingMachine.changeState(new IdleState(this.vendingMachine));
+  cancelTxn(): void {
+    this.vendingMachine.showMessage('Item has been dispached. Cannot cancel Txn.');
   }
 }
 
@@ -138,13 +139,15 @@ type Item = { code: string; price: number };
 class VendingMachine {
   private state: VendingMachineState;
   private items: { code: string; price: number }[];
-  private moneyInserted: number;
+  private totalCashCollected: number;
+  private cashCollected: number;
   private selectedItem: Item;
 
   constructor(items: Item[]) {
     this.state = new IdleState(this);
     this.items = items;
-    this.moneyInserted = 0;
+    totalCashCollected = 0;
+    this.cashCollected = 0;
     this.selectedItem = null;
   }
 
@@ -157,11 +160,12 @@ class VendingMachine {
   }
 
   private addMoney(amount: number): void {
-    this.moneyInserted += amount;
+    this.totalCashCollected += amount;
+    this.cashCollected += amount;
     this.showMessage(`Inserted money: ${amount}`);
   }
 
-  public getItemByCode(code: string): Item | undefined {
+  private getItemByCode(code: string): Item | undefined {
     return this.items.find((item) => item.code === code);
   }
 
@@ -170,45 +174,59 @@ class VendingMachine {
   }
 
   private hasEnoughMoney(price: number): boolean {
-    return this.moneyInserted >= price;
+    return this.cashCollected >= price;
   }
 
-  private setSelectedItem(item: Item): void {
+  private setSelectedItem(item: Item | null): void {
     this.selectedItem = item;
   }
 
-  public getSelectedItem(): Item | null {
+  private getSelectedItem(): Item | null {
     return this.selectedItem;
   }
 
-  private dispenseProduct(): void {
+  private dispenceItem(): void {
     if (this.selectedItem) {
       this.showMessage(`Dispensing ${this.selectedItem.code}...`);
-      this.moneyInserted -= this.selectedItem.price;
+      this.returnChange();
       this.removeItem(this.selectedItem);
-      this.selectedItem = null;
+      this.setSelectedItem(null);
     }
   }
 
+  private returnChange(): void {
+    const change = this.cashCollected - this.selectedItem.price;
+    this.showMessage(`Returning money: ${change}`);
+    this.cashCollected = 0;
+  }
+
   private returnMoney(): void {
-    this.showMessage(`Returning money: ${this.moneyInserted}`);
-    this.moneyInserted = 0;
+    this.showMessage(`Returning money: ${this.cashCollected}`);
+    this.cashCollected = 0;
   }
 
-  public insertMoney(amount: number): void {
-    this.state.insertMoney(amount);
+  private abortTxn(): void {
+    this.showMessage(`Aborting txn...\nReturning money: ${this.cashCollected}`);
+    this.returnMoney();
+    this.setSelectedItem(null);
   }
 
-  public selectProduct(code: string): void {
-    this.state.selectProduct(code);
+  // only the actions performed by the user are made public
+
+  public insertCash(amount: number): void {
+    this.state.insertCash(amount);
   }
 
-  public dispenseProduct(): void {
-    this.state.dispenseProduct();
+  public selectItem(code: string): void {
+    this.state.selectItem(code);
   }
 
-  public ejectMoney(): void {
-    this.state.ejectMoney();
+  public dispenceItem(): void {
+    this.state.dispenceItem();
+  }
+
+  public cancelTxn(): void {
+    this.state.cancelTxn();
   }
 }
 
@@ -224,7 +242,7 @@ const items: { code: string; price: number }[] = [
 const vendingMachine = new VendingMachine(items);
 
 // Simulated user interaction
-vendingMachine.insertMoney(2);
-vendingMachine.selectProduct("A1");
-vendingMachine.dispenseProduct();
-vendingMachine.ejectMoney();
+vendingMachine.insertCash(2);
+vendingMachine.selectItem("A1");
+vendingMachine.dispenceItem();
+// vendingMachine.cancelTxn();

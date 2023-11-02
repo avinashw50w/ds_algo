@@ -1,10 +1,8 @@
 struct Node {
-    char c;
     vector<Node*> children;
     bool isLeaf;
 
-    Node (char c) {
-        this->c = c;
+    Node () {
         this->children = new vector<Node*>(26, NULL);
         this->isLeaf = false;
     } 
@@ -15,7 +13,7 @@ class Solution {
 
 public:
     Solution(vector<string> dict) {
-        this->trie = new Node("");
+        this->trie = new Node();
         for (string word: dict) insert(word);
     } 
 
@@ -24,7 +22,7 @@ public:
         for (int i = 0; i < word.length(); ++i) {
             char c = word[i];
             if (curr->children[c-'a'] == NULL) {
-            	curr->chlildren[c-'a'] = new Node(c);
+            	curr->chlildren[c-'a'] = new Node();
             }
         	curr = curr->children[c-'a'];
         }
@@ -54,9 +52,9 @@ public:
             res.push_back(prefix);
         }
 
-        for (int i = 0; i < 26; ++i ) {
+        for (int i = 0; i < curr->children.size(); ++i ) {
             if (curr->children[i] != NULL) {
-                prefix += curr->children[i]->c;
+                prefix += i + 'a';
                 getWordsRec(curr->children[i], res, prefix);
             }
         }

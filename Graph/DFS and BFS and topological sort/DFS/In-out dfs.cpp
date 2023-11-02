@@ -1,4 +1,14 @@
-/* Find the height of the tree when root is x. */
+/* Find the height of the tree when root is x. 
+find the height of the tree when u is the root
+Note: for a single query this can be easily calculated by calling dfs(u),
+but for answering multiple queries, we have to precalculate some data.
+
+inward height from a node u with respect to the root; in[u] = 1 + max(in[v1], in[v2], ..., in[vn])
+where v1, v2, ..., vn are the children of u
+outward height from a node u with respect to the root; out[v] = max(1 + out[u], 2 + in[v2]),
+where u is the parent, v and v2 are the children of u and 
+height of v2 is maximum among all the children of u except v.
+*/
 
 #include <bits/stdc++.h>
 using namespace std;

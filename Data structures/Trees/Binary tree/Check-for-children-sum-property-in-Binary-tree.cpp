@@ -14,6 +14,8 @@ bool check(Node *root) {
 
     return root->data == ld + rd and check(root->left) and check(root->right);
 }
+
+// another way
 int check(Node *root) {
 
     if (!root || (!root->left and !root->right)) return 1;

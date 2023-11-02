@@ -31,19 +31,27 @@ struct node
 };
 
 The structure of TreeNode is as follows
+
+*/
+/*TreeNode *newNode(int val) {
+    TreeNode *tmp = new TreeNode();
+    tmp->data = val;
+    tmp->left = tmp->right = NULL;
+    return tmp;
+}*/
 struct TreeNode
 {
     int data;
     TreeNode *left;
     TreeNode *right;
+
+    TreeNode(int data) {
+        data = data;
+        left = NULL;
+        right = NULL;
+    }
 };
-*/
-TreeNode *newNode(int val) {
-    TreeNode *tmp = new TreeNode();
-    tmp->data = val;
-    tmp->left = tmp->right = NULL;
-    return tmp;
-}
+
 /*You are required to complete this method*/
 void convert(node *head,TreeNode * &root)
 {
@@ -53,7 +61,7 @@ void convert(node *head,TreeNode * &root)
         return;
     }
   
-    root = newNode(head->data);
+    root = new TreeNode(head->data);
     head = head->next;
     q.push(root);
     
@@ -63,14 +71,14 @@ void convert(node *head,TreeNode * &root)
         
         TreeNode *lchild = NULL, *rchild = NULL;
         
-        lchild = newNode(head->data);
-        head = head->next;
+        lchild = new TreeNode(head->data);
         q.push(lchild);
+        head = head->next;
         
         if(head) {
-            rchild = newNode(head->data);
-            head = head->next;
+            rchild = new TreeNode(head->data);
             q.push(rchild);
+            head = head->next;
         }
         
         parent->left = lchild;

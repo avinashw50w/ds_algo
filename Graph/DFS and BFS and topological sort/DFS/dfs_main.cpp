@@ -32,7 +32,7 @@ int main() {
 
 /////////////////////////////////////////////////////////////
 
-// DFS for a general tree
+// DFS for a general tree(undirected acyclic)
 
 void dfs(int u, int baap = -1) {
 
@@ -124,10 +124,10 @@ int sum[maxn]; // sum[i] stores the maximum sum path from node i to leaf
 int a[maxn]; // a[i] contains the value of node i
 
 // the ans will be sum[0] if 0 is the root
+// sum[i] = max(sum[v] where v are the children of node i) + a[i]
 
 void dfs(int u, int baap) {
 
-	sum[u] = a[u];
 	int mx = 0;
 
 	for (auto v: G[u]) {
@@ -137,7 +137,7 @@ void dfs(int u, int baap) {
 		mx = max(mx, sum[v]);
 	}
 
-	sum[u] += mx;
+	sum[u] = a[u] + mx;
 }
 
 ///////////////////////////////////////////////////////////
@@ -165,8 +165,13 @@ bool isAncestor(int u, int v) {
 // where v1, v2, ..., vn are the children of u
 int in[maxn];
 // outward height from a node u with respect to the root; out[v] = max(1 + out[u], 2 + in[v2]),
-// where u is the parent, v and v2 are the children of u where height of the subtree rooted at v and v2
-// are the maximum
+// where u is the parent, v and v2 are the children of u and 
+// height of v2 is maximum among all the children of u except v.
+/*
+								u
+							   / \
+							  v   v2
+*/
 int out[maxn];
 int dp[maxn]; // dp[i] stores the height of tree if i is the root of the tree
 

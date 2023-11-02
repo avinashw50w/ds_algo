@@ -50,7 +50,7 @@ typedef long long ll;
 int dx[] = {1, -1, 1, -1, 2, -2, 2, -2};
 int dy[] = {2, 2, -2, -2, 1, 1, -1, -1};
 int mat[maxn][maxn];
-ll fact[maxn*maxn], ans, sum;
+ll fact[maxn*maxn], ans, horseCnt;
 int N, M, Q;
 
 void init() {
@@ -65,7 +65,7 @@ inline bool safe(int x, int y) {
 
 void dfs(int x, int y) {
     mat[x][y] = 0;
-    sum++;
+    horseCnt++;
     
     rep(i,0,8) {
         int nx = x+dx[i];
@@ -95,11 +95,11 @@ int main() {
         rep(i,0,N)
             rep(j,0,M)
                 if(mat[i][j] == 1) {
-                    sum = 0;
+                    horseCnt = 0;
                     dfs(i, j);
                     
-                    sum = fact[sum];
-                    ans = (ans * sum) % mod;
+                    horseCnt = fact[horseCnt];
+                    ans = (ans * horseCnt) % mod;
                 }
                 
         cout << ans << endl;
