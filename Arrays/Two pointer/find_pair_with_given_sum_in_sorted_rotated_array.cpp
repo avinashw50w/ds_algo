@@ -7,7 +7,7 @@ There is a pair (6, 10) with sum 16
 bool check(int a[], int n, int x) {
     // find the index of the smallest no
     int i = 0;
-    for (i = 0; i < n ++i) {
+    for (i = 0; i < n-1 ++i) {
         if (a[i] > a[i + 1]) break;
     }
     // set l to the index of the smallest no and r to the highest no

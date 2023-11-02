@@ -37,3 +37,17 @@ void solve(vector<int> a) {
 		cout << a[i];
 	}
 }
+
+// ---------------------------------------
+void solve(vector<int> &a) {
+	sort(a.begin(), a.end());
+	int n = a.size(), i, j, k = 0;
+	for (i = 0, j = n - 1, i < j; ++i, --j) {
+		a[k++] = a[j];
+		a[k++] = a[i];
+	}
+
+	if (n & 1) {
+		a[k++] = a[i];
+	}
+}

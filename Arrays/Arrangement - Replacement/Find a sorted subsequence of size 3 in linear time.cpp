@@ -11,7 +11,7 @@ Output: 5, 6, 30*/
 void solve(vector<int> a) {
 	int n = a.size();
 	if (n < 3) return;
-	int maxx = -1, mini = -1; // to store the maximum and minimum indexes
+	int maxx = n-1, mini = 0; // to store the maximum and minimum indexes
 	// smaller[i] will store the index of the smallest no to the left of a[i]
 	int smaller[n];
 	smaller[0] = -1;

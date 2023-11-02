@@ -37,9 +37,9 @@ class Solution {
     set<array<int, 2>, greater<array<int, 2>>> maxheap;
 public:
     void rebalance() {
-        if (maxheap.size() > minheap.size()) {
-            minheap.insert(*maxheap.begin());
-            maxheap.erase(*maxheap.begin());
+        if (minheap.size() > maxheap.size()) {
+            maxheap.insert(*minheap.begin());
+            minheap.erase(*minheap.begin());
         }
     }
     
@@ -62,7 +62,6 @@ public:
             }
             
             minheap.insert({ nums[i], i });
-            maxheap.insert(*minheap.begin()); minheap.erase(*minheap.begin());
             
             rebalance();
             
@@ -77,10 +76,10 @@ public:
 /*Find the median of all subarrays of size k*/
 
 double median(auto &it, bool isOdd) {
-	if (isOdd) return (double) * it;
-	int a = *it;
+	if (isOdd) return (double) (*it)[0];
+	int a = (*it)[0];
 	--it;
-	int b = *it;
+	int b = (*it)[0];
 	++it;
 	return (a + b) / 2.0;
 }
@@ -88,9 +87,9 @@ double median(auto &it, bool isOdd) {
 vector<double> getMedian(vector<int> a, int k) {
 	int n = a.size();
 	vector<double> res;
-	multiset<int> st;
+	set<array<int,2>> st;
 	for (int i = 0; i < k; ++i)
-		st.insert(a[i]);
+		st.insert({a[i], i});
 
 	auto it = st.begin();
 	for (int i = 0; i < k / 2; ++i)
@@ -102,15 +101,16 @@ vector<double> getMedian(vector<int> a, int k) {
 
 	for (int i = k; i < n; ++i) {
 		// remove a[i-k]
-		// eg. 1 2 3 4 5, med = 3, it at index 2,
-		//  after 1 is removed med = (3+4)/2, it at index 3
-		if (a[i - k] < *it)
+		// if the element to be removed is less than median, 
+		// ie. lies on the left side of median, then median will be the next element in
+		// sorted set
+		if (a[i - k] < (*it)[0])
 			++it;
-		st.erase(st.find(a[i - k]));
+		st.erase({a[i-k], i-k});
 		// insert a[i]
-		st.insert(a[i]);
+		st.insert({a[i], i});
 
-		if (a[i] < *it)
+		if (a[i] < (*it)[0])
 			--it;
 
 		res.push_back(median(it, isOdd));

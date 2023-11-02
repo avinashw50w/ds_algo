@@ -1,20 +1,18 @@
 /*Given an array a of n elements, where a[i] represents the height of buildings.
 Choose any two buildings i and j such that after removing all the building except
 i and j, the amount of water trapped btw the building i and j is maximum.
-summary: need to find the maximum value of min(a[i], a[j]) * (j - i - 1)
+summary: need to find the maximum value of min(a[i], a[j]) * (j - i)
 IDEA: use two pointer approach,
-set l = 0 and r = n-1
-if height[l] < height[r], then
-	update ans = max(ans, height[l] * (r - l + 1))
-now we can either increment l or decrement r,
-if we decrement r then height[r-1] can be either larger or smaller than height[l]
-if height[r-1] is larger then the ans will still be the same
-if height[r-1] is smaller then ans will decrease coz now ans will be height[r-1] * (r-l+1)
-so we have to increment l
 
-if height[r] < height[l], then
-	update ans = max(ans, height[r] * (r - l + 1))
-	decrement r
+NOTE: if (height[l] < height[r]) l++;
+here we have incremented l instead of decr r;
+Suppose we decr r, then there can be 2 cases
+case 1:
+    height[r-1] > height[l], in this case we will still choose height[l],
+    so, ans becomes height[l] * (r-1-1), since dist has decreased so ans has decreased
+case 2:
+    height[r-1] < height[l], in this case ans = height[r-1] * (r-1-l), 
+    since chosen height is decreased from prev so ans has decreased
 */
 // time complexity : O(N)
 int maxArea(vector<int>& height) {

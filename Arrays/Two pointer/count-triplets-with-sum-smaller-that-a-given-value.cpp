@@ -44,7 +44,7 @@ int countTriplets(int arr[], int n, int sum)
             // Else move left corner
             else
             {
-                // This is important. For current i and j, there
+                // This is important. For current a[i] and a[j], there
                 // can be total k-j third elements.
                 ans += (k - j);
                 j++;

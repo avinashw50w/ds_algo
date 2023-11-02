@@ -31,6 +31,7 @@ and so on.
 R1 = 0*arr[n-1] + 1*arr[0] +...+ (n-1)*arr[n-2]
 
 R1 - R0 = arr[0] + arr[1] + ... + arr[n-2] - (n-1)*arr[n-1]
+        = arr[0] + arr[1] + ... + arr[n-2] + arr[n-1] + n*arr[n-1]
 
 After 2 rotations arr[n-2], becomes first element of array, 
 arr[n-1] becomes second element, arr[0] becomes third element

@@ -7,7 +7,7 @@ void func(int a[], int n, int k)
 
 	for (i = 0; i < k; ++i) 
 	{
-		while(!q.empty() and a[q.back()] <= a[i]) q.pop_back();
+		while(!q.empty() and a[i] >= a[q.back()]) q.pop_back();
 		q.push_back(i);
 	}
 

@@ -1,46 +1,47 @@
-typedef priority_queue<int> maxHeap; // max heap
-typedef priority_queue<int, vector<int>, greater<int>> minHeap; // min heap
+class Solution {
 
-void addNumber(int n, maxHeap &leftHeap, minHeap &rightHeap)
-{
-	if(leftHeap.emtpy() || n < leftHeap.top())
-		leftHeap.push(n);
-	else
-		rightHeap.push(n);
-}
+priority_queue<int> maxheap;
+priority_queue<int, vector<int>, greater<int>> minheap;
 
-void rebalance(maxHeap &leftHeap, minHeap &rightHeap)
-{
-	if(leftHeap.size() - rightHeap.size() >= 2) {
-		rightHeap.push(leftHeap.top());
-		leftHeap.pop();
+public:
+	void addNumber(int n)
+	{
+		if(maxheap.emtpy() || n < maxheap.top())
+			maxheap.push(n);
+		else
+			minheap.push(n);
 	}
-	else if(rightHeap.size() - leftHeap.size() >= 2) {
-		leftHeap.push(rightHeap.top());
-		rightHeap.pop();
+
+	void rebalance()
+	{
+		if(maxheap.size() - minheap.size() >= 2) {
+			minheap.push(maxheap.top());
+			maxheap.pop();
+		}
+		else if(minheap.size() - maxheap.size() >= 2) {
+			maxheap.push(minheap.top());
+			minheap.pop();
+		}
 	}
-}
 
-int getMedian(maxHeap &leftHeap, minHeap &rightHeap) 
-{
-	if(leftHeap.size() == rightHeap.size())
-		return (leftHeap.top() + rightHeap.top()) >> 1;
-	if(leftHeap.size() - rightHeap.size() == 1)
-		return leftHeap.top();
-	if(rightHeap.size() - leftHeap.size() == 1)
-		return rightHeap.top();
-}
+	int getMedian() 
+	{
+		if(maxheap.size() == minheap.size())
+			return (maxheap.top() + minheap.top()) >> 1;
+		if(maxheap.size() - minheap.size() == 1)
+			return maxheap.top();
+		if(minheap.size() - maxheap.size() == 1)
+			return minheap.top();
+	}
 
-void printMedian() {
-	maxHeap leftHeap;
-	minHeap rightHeap;
+	void printMedian() {
+		int n;
 
-	int n;
-
-	while(cin >> n) {
-		addNumber(n, leftHeap, rightHeap);
-		rebalance(leftHeap, rightHeap);
-		cout << getMedian(leftHeap, rightHeap) << " ";
+		while(cin >> n) {
+			addNumber(n);
+			rebalance();
+			cout << getMedian() << " ";
+		}
 	}
 }
 

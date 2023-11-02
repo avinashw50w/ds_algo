@@ -1,5 +1,20 @@
 /*================================================== DEBUGGING TEMPLATES =======================================================*/
 
+// print any nested vector
+template<class T>
+void print(T const& object) {
+    std::cout << object << ' ';
+}
+
+template<class...Args>
+void print(std::vector<Args...> const& container) {
+    for(auto const& element : container) {
+        print(element);
+    }
+    std::cout << '\n';
+}
+
+////////////////////////////////////////////////////////////////////////
 #ifdef DEBUG
 #define debug(args...) {dbg,args; cerr<<endl;}
 #else

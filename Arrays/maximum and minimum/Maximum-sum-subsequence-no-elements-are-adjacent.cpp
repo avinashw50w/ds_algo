@@ -1,7 +1,8 @@
 
 int maxSum(vector<int> A) {
 	int n = A.size();
-	int a = 0, b = A[0], c = b;
+	if (n == 0) return 0;
+	int a = 0, b = A[0], c = max(b, a + A[0]);
 	for (int i = 1; i < n; ++i) {
 		c = max(b, a + A[i]);
 		a = b;

@@ -43,6 +43,8 @@ int countMinSwaps(string st)
 	}
 
 	// alternating string starts with 0
+	// means 0's should be at even positions and 1's at odd
+	// if most 0's are at
 	int cnt_swaps_1 = min(even_0, odd_1);
 
 	// alternating string starts with 1

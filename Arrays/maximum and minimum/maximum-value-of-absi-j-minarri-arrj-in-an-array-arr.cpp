@@ -2,31 +2,18 @@
 
 // Function to calculate maximum value of 
 // abs(i - j) * min(arr[i], arr[j]) in arr[]
-int Maximum_Product(int arr[], int n)
-{
-    int maxProduct = INT_MIN; // Initialize result
-    int currProduct; // product of current pair
- 
-    // loop  until they meet with each other
-    int Left = 0, right = n-1;
-    while (Left < right)
-    {
-        if (arr[Left] < arr[right])
-        {
-            currProduct = arr[Left]*(right-Left);
-            Left++;
-        }
-        else // arr[right] is smaller
-        {
-            currProduct = arr[right]*(right-Left);
-            right--;
-        }
- 
-        // maximizing the product
-        maxProduct = max(maxProduct, currProduct)
+const int inf = 1e9 + 7;
+int maxProduct(vector<int> a) {
+    int n = a.size();
+    int l = 0, r = n-1;
+    int maxprod = -inf;
+    while (l < r) {
+        int prod = (r-l) * min(a[l], a[r]);
+        maxprod = max(maxprod, prod);
+        if (a[l] < a[r]) l++;
+        else r--;
     }
- 
-    return maxProduct;
+    return maxprod;
 }
 
 /*How does this work?

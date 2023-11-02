@@ -1,3 +1,20 @@
+// NOTE: a[i] should be non-negative for this to work
+// O(n)
+int solve(vector<int> a, int k) {
+    int n = a.size();
+    int cnt = 0, sum = 0;
+    for (int st = 0, end = 0, end < n; ++end) {
+        sum += a[end];
+        while (st < end and sum >= k) {
+            sum -= a[st];
+            st++;
+        }
+        cnt += end - st + 1;
+    }
+
+    return cnt;
+}
+
 /*Count the # of subarray having sum less than k*/
 // IDEA: use merge sort
 // prefix[i] : prefix sum upto index i
@@ -46,20 +63,3 @@ int solve(vector<int> &a, int K) {
     return ans;
 }
 
-// NOTE: a[i] should be non-negative for this to work
-// O(n)
-int solve(vector<int> a, int k) {
-    int n = a.size();
-    int cnt = 0, sum = 0;
-    int start = 0, end = 0;
-    while (start < n and end < n) {
-        if (sum < k) {
-            if (end < n) sum += a[end++];
-            if (end >= start) cnt += end - start + 1;
-        }
-        else {
-            sum -= a[start++];
-        }
-    }
-    return cnt;
-}
