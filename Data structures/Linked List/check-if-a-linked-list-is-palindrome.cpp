@@ -38,55 +38,53 @@ struct node
   palindrome or not */
 bool isPalindrome(struct node *head)
 {
-  node *slow_ptr = head, *fast_ptr = head;
-  node *second_half, *prev_of_slow_ptr = head;
+  node *slow = head, *fast = head;
+  node *second_half, *prev_of_slow = head;
   node *midnode = NULL;  // To handle odd size list
   bool res = true; // initialize result
 
-  if (head && head->next)
+  if (!head or !head->next) return head;
+  /* Get the middle of the list. Move slow by 1
+    and fastr by 2, slow will have the middle
+    node */
+  while (fast && fast->next)
   {
-    /* Get the middle of the list. Move slow_ptr by 1
-      and fast_ptrr by 2, slow_ptr will have the middle
-      node */
-    while (fast_ptr && fast_ptr->next)
-    {
-      fast_ptr = fast_ptr->next->next;
+    fast = fast->next->next;
 
-      /*We need previous of the slow_ptr for
-       linked lists  with odd elements */
-      prev_of_slow_ptr = slow_ptr;
-      slow_ptr = slow_ptr->next;
-    }
-
-
-    /* fast_ptr would become NULL when there are even elements in list.
-       And not NULL for odd elements. We need to skip the middle node
-       for odd case and store it somewhere so that we can restore the
-       original list*/
-    if (fast_ptr != NULL) // for list of odd length
-    {
-      midnode = slow_ptr;
-      slow_ptr = slow_ptr->next;
-    }
-
-    // Now reverse the second half and compare it with first half
-    second_half = slow_ptr;
-    prev_of_slow_ptr->next = NULL; // NULL terminate first half
-    reverse(&second_half);  // Reverse the second half
-    res = compareLists(head, second_half); // compare
-
-    /* Construct the original list back */
-    reverse(&second_half); // Reverse the second half again
-
-    // If there was a mid node (odd size case) which
-    // was not part of either first half or second half.
-    if (midnode != NULL)
-    {
-      prev_of_slow_ptr->next = midnode;
-      midnode->next = second_half;
-    }
-    else  prev_of_slow_ptr->next = second_half;
+    /*We need previous of the slow for
+     linked lists  with odd elements */
+    prev_of_slow = slow;
+    slow = slow->next;
   }
+
+
+  /* fast would become NULL when there are even elements in list.
+     And not NULL for odd elements. We need to skip the middle node
+     for odd case and store it somewhere so that we can restore the
+     original list*/
+  if (fast != NULL) // for list of odd length
+  {
+    midnode = slow;
+    slow = slow->next;
+  }
+
+  // Now reverse the second half and compare it with first half
+  second_half = slow;
+  prev_of_slow_ptr->next = NULL; // NULL terminate first half
+  reverse(&second_half);  // Reverse the second half
+  res = compareLists(head, second_half); // compare
+
+  /* Construct the original list back */
+  reverse(&second_half); // Reverse the second half again
+
+  // If there was a mid node (odd size case) which
+  // was not part of either first half or second half.
+  if (midnode != NULL)
+  {
+    prev_of_slow_ptr->next = midnode;
+    midnode->next = second_half;
+  }
+  else  prev_of_slow_ptr->next = second_half;
   return res;
 }
 

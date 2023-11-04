@@ -1,3 +1,30 @@
+/*Find an element in a sorted rotated array.
+eg. 4 5 6 7 1 2 3
+*/
+
+class Solution {
+public:
+    int search(vector<int>& nums, int target) {
+        int l = 0, r = nums.size() - 1;
+        while (l <= r) {
+            int mid = l + (r-l)/2;
+            if (nums[mid] == target) return mid;
+            // first sorted half
+            if (nums[mid] >= nums[0]) {
+                if (nums[l] <= target and target < nums[mid]) r = mid-1;
+                else l = mid + 1;
+            } else {
+                if ( nums[mid] <= target and target <= nums[r]) l = mid + 1;
+                else r = mid-1;
+            }
+        }
+
+        return -1;
+    }
+};
+
+// another way
+
 
 int SearchCircularArray(int A[],int n,int x){
 	int low = 0, high = n-1;

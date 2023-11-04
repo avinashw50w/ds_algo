@@ -8,44 +8,42 @@ interface ElevatorState {
 
 enum Direction {
   UP = "UP",
-  DOWN = "DOWN"
+  DOWN = "DOWN",
 }
 
 // Concrete State: Elevator is Stopped
 class StoppedState implements ElevatorState {
-
   constructor(private elevator: Elevator) {}
 
   openDoor() {
-    console.log('Opening doors...');
+    console.log("Opening doors...");
   }
 
   closeDoor() {
-    console.log('Closing doors...');
+    console.log("Closing doors...");
   }
 
   requestFloor(floor: number) {
     this.elevator.addDestinationFloor(floor);
     this.elevator.setState(new MovingState(this.elevator));
-    this.elevator.serverRequestedFloors();
+    this.elevator.serveRequestedFloors();
   }
 
   stop() {
-    console.log('Elevator is already stopped.');
+    console.log("Elevator is already stopped.");
   }
 }
 
 // Concrete State: Elevator is Moving
 class MovingState implements ElevatorState {
-
   constructor(private elevator: Elevator) {}
 
   openDoor() {
-    console.log('Cannot open doors while moving.');
+    console.log("Cannot open doors while moving.");
   }
 
   closeDoor() {
-    console.log('Cannot close doors while moving.');
+    console.log("Cannot close doors while moving.");
   }
 
   requestFloor(floor: number) {
@@ -53,7 +51,7 @@ class MovingState implements ElevatorState {
   }
 
   stop() {
-    console.log('Stopping elevator...');
+    console.log("Stopping elevator...");
     this.elevator.setState(new StoppedState(this.elevator));
   }
 }
@@ -88,30 +86,19 @@ class Elevator {
     this.state.stop();
   }
 
-  // requestFloor(floor: number) {
-  //   if (floor === this.currentFloor) {
-  //     console.log(`Already on floor ${floor}.`);
-  //   } else {
-  //     this.requestedFloors.push(floor);
-  //     this.moveElevator();
-  //   }
-  // }
-
   private addDestinationFloor(floor: number) {
     if (this.requestedFloors.indexOf(floor) !== -1) {
-      console.log('Floor already requested.');
+      console.log("Floor already requested.");
     }
     this.requestedFloors.push(floor);
-
   }
 
-  private moveElevator(direction: Direction) {
-  }
+  private moveElevator(direction: Direction) {}
 
-  private serverRequestedFloors() {
+  private serveRequestedFloors() {
     if (this.requestedFloors.length === 0) {
       this.setState(new StoppedState());
-      console.log('Elevator is now idle.');
+      console.log("Elevator is now idle.");
       return;
     }
 
@@ -135,7 +122,7 @@ class Elevator {
     this.openDoor();
     delay(10000);
     this.closeDoor();
-    this.serverRequestedFloors();
+    this.serveRequestedFloors();
   }
 }
 

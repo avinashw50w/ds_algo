@@ -24,21 +24,21 @@ struct Node
     Node *left, *right;
 };
 
-void BToDLL(Node* root, Node** head_ref)
+void BToDLL(Node* root, Node* &head)
 {
     if (!root)
         return;
 
-    BToDLL(root->right, head_ref);
+    BToDLL(root->right, head);
 
-    root->right = *head_ref;
+    root->right = head;
 
-    if (*head_ref)
-        (*head_ref)->left = root;
+    if (head)
+        head->left = root;
 
-    *head_ref = root;
+    head = root;
 
-    BToDLL(root->left, head_ref);
+    BToDLL(root->left, head);
 }
 
 // Utility function for allocating node for Binary

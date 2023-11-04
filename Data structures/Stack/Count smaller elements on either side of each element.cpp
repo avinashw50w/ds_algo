@@ -14,7 +14,7 @@ void solve(vector<int> a) {
 
 	for (int i = 0; i < n; ++i) {
 		while (!st.empty() and a[st.top()] < a[i]) {
-			left[i] += left[st.top()];
+			left[i] += left[st.top()] + 1;
 			st.pop();
 		}
 		st.push(i);
@@ -24,7 +24,7 @@ void solve(vector<int> a) {
 
 	for (int i = n - 1; i >= 0; --i) {
 		while (!st.empty() and a[st.top()] < a[i]) {
-			right[i] += right[st.top()];
+			right[i] += right[st.top()] + 1;
 			st.pop();
 		}
 		st.push(i);

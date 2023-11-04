@@ -8,25 +8,28 @@ is previous (previous to tp) item in stack and ‘right index’ is ‘i’ (cur
 
 3) If the stack is not empty, then one by one remove all bars from stack and do step 2.b for every removed bar.*/
 
-int largestRectangleArea(vector<int> hist) {
-	int n = hist.size();
-	stack<int> st;
-	int maxarea = 0;
+class Solution {
+public:
+    int largestRectangleArea(vector<int>& hist) {
+        int n = hist.size();
+        stack<int> st;
+        int maxarea = 0;
 
-	for (int i = 0; i <= n; ++i) {
-		while (!st.empty() and (i == n or hist[st.top()] >= hist[i])) {
-			int height = hist[st.top()];
-			st.pop();
-			int width;
-			if (st.empty()) width = i;
-			else width = i-1 - st.top();
-			maxarea = max(maxarea, height * width);
-		}
-		st.push(i);
-	}
+        for (int i = 0; i <= n; ++i) {
+            while (!st.empty() and (i == n or hist[st.top()] >= hist[i])) {
+                int height = hist[st.top()]; st.pop();
+                int width;
+                if (st.empty()) width = i;
+                else width = i-1 - st.top();
 
-	return maxarea;
-}
+                maxarea = max(maxarea, height * width);
+            }
+            st.push(i);
+        }
+
+        return maxarea;
+    }
+};
 
 ////////////////////////////////////////////////////////////////
 // another way

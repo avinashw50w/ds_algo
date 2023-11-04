@@ -1,6 +1,48 @@
-/*Given the list of stock prices for n no of days. Find the maximum profit which can be earned
-if a maximum of k transations are allowed. A transation involves buy -> sell in sequence. No two trasactions
-should overlap.*/
+// Given the list of stock prices for n no of days. 
+// Find the maximum profit which can be earned when only 1 trasaction is allowed
+// Profit is earned when you do both buy and sell and sell value > buy value
+// we should first buy before selling
+
+int solve(vector<int> prices) {
+	int ans = 0, mini = 1e9;
+
+	for (int i = 0; i < prices.size(); ++i) {
+		ans = max(ans, prices[i] - mini);
+		mini = min(mini, prices[i]);
+	}
+
+	return ans;
+}
+
+////////////////////////////////////////////////////////////////
+// Another variation is that one can do any no of transation to obtain maximum profit
+// for that just keep adding the difference between the consecutive elements which are
+// strictly increasing.
+
+
+int solve(vector<int> prices) {
+	int n = prices.size();
+
+	int ans = 0;
+	for (int i = 1; i < n; ++i)
+		if (a[i] > a[i - 1]) ans += a[i] - a[i - 1];
+
+	return ans;
+}
+
+// another method
+int solve(vector<int> a) {
+	int best_with_stock = INT_MIN, best_without_stock = 0;
+
+	for (int x : a) {
+		best_with_stock = max(best_with_stock, best_without_stock - x);
+		best_without_stock = max(best_without_stock, best_with_stock + x);
+	}
+
+	return max(best_without_stock, best_with_stock);
+}
+/*Solve if a maximum of k transations are allowed. 
+A transation involves buy -> sell in sequence. No two trasactions should overlap.*/
 
 /*
 For any ith day, one can either buy/sell on that day or don't do any transation at all. So the recurrence
@@ -21,7 +63,7 @@ int solve(vector<int> prices, int K) {
 
 	for (int t = 1; t <= K; t++) {
 		for (int i = 1; i < n; ++i) {
-			int max_so_far = INT_MIN;
+			int max_so_far = dp[t][i-1];
 			for (int j = 0; j < i; ++j)
 				max_so_far = max(max_so_far, price[i] - price[j] + dp[t - 1][j]);
 
@@ -72,10 +114,10 @@ int solve(vector<int> prices, int K) {
 
 // Another more space optimized approach
 // let buy[i] = min amt spent till day i in buying stocks
-// let sell[i] = max profit till day i after selling stocks
-// buy[i] = max(buy[i], sell[i-1] - price[i]), if we buy on the ith day then the amt that we
-// have to loose is the previous profit - current stock price
-// sell[i] = max(sell[i], buy[i] + price[i]), if we sell on the ith day then the profit that
+// let profit[i] = max profit till day i after selling stocks
+// buy[i] = max(buy[i], profit[i-1] - price[i]), if we buy on the ith day then the amt that we
+// are left with is the previous day profit - current stock price
+// profit[i] = max(profit[i], buy[i] + price[i]), if we sell on the ith day then the profit that
 // we make is equal to prices of current stock + the amt spent in buying stocks till now
 // One thing to note is that if K > total # of days then the problems reduces to finding the
 // maximum profit when allowed to do multiple txns;
@@ -90,40 +132,40 @@ int solve(vector<int> price, int K) {
 		return ans;
 	}
 
-	vector<int> buy(K + 1, -1e9), sell(K + 1);
+	vector<int> buy(K + 1, -1e9), profit(K + 1);
 
 	for (int p : price) {
 		for (int i = 1; i <= K; ++i) {
-			buy[i] = max(buy[i], sell[i - 1] - p);
-			sell[i] = max(sell[i], buy[i] + p);
+			buy[i] = max(buy[i], profit[i - 1] - p);
+			profit[i] = max(profit[i], buy[i] + p);
 		}
 	}
 
-	return sell[K];
+	return profit[K];
 }
 
 ////////////////////////////////////////////////////////////////
 // recursive
 vector<int> price;
-int dp[N][2][t + 1];
+int dp[N][2][K + 1];
 
-int solve(int i, int own, int t, int N) {
+int solve(int i, int own, int k, int N) {
 	if (i == N or t == 0) return 0;
 
-	int &res = dp[i][own][t];
+	int &res = dp[i][own][k];
 	if (res != -1) return res;
 
 	if (own) {
-		int op1 = price[i] + solve(i + 1, 0, t - 1, N); // sell the stock
-		int op2 = solve(i + 1, own, t, N); // do nothing
+		int op1 = price[i] + solve(i + 1, 0, k - 1, N); // sell the stock
+		int op2 = solve(i + 1, own, k, N); // do nothing
 
 		return res = max(op1, op2);
 	}
 	else {
 		// note that t is not decrease becoz 1 txn consists of pair of buy and sell
 		// since here we only buy t is not decreased
-		int op1 = -price[i] + solve(i + 1, 1, t, N); // buy the stock
-		int op2 = solve(i + 1, own, t, N); // do nothing
+		int op1 = -price[i] + solve(i + 1, 1, k, N); // buy the stock
+		int op2 = solve(i + 1, own, k, N); // do nothing
 
 		return res = max(op1, op2);
 	}
@@ -141,33 +183,6 @@ int maxProfitAfterKTransactions(vector<int> price, int K) {
 
 	memset(dp, -1, sizeof(dp));
 	return solve(0, 0, K, price.size())
-}
-////////////////////////////////////////////////////////////////
-// Another variation is that one can do any no of transation to obtain maximum profit
-// for that just keep adding the difference between the consecutive elements which are
-// strictly increasing.
-
-
-int solve(vector<int> prices) {
-	int n = prices.size();
-
-	int ans = 0;
-	for (int i = 1; i < n; ++i)
-		if (a[i] > a[i - 1]) ans += a[i] - a[i - 1];
-
-	return ans;
-}
-
-// another method
-int solve(vector<int> a) {
-	int best_with_stock = INT_MIN, best_without_stock = 0;
-
-	for (int x : a) {
-		best_with_stock = max(best_with_stock, best_without_stock - x);
-		best_without_stock = max(best_without_stock, best_with_stock + x);
-	}
-
-	return max(best_without_stock, best_with_stock);
 }
 
 ////////////////////////////////////////////////////
@@ -220,15 +235,4 @@ int solve(vector<int> prices) {
 }
 
 //////////////////////////////////////////////////
-// when ONly 1 trasaction is allowed
 
-int solve(vector<int> prices) {
-	int ans = 0, mini = 1e9;
-
-	for (int i = 0; i < prices.size(); ++i) {
-		ans = max(ans, prices[i] - mini);
-		mini = min(mini, prices[i]);
-	}
-
-	return ans;
-}
