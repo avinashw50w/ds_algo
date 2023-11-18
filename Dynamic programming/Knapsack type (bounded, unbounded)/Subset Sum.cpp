@@ -1,59 +1,101 @@
-#include <iostream>
-using namespace std;
+/*Given an array of integers, check if a subset exists whose sum is target.
+NOTE: each element of the array can be taken only once.
+*/
+class Sol {
+	vector<int> dp;
+	vector<int> a;
+public: 
+	int subsetSumTopDownUtil(int pos, int sum) {
+		if (sum == 0) return true;
+		if (sum < 0) return false;
+		int &res = dp[sum];
+		if (res) return res;
 
-// let the total sum of the elemets of the array a be S
-bitset<S> bit;
-
-bit.reset();  // reset all bits to 0
-bit[0] = 1; // 0th bit will be 1 indicating that sum 0 is possible (ie, when no element is chosen)
-
-for (int i = 0; i < n; ++i) bit |= (bit << a[i]);
-
-// bit[i] will indicate that a subset sum of i is possible or not
-
-/////////////////////////////////////////////////////////////////////////////////
-// for -ve numbers also
-
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-// top down approach //
-
-int a[n];
-for (int i = 0; i < n; ++i) cin >> a[i];
-a[n] = -1;
-
-int subsetSum(int *a, int sum) {
-	for ( ; *a != -1 ; a++ ) {
-		if (*a == sum) return 1;
-		else if (*a < sum)
-			return subsetSum(a + 1, sum - *a) || subsetSum(a + 1, sum); // either include the element or don't include it
-	}
-	return 0;
-}
-
-/////////////////////////////////////////////////////////////////////////////////////////
-
-int subsetSum(int i, int sum) {
-	for (int k = i; k < n; ++k) {
-		if (a[k] == sum) return 1;
-		else if (sum > a[k])
-			return subsetSum(k + 1, sum - a[k]) || subsetSum(k + 1, sum);
-	}
-	return 0;
-}
-
-/////////////////////////////////////////////////////////////////////////////////////
-
-int dp[S + 10];
-void subsetSum() {
-	dp[0] = 1;
-	for (int i = 0; i < n; i++)	// for all the numbers of the array
-		for (int j = S; j >= a[i]; j--) // for sums ranging b/w a[i] to S
-			dp[j] |= dp[j - a[i]]
+		for (int i=pos; i<a.size(); ++i) {
+			res |= subsetSumTopDownUtil(pos+1, sum-a[i]);
 		}
+		return res;
+	}
+	// works even if array elements contain -ve numbers. But targetSum should be +ve 
+	// T: O(N*targetSum)
+	int subsetSumTopDown(vector<int> a, int targetSum) {
+		this->a = a;
+		dp = vector<int(targetSum+1, 0);
+		return subsetSumTopDownUtil(0, targetSum);
+	}
+
+	bool subsetSumPathUtil(int pos, int sum, vector<int> &path ) {
+		if (sum == 0) return true;
+		if (sum < 0) return false;
+		for (int i = pos; i < a.size(); ++i) {
+			if (subsetSumPathUtil(i+1, sum-a[i], path)) {
+				path.push_back(a[i]);
+				return true;
+			}
+		}
+		return false;
+	}
+
+	vector<int> subsetSumPath(vector<int> a, int targetSum) {
+		vector<int> path;
+		this->a = a;
+		subsetSumPathUtil(0, targetSum, path);
+		return path;
+	}
+
+	// works only if a[i] >= 0 and targetSum >= 0
+	// T: O(N*targetSum)
+	int subsetSumBottomUp(vector<int> a, int targetSum) {
+		int n = a.size();
+		dp = vector<int(targetSum+1, 0);
+		dp[0] = 1;
+
+		for (int i = 0; i < n; i++)	{// for all the numbers of the array
+			for (int j = targetSum; j >= a[i]; j--) {// for sums ranging b/w a[i] to S
+				dp[j] |= dp[j - a[i]];
+			}
+		}
+		return dp[targetSum];
+	}
+
+	// works only if a[i] >= 0 and targetSum >= 0
+	// T: O(N)
+	int subsetSumBitmask(vector<int> a, int targetSum) {
+		// let the total sum of the elemets of the array a be S
+		bitset<targetSum> bit;
+
+		bit.reset();  // reset all bits to 0
+		bit[0] = 1; // 0th bit will be 1 indicating that sum 0 is possible (ie, when no element is chosen)
+
+		// bit[i] will indicate that a subset sum of i is possible or not
+		for (int i = 0; i < n; ++i) {
+			bit |= (bit << a[i]);
+		}
+
+		return bit[targetSum];
+	}
+
+	// works for both a[i] +ve or -ve and targetSum can be either +ve or -ve;
+	// T: O(2^N * N)
+	int subsetSumBitmask2(vector<int> a, int targetSum) {
+		int n = a.size();
+		for (int i = 0; i < 1<<n; ++i) {
+			int subsetSum = 0;
+			for (int j = 0; j < n; ++j) {
+				if (i>>j&1) subsetSum += a[j];
+			}
+			if (subsetSum == target) return true;
+		}
+
+		return false;
+	}
+
+	int solve(int target) {
+		vector<int> a = {1,2,3,-4,6,5};
+		return subsetSumTopDown(a, target);
+	}
+}
+
 
 // here S is the total sum of the array
 // dp[k] indicates whether any subset of sum k exists in the array or not
@@ -66,15 +108,15 @@ bool isSubset(int a[], int n, int sum) {
 	for (int i = 0; i <= n; i++) subset[i][0] = true; //  if sum = 0 ,then it is possible to get it via an empty subset
 	for (int i = 1; i <= sum; i++) subset[0][i] = false; //  if the set is empty, and sum is positive then it is not possible to get the sum
 
-	for (int i = 1; i <= n; i++) {
-		for (int j = 1; j <= sum; j++) {
-			if (j < a[i - 1]) subset[i][j] = subset[i - 1][j];
+		for (int i = 1; i <= n; i++) {
+			for (int j = 1; j <= sum; j++) {
+				if (j < a[i - 1]) subset[i][j] = subset[i - 1][j];
 
-			else subset[i][j] = subset[i - 1][j] || subset[i - 1][j - a[i - 1]];
+				else subset[i][j] = subset[i - 1][j] || subset[i - 1][j - a[i - 1]];
+			}
 		}
+		return subset[n][sum];
 	}
-	return subset[n][sum];
-}
 
 //  lets say we have a set = { 2,3,7,8,10 } and we want sum =11
 /*  if we have sum 2 and set 3 , here sum is less than 3 , so we go to previous set ie 2 , and assign it the value at 2.the value at 2 may be true or false
