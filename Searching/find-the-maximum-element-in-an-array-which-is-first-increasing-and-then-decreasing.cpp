@@ -14,8 +14,7 @@ int find(int a[], int n) {
         if (l == r) return a[l];
         // if there are two elements
         if (r - l == 1) {
-            if (a[l] >= a[r]) return a[l];
-            else return a[r];
+            return max(a[l], a[r]);
         }
         mid = (l + r) >> 1;
         // if the middle ele is greater than its left and right ele, then return it

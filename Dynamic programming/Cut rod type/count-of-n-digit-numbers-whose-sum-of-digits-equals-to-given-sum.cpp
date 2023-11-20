@@ -33,67 +33,68 @@ The idea is simple, we subtract all values from 0 to 9 from given sum and recur 
 unsigned long long int countRec(int n, int sum)
 {
     // Base case
-    if (n == 0)
-       return sum == 0;
- 
+  if (n == 0)
+     return sum == 0;
+
     // Initialize answer
-    unsigned long long int ans = 0;
- 
+  unsigned long long int ans = 0;
+
     // Traverse through every digit and count
     // numbers beginning with it using recursion
-    for (int i=0; i<=9; i++)
-       if (sum-i >= 0)
-          ans += countRec(n-1, sum-i);
- 
-    return ans;
-}
- 
+  for (int i=0; i<=9; i++)
+     if (sum-i >= 0)
+        ans += countRec(n-1, sum-i);
+
+     return ans;
+  }
+
 // This is mainly a wrapper over countRec. It
 // explicitly handles leading digit and calls
 // countRec() for remaining digits.
-unsigned long long int finalCount(int n, int sum)
-{
+  unsigned long long int finalCount(int n, int sum)
+  {
     // Initialize final answer
-    unsigned long long int ans = 0;
- 
+     unsigned long long int ans = 0;
+
     // Traverse through every digit from 1 to
     // 9 and count numbers beginning with it
-    for (int i = 1; i <= 9; i++)
+     for (int i = 1; i <= 9; i++)
       if (sum-i >= 0)
          ans += countRec(n-1, sum-i);
- 
-    return ans;
-}
+
+      return ans;
+   }
  ////////////////////////////////////////////////////////////////////////////
 // dp //
-unsigned long long int countRec(int n, int sum)
-{
-    if (n == 0)
-       return sum == 0;
- 
-    if (lookup[n][sum] != -1)
-       return lookup[n][sum];
- 
-    unsigned long long int ans = 0;
- 
-    for (int i=0; i<10; i++)
-       if (sum-i >= 0)
-          ans += countRec(n-1, sum-i);
- 
-    return lookup[n][sum] = ans;
-}
- 
+   int countRec(int n, int sum)
+   {
+     if (n == 0)
+        return sum == 0;
+
+     int &res = dp[n][sum];
+     if (res != -1)
+        return dp[n][sum];
+
+
+     for (int i=0; i<10; i++) {
+        if (sum-i >= 0)
+           res += countRec(n-1, sum-i);
+     }
+
+     return res;
+  }
+
 // For handing first digit and count possibilities
 // for the remaining digits
-unsigned long long int finalCount(int n, int sum)
-{
-    memset(lookup, -1, sizeof lookup);
- 
-    unsigned long long int ans = 0;
- 
-    for (int i = 1; i <= 9; i++)
+  int finalCount(int n, int sum)
+  {
+     memset(dp, -1, sizeof dp);
+
+     int ans = 0;
+
+     for (int i = 1; i <= 9; i++)
       if (sum-i >= 0)
          ans += countRec(n-1, sum-i);
-    
-    return ans;
-}
+
+      return ans;
+   }

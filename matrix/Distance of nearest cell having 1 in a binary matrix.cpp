@@ -32,8 +32,7 @@ vector<vector<int>> solve(vector<vector<int>> mat) {
 
 	for (int i = 0; i < n; ++i) {
 		for (int j = 0; j < m; ++j) {
-			vis[i][j] = 0;
-			dist[i][j] = INT_MAX;
+			dist[i][j] = -1;
 			if (mat[i][j] == 1) {
 				dist[i][j] = 0;
 				q.push({i, j});
@@ -44,14 +43,13 @@ vector<vector<int>> solve(vector<vector<int>> mat) {
 	while (!q.empty()) {
 		auto p = q.front(); q.pop();
 		int x = p.first, y = p.second;
-		vis[x][y] = 1;
 
 		for (int i = 0; i < 4; ++i) {
 			int nx = x + dx[i], ny = y + dy[i];
-			if (nx >= 0 and nx < n and ny >= 0 and ny < m 
-				and dist[nx][ny] == INT_MAX and mat[nx][ny] != 1) {
-				dist[nx][ny] = min(dist[ny][ny], dist[x][y] + abs(nx - x) + abs(ny - y));
+			if (nx >= 0 and nx < n and ny >= 0 and ny < m and dist[nx][ny] == -1 and mat[nx][ny] == 0) {
+				dist[nx][ny] = dist[x][y] + abs(nx - x) + abs(ny - y);
 				q.push({ nx, ny });
+				mat[nx][ny] = 1;
 			}
 		}
 	}

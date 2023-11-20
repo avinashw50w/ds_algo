@@ -1,0 +1,8 @@
+1. for any rotated array, all the elements in the left half will be >= all the elements in the right half
+eg. 4 5 6 7 | 0 1 2
+so let's say we are at index mid,
+now to determine which half we are at, check if a[mid] >= a[n-1]
+if true then we are on the left half, otherwise right half
+
+In a sorted array, if a[mid] >= a[n-1], then it simply mean that 
+either the array is rotated or all elements are equal in the range [mid, n-1]

@@ -1,6 +1,13 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+/*
+fundamentals:
+nCr = n!/(n-r)! * r!
+nC0 = nCn = 1
+nCr = nCn-r
+nCr = n-1Cr + n-1Cr-1
+ */
 const int mod = (int)1e9 + 7;
 
 int C[5005][5005];
@@ -9,8 +16,7 @@ int C[5005][5005];
 void prec(){
     for(int n=1; n<5001; ++n){
         C[n][0] = C[n][n] = 1;
-        int k = n>>1;
-        for(int r=1; r<=k; ++r)
+        for(int r=1; r<=n/2; ++r)
             C[n][r] = C[n][n-r] = (C[n-1][r-1] + C[n-1][r]) % mod;
     }
 }
@@ -22,15 +28,15 @@ void nCr(int n, int r) {
     if(C[n][r] != -1) return C[n][r];
     return C[n][r] = nCr(n-1, r) + nCr(n-1, r-1);
 }
- 
+
 int main(){
-    
+
     prec();
 
     int n, r;
 
     while(cin>>n>>r){
-        
+
         cout << C[n][r] << endl;
     }
 }
@@ -50,14 +56,25 @@ long nCr(int n, int r){
     return C[n&1][r];
 }
 //////////////////////////////////////////////////////////////////////
-
+// using pascal's triangle
+/*
+                 1
+               1   1
+             1   2   1
+           1   3   3   1
+         1   4   6   4   1
+       1   5  10   10  5   1
+     1   6  15  20   15  6   1
+   1   7  21  35   35  21  7   1
+ 1   8  28  56  70   56   28  8   1
+ */
 int binomialCoeff(int n, int k)
 {
     int C[k+1];
     memset(C, 0, sizeof(C));
- 
+
     C[0] = 1;  // nC0 is 1
- 
+
     for (int i = 1; i <= n; i++)
     {
         // Compute next row of pascal triangle using

@@ -27,7 +27,7 @@ int solve(int u, int jumps) {
 		return weight[u];
 	if (dp[u][jumps] == -1) {
 		dp[u][jumps] = weight[u];
-		for (int v : g[u])
+		for (int v : g[u]) 
 			dp[u][jumps] = max(dp[u][jumps], weight[u] + solve(v, jumps - 1));
 	}
 	return dp[u][jumps];

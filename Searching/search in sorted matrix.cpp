@@ -10,6 +10,16 @@ for any index x of the above array, what is the position of the element at index
 it will be at row x/C and column x%C (both 0 indexed)
 */
 
+array<int, 2> find(vector<vector<int>> mat, int x) {
+	int n = mat.size(), m = mat[0].size();
+	int i = 0, j = m-1;
+	while (i < n and j >= 0) {
+		if (x > mat[i][j]) i++;
+		else if (x < mat[i][j]) j--;
+		else return {i, j}
+	}
+}
+
 pair<int, int> search(vector<vector<int>> matrix, int target) {
 	int R = matrix.size(), C = matrix[0].size();
 	int l = 0, r = R * C - 1, mid;

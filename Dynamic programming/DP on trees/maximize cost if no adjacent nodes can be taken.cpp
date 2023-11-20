@@ -8,27 +8,26 @@ vi G[N];   // graph
 int C[N];  // cost assosiated with each node
 dp1[N],dp2[N];           //  dp1 is for storing optimal cost of the children of the current node and dp2 is for storing optimal cost of the grandchildren of the current node
 void dfs(int u,int par){     // par is the parent of v
-	int sum1=0,sum2=0;     
-	for(auto v:G[u]){       //  for all the childrens of v
-		if(v==par) continue;    //  if child is the parent then do nothing and continue
+    dp1[u] = C[u];
+    dp2[u] = 0;
+	for(auto v: G[u]){       //  for all the childrens of v
+		if(v == par) continue;    //  if child is the parent then do nothing and continue
 		dfs(v,u);              // call dfs for all children of v
-		sum1+=dp2[v];               // sum of costs of the grandchildren of v  (if cost of v is included)
-		sum2+=max(dp1[v],dp2[v]);    // if cost of v is not included
+		dp1[u] += dp2[v];      // sum of costs of the grandchildren of v  (if cost of v is included)
+		dp2[u] += max(dp1[v], dp2[v]);    // if cost of v is not included
 	}
-	dp1[u] = C[u]+sum1;    //  if v is chosen ,then add its cost along with the maximum cost obtained from its grandchildren
-	dp2[u] = sum2;        
 }
 
 int main(){
     int n;
     cin >> n;
- 
+
     for(int i=1; i<n; i++){
         cin >> u >> v;
         G[u].push_back(v);
         G[v].push_back(u);
     }
- 
+
     dfs(1, 0);
     int ans = max(dp1[1], dp2[1]);
     cout << ans << endl;

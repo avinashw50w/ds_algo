@@ -12,7 +12,7 @@ public:
 		if (res) return res;
 
 		for (int i=pos; i<a.size(); ++i) {
-			res |= subsetSumTopDownUtil(pos+1, sum-a[i]);
+			res |= subsetSumTopDownUtil(i+1, sum-a[i]);
 		}
 		return res;
 	}
@@ -24,21 +24,30 @@ public:
 		return subsetSumTopDownUtil(0, targetSum);
 	}
 
+	// find a path that leads to targetSum, 
+	// and once the path is found then backtrack the path and store it
 	bool subsetSumPathUtil(int pos, int sum, vector<int> &path ) {
 		if (sum == 0) return true;
 		if (sum < 0) return false;
+		
+		if (dp.count(sum)) return dp[sum];
+
 		for (int i = pos; i < a.size(); ++i) {
 			if (subsetSumPathUtil(i+1, sum-a[i], path)) {
 				path.push_back(a[i]);
+				dp[sum] = path;
 				return true;
 			}
 		}
 		return false;
 	}
 
+	// works for both a[i] +ve or -ve and targetSum >= 0
+	// T: O(N*targetSum)
 	vector<int> subsetSumPath(vector<int> a, int targetSum) {
 		vector<int> path;
 		this->a = a;
+		unordered_map<int, vector<int> dp; // {sum, path}
 		subsetSumPathUtil(0, targetSum, path);
 		return path;
 	}

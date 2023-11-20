@@ -14,6 +14,7 @@ int solve(vector<int> a, int diff) {
 		if (m + 1 <= r and a[m + 1] - a[m] > diff)
 			return a[m] + diff;
 
+		// if the array until m is in AP, then look right
 		if (a[m] == a[0] + m * diff) l = m + 1;
 		else r = m - 1;
 	}
