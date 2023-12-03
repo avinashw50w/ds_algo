@@ -14,13 +14,13 @@ int find(int a[], int n) {
         mid = (l+r)>>1;
         if ((mid == 0 or a[mid-1] <= a[mid]) 
             && (mid == n-1 or a[mid] >= a[mid+1]))
-        return a[mid];
+            return a[mid];
 
         if (mid > 0 and a[mid-1] > a[mid]) r = mid-1;
         else l = mid+1;
     }
 
-return 0;
+    return 0;
 }
 
 /*Find a peak element in a 2D array
@@ -55,7 +55,7 @@ If max >= A[index][mid-1] & max >= A[index][pick+1], max is a peak, return max.
 If max < mat[max_index][mid-1], recur for left half of matrix.
 If max < mat[max_index][mid+1], recur for right half of matrix.*/
 
-int findMax(int arr[][MAX], int rows, int mid, int &max) 
+int findMaxInCol(int arr[][MAX], int rows, int mid, int &max) 
 { 
     int max_index = 0; 
     for (int i = 0; i < rows; i++) 
@@ -70,38 +70,38 @@ int findMax(int arr[][MAX], int rows, int mid, int &max)
     } 
     return max_index; 
 } 
-  
+
 // Function to find a peak element 
 int findPeakRec(int arr[][MAX], int rows, int columns, 
-                                              int mid) 
+  int mid) 
 { 
     // Evaluating maximum of mid column. Note max is 
     // passed by reference. 
     int max = 0; 
-    int max_index = findMax(arr, rows, mid, max); 
-  
+    int max_index = findMaxInCol(arr, rows, mid, max); 
+    
     // If we are on the first or last column, 
     // max is a peak 
     if (mid == 0 || mid == columns-1) 
         return max; 
-  
+    
     // If the max at mid is greater than its left and right elements( the max at mid is already greater than its top and bottom elements)
     if (max >= arr[max_index][mid-1] && 
-            max >= arr[max_index][mid+1]) 
+        max >= arr[max_index][mid+1]) 
         return max; 
-  
+    
     // If max is less than its left 
     if (max < arr[max_index][mid-1]) 
         return findPeakRec(arr, rows, columns, mid - mid/2); 
-  
+    
     // If max is less than its left 
     // if (max < arr[max_index][mid+1]) 
     return findPeakRec(arr, rows, columns, mid+mid/2); 
 } 
-  
+
 // A wrapper over findPeakRec() 
 int findPeak(int arr[][MAX], int rows, int columns) 
 { 
     return findPeakRec(arr, rows, columns, columns/2); 
 } 
-  
+

@@ -8,6 +8,23 @@ as input and prints first n lines of the Pascal’s triangle. Following are the 
 1 4 6 4 1
 1 5 10 10 5 1 */
 
+class Solution {
+public:
+    vector<vector<int>> generate(int rows) {
+        vector<vector<int>> res;
+        vector<int> v;
+        v.push_back(1);
+        res.push_back(v);
+        for (int i = 1; i < rows; ++i) {
+            v.resize(i+1);
+            for (int j = i; j > 0; --j) 
+                v[j] += v[j-1];
+            res.push_back(v);
+        }
+        return res;
+    }
+};
+
 int A[100][100];
 
 void genPascalTriangle() {

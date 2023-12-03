@@ -1,3 +1,10 @@
+/*
+Structural pattern
+when we want to add some extra functionality on top class functions
+
+eg. 1. decorating pizza with multiple toppings
+2. adding coupons disounts to product price
+ */
 // Component interface
 interface Car {
   assemble(): string;
@@ -6,17 +13,13 @@ interface Car {
 // Concrete component
 class BasicCar implements Car {
   assemble(): string {
-    return 'Basic car';
+    return "Basic car";
   }
 }
 
 // Decorator base class
-class CarDecorator implements Car {
-  protected car: Car;
-
-  constructor(car: Car) {
-    this.car = car;
-  }
+abstract class CarDecorator implements Car {
+  constructor(protected car: Car) {}
 
   assemble(): string {
     return this.car.assemble();

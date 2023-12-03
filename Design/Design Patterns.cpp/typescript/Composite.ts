@@ -1,3 +1,6 @@
+/*
+it's like composition
+ */
 // Component interface
 interface Component {
   operation(): void;
@@ -32,7 +35,7 @@ class Composite implements Component {
   }
 
   operation(): void {
-    console.log('Composite operation:');
+    console.log("Composite operation:");
     for (const child of this.children) {
       child.operation();
     }
@@ -40,9 +43,9 @@ class Composite implements Component {
 }
 
 // Client code
-const leaf1: Component = new Leaf('Leaf 1');
-const leaf2: Component = new Leaf('Leaf 2');
-const leaf3: Component = new Leaf('Leaf 3');
+const leaf1: Component = new Leaf("Leaf 1");
+const leaf2: Component = new Leaf("Leaf 2");
+const leaf3: Component = new Leaf("Leaf 3");
 
 const composite1: Component = new Composite();
 composite1.add(leaf1);
@@ -55,6 +58,7 @@ composite2.add(leaf3);
 // Calling operation on the composite, which recursively calls operation on its children
 composite2.operation();
 
+////////////////////////////////////////////////////////////////
 
 /*In this example, we have a Component interface that defines the common interface for both the leaf and composite classes. The Leaf class represents the individual elements or leaves of the composite structure. The Composite class represents a group of components and can contain other components, including other composites.
 

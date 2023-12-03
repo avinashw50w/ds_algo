@@ -12,17 +12,16 @@ Output:
 
 void solve(string s, int N, int open, int close, vector<string> &res) {
 
-	if (close == N)  {
+	if (open == N and close == N)  {
 		res.push_back(s);
 		return;
 	}
-	// while open brackets are more than closing brackets print closing brackets
-	if (open > close) 
-		solve(s + "}", N, open, close+1, res);
 
-	// otherwise print opening brackets
 	if (open < N) 
 		solve(s + "{", N, open+1, close, res);
+
+	if (open > close) 
+		solve(s + "}", N, open, close+1, res);
 }
 
 vector<string> print(int N) {
@@ -36,6 +35,6 @@ vector<string> print(int N) {
 
 int main()
 {
-  vector<string> res = print(3);
-  for (string s: res) cout << s << endl;
+	vector<string> res = print(3);
+	for (string s: res) cout << s << endl;
 }

@@ -17,10 +17,10 @@ bool ok() {
 int steadyGene(string gene) {
     n = gene.length();
     for (char c : gene) f[c]++;
-    if (ok()) return 0;
+        if (ok()) return 0;
     int j = 0, ans = n;
     for (int st = 0, end = 0; st < n; ++st) {
-        // keep removing from the start until not ok
+        // keep removing from the start until ok
         while (end < n and !ok()) {
             f[gene[end]]--;
             end++;

@@ -19,9 +19,8 @@ class Solution {
 public:
     int rob(vector<int>& num) {
         int n = num.size();
-        if (n == 0) return 0;
-        int a = 0, b = num[0], c = num[0];
-        for (int i = 1; i < n; ++i) {
+        int a = 0, b = 0, c = 0;
+        for (int i = 0; i < n; ++i) {
             c = max(b, a + num[i]);
             a = b;
             b = c;

@@ -1,4 +1,8 @@
-/* find shortest path in a graph when the edge weights are either 1 or 0 */
+/* find shortest path in a graph when the edge weights are either 1 or 0 
+we can use dijkstra algo to find the shortest path. 
+But since dijkstra is nothing but bfs using priority_queue.
+So we push the edge with weight 0 to the front and weight 1 to the end
+*/
 
 #include <bits/stdc++.h>
 using namespace std;

@@ -1,3 +1,14 @@
-Depth First Traversal can be used to detect cycle in both directed and undirected Graph. 
-cycle in an undirected graph can also be found using disjoint sets
-DFS for a connected graph produces a tree.
+1. Depth First Traversal can be used to detect cycle in both directed and undirected Graph.
+2. cycle in an undirected graph can also be found using disjoint sets
+3. DFS for a connected graph produces a tree.
+4. Dijkstra is BFS with priority queue. It is a greedy algorithm, coz we choose the neighbor with
+    the shortest weight.
+
+Shortest paths
+1. From a given source node:
+    - For Unweighted graphs, use BFS to find the shortest path. Distance array can be used as visited 
+    array coz if a node is visited for the first time, then it's distance from src is minimum.
+    - DFS can also be used, but it is inefficient way.
+
+    - For weighted graph, use Dijkstra if every edge weights >= 0, otherwise use Bellman Ford
+

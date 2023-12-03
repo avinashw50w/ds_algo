@@ -1,4 +1,7 @@
 // Time complexity : O(E + VlogV)
+// NOTE: Dijkstra is a greedy algorithm
+// edge weights should be >= 0
+// use it to find the shortest path to all the nodes from a given source.
 #include <bits/stdc++.h>
 using namespace std;
 typedef vector<int> vi;

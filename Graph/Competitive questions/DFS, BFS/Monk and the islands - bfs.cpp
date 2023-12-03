@@ -38,15 +38,14 @@ const int maxn = 1e4+2;
 const int oo = 1e9;
 int N, M;
 vector<int> G[maxn];
-int vis[maxn], dist[maxn];
+int dist[maxn];
 
 int main() {
     int T; cin >> T;
     
     while(T--) {
         rep(i,0,maxn) G[i].clear();
-        memset(vis, 0, sizeof(vis));
-        fill(dist, dist+maxn, oo);
+        fill(dist, dist+maxn, -1);
         cin >> N >> M;
         int X, Y;
         
@@ -55,7 +54,7 @@ int main() {
             G[X].push_back(Y);
             G[Y].push_back(X);
         }
-    
+
         queue<int> q;
         q.push(1);
         dist[1] = 0;
@@ -64,11 +63,11 @@ int main() {
             int u = q.front();
             q.pop();
             
-            if(vis[u]) continue;
-            vis[u] = 1;
-            
             for(int v: G[u]) {
-                if(!vis[v]) q.push(v), dist[v] = min(dist[v], dist[u] + 1);    
+                if(dist[v] == -1) {
+                    q.push(v);
+                    dist[v] = dist[u] + 1; 
+                }
             }
         }
         
@@ -77,21 +76,25 @@ int main() {
 }
 
 /////////////////////////////////////////////
-// simple one
-
+// using dfs
+// we need to traverse all possible paths from src to dest and update the dist 
+// it is inefficient way to find shortest path from src in an unweighted graph
 int dist[maxn], vis[maxn];
 
 void dfs(int u) {
     vis[u] = 1;
     for (auto v: G[u]) {
         if (!vis[v]) {
-            dist[v] = dist[u] + 1;
+            dist[v] = min(dist[v], dist[u] + 1);
             dfs(v);
         }
     }
+    vis[u] = 0;
 }
 
-int solve() {
-    dfs(1);
+int solve(int src) {
+    fill(dist, dist+maxn, INF);
+    dist[src] = 0;
+    dfs(src);
     return dist[N];
 }

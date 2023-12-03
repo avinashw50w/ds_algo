@@ -14,7 +14,7 @@ vector<vector<int>> G;
 pair<int, int> best; // {dist, node}
 int N;
 
-void DFS(int u, int par = -1, int dist = 0) {
+void DFS(int u = 0, int par = -1, int dist = 0) {
 	best = max(best, {dist, u});
 	for (auto v : G[u]) {
 		if (v == par) continue;
