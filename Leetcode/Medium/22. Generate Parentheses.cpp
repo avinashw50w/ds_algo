@@ -7,6 +7,36 @@ Example 2:
 
 Input: n = 1
 Output: ["()"]*/
+
+class Solution {
+    vector<string> ans;
+    int n;
+public:
+
+    void solve(string s, int open, int close) {
+        if (open == n and close == n) {
+            ans.push_back(s);
+            return;
+        }
+        
+        if (open < n) {
+            solve(s + "(", open + 1, close);
+        }
+
+        if (open > close) {
+            solve(s + ")", open, close + 1);
+        }
+    }
+
+    vector<string> generateParenthesis(int n) {
+        this->n = n;
+        solve("", 0, 0);
+
+        return ans;
+    }
+};
+
+////////////////////////////////////////////////////////////////////////////31. Next Permutation
 class Solution {
     vector<string> ans;
     int n;
@@ -17,7 +47,7 @@ public:
             ans.push_back(s);
             return;
         }
-  
+        
         if (open > close) {
             solve(s + ")", open, close + 1);
         }

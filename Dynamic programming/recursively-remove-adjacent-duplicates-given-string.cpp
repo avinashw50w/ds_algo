@@ -20,6 +20,7 @@ Output: Empty String
 Input: acaaabbbacdddd
 Output: acac*/
 
+// recursive
 string solve(string s) {
 	int n = s.size();
 
@@ -40,4 +41,23 @@ string solve(string s) {
 	}
 
 	return s;
+}
+
+// using stack
+string solve(string s) {
+	int n = s.size();
+	stack<char> st;
+	for (int i = 0; i < n; ++i) {
+		if (!st.empty() and s[i] == st.top())
+			st.pop();
+		else
+			st.push(s[i]);
+	}
+	string res;
+	while(!st.empty()) {
+		res += st.top();
+		st.pop();
+	}
+	reverse(begin(res), end(res));
+	return res;
 }

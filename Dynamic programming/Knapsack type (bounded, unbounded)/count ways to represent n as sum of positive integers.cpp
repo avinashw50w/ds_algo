@@ -36,7 +36,7 @@ int countWays(int n)
     memset(table, 0, sizeof(table));
  
     table[0] = 1;
- 
+    // a no n can be represented by n-1, n-2,..., 1. a total of n-1 elements
     for (int i=1; i<n; i++)
         for (int j=i; j<=n; j++)
             table[j] += table[j-i];

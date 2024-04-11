@@ -16,9 +16,11 @@ int solve(int A, int B) {
 		for (int j = 1; j <= B; ++j) {
 			if (i == j) continue;
 			int ans = 1e9;
+			for (int k = 1; k < i; ++k) {
+				ans = min(ans, dp[k][j] + dp[i - k][j]);
+			}
 			for (int k = 1; k < j; ++k) {
 				ans = min(ans, dp[i][k] + dp[i][j - k]);
-				ans = min(ans, dp[k][j] + dp[i - k][j]);
 			}
 			dp[i][j] = ans;
 		}

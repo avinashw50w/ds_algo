@@ -34,6 +34,6 @@ public:
         int ans = INT_MAX;
         for (int j = 0; j < n; ++j) ans = min(ans, dp[n-1][j]);
 
-        return ans;
+            return ans;
     }
 };

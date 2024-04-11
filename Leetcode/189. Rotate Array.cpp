@@ -3,7 +3,11 @@
 Follow up:
 
 Try to come up as many solutions as you can, there are at least 3 different ways to solve this problem.
-Could you do it in-place with O(1) extra space?*/
+Could you do it in-place with O(1) extra space?
+
+eg. 1 2 3 4 5 6 7 8  k = 3
+    6 7 8 1 2 3 4 5
+    */
 
 class Solution {
 public:

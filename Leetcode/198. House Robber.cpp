@@ -12,10 +12,9 @@ Explanation: Rob house 1 (money = 1) and then rob house 3 (money = 3).
 
 // dp[i] = max(dp[i-1], dp[i-2] + A[i])
 int rob(vector<int>& arr) {
-    if (arr.empty()) return 0;
-    int a = 0, b = arr[0], c = max(a, b);
+    int a = 0, b = 0, c = 0;
 
-    for (int i = 1; i < arr.size(); ++i) {
+    for (int i = 0; i < arr.size(); ++i) {
         c = max(b, a + arr[i]);
         a = b;
         b = c;

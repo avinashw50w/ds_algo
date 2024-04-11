@@ -1,0 +1,50 @@
+# What will be the db schema for the following chat feature
+# 1. User can login via phone number
+# 2. There will be both one to one and group chats
+# 3. There will be 3 types of messages: text, image and video
+# 4. Message status will be sent, delivered or read
+# 5. The sender can delete a message for himself or for everyone
+# 6. The sender can delete the entire conversation only for himself
+
+1. User
+- id
+- phone_number
+- country_code
+- name
+
+
+2. Chats
+- id
+- name
+- type enum(121, group)
+- created_at
+- updated_at
+
+3. ChatMembers
+- id
+- chat_id
+- user_id
+- role  enum(admin, member)
+- joined_at
+
+4. Messages
+- id
+- type     enum(text, image, video)
+- chat_id
+- sender_id
+- status  enum(sent, delivered, read)
+- content
+- media_url   text
+- created_at
+- read_at
+
+5. MessageDeletes
+- message_id
+- user_id
+- scope      enum(self, all)
+- deleted_at
+
+6. ChatDeletes
+- chat_id
+- user_id
+- deleted_at

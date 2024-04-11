@@ -27,15 +27,31 @@ subproblems in recursive structure of problem, we can use Dynamic Programming to
 
 int findMinSum(int arr[], int n)
 {
-    int sum[n];
- 
-    sum[0] = arr[0];
-    sum[1] = arr[1];
-    sum[2] = arr[2];
+  int sum[n];
+  
+  sum[0] = arr[0];
+  sum[1] = arr[1];
+  sum[2] = arr[2];
 
-    for (int i=3; i<n; i++)
-      sum[i] = arr[i] +
-              minimum(sum[i-3], sum[i-2], sum[i-1]);
+  for (int i=3; i<n; i++)
+    sum[i] = arr[i] +
+  minimum(sum[i-3], sum[i-2], sum[i-1]);
+  
+  return minimum(sum[n-1], sum[n-2], sum[n-3]);
+}
+////////////////////////////////////////////////////////////////
+int findMinSum(int arr[], int n)
+{
  
-    return minimum(sum[n-1], sum[n-2], sum[n-3]);
+  int a = arr[0];
+  int b = arr[1];
+  int c = arr[2];
+
+  for (int i=3; i<n; i++) {
+    c = arr[i] + minimum(a, b, c);
+    a = b;
+    b = c;
+  }
+  
+  return minimum(a, b, c);
 }

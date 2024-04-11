@@ -10,7 +10,7 @@ int solve(string s, set<string> dict) {
 
 	for (int i = 0; i < n; ++i) {
 		string left = s.substr(0, i + 1);
-		string right = s.substr(i + 1, n - i);
+		string right = s.substr(i + 1);
 		if (dict.count(left) and solve(right, dict)) return true;
 	}
 
@@ -68,7 +68,7 @@ void solve(string s, vector<string> buff, vector<vector<string>> &res) {
 
 	for (int i = 0; i < n; ++i) {
 		string left = s.substr(0, i + 1);
-		string right = s.substr(i + 1, n - i);
+		string right = s.substr(i + 1);
 
 		if (dict.count(left)) {
 			buff.push_back(left);

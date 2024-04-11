@@ -1,4 +1,4 @@
-/*Given a non-negative integer n, count all numbers with unique digits, x, where 0 ≤ x < 10n.
+/*Given a non-negative integer n, count all numbers with unique digits, upto x, where 0 ≤ x < 10n.
 
 Example:
 
@@ -19,8 +19,8 @@ public:
         fac[0] = 1; 
 
         for (int i = 1, m = 9; i <= n; ++i) fac[i] = m * fac[i-1], m--;
-    
-        dp[1] = 10;
+
+            dp[1] = 10;
         
         for (int i = 2; i <= n; ++i) {
             dp[i] = 9 * fac[i-1] + dp[i-1];

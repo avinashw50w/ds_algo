@@ -90,8 +90,8 @@ int main() {
 				break;
 			}
 
-		cout << ans << endl;
-	}
+			cout << ans << endl;
+		}
 
-	return 0;
-}
+		return 0;
+	}

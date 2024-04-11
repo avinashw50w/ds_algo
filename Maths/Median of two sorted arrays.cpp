@@ -45,7 +45,7 @@ int getMedian(int a1[], int a2[], int n) {
 }
 
 ///////////////////////////////////////////
-// simple but use O(N) extra space
+// simple 
 int getMedian(int a1[], int a2[], int n) {
     int i = 0, j = 0, m1 = -1, m2 = -1;
 

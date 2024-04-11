@@ -34,7 +34,7 @@ int main() {
 
 //////////////////////////////////////////////////
 // dp solution
-
+// T: O((logN + logK)^K)
 int solve(int n, int k) {
 	if (n == 0 || k == 0) return 1;
 	if (k < 0) return 0;
@@ -45,4 +45,22 @@ int solve(int n, int k) {
 		return dp[n][k] = solve(n - power(2, k), k) + solve(n, k-1);
 
 	else return dp[n][k] = solve(n, k-1);
+}
+
+////////////////////////////////////////////////////////////////
+// T: O(NlogN)
+int solve(int n) {
+	vector<int> dp(n+1, 0);
+	// 1 way to represent 0 as a sum of power of 2
+	dp[0] = 1;
+
+	// iterate through all powers of 2 upto n
+	for (int i = 1; i <= n; ++i) {
+		// iterate through all the #s from 2^i upto n
+		for (int j = i; j <= n; ++j) {
+			dp[j] += dp[i-j];
+		}
+	}
+
+	return dp[n];
 }

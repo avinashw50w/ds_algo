@@ -36,7 +36,7 @@ public:
         
         vector<int> res;
         for (int e: nums1) res.push_back(next[e]);
-        return res;
+            return res;
     }
 };
 

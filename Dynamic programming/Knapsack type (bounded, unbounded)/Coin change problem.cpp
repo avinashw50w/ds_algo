@@ -8,6 +8,22 @@ there are five solutions: {2,2,2,2,2}, {2,2,3,3}, {2,2,6}, {2,3,5} and {5,5}. So
 1) Solutions that do not contain ith coin (or Ai).
 2) Solutions that contain at least one Ai.*/
 
+// optimized O(n) space // 
+
+int count() {
+	int dp[sum+1] = {};
+
+	dp[0] = 1;
+
+	for(int i=0; i<n; ++i) {
+		for(int j=A[i]; j<=sum; ++j) {
+			dp[j] += dp[j-A[i]];
+		}
+	}
+
+	return dp[sum];
+}
+
 // i : indicates the ith coin ; sum : the required sum needed
 int count(int i, int sum) {
 
@@ -30,11 +46,10 @@ int dp[n+1][sum+1];
 memset(dp, -1, sizeof(dp));
 
 int count(int i, int sum) {
-	if(sum == 0) return 1;	
-
 	if(i < 0) return 0;
-
 	if(i <= 0 and sum > 0) return 0;
+	
+	if(sum == 0) return 1;	
 
 	if(dp[i][sum] != -1) return dp[i][sum];
 
@@ -49,9 +64,9 @@ int count() {
 	for(int i=0; i<n; ++i) d[i][0] = 1; 
 
 	// for each coin //
-	for(int i=0; i<n; ++i) {
+		for(int i=0; i<n; ++i) {
 		// for each sum // 
-		for(int j=1; j <= sum; ++j) {
+			for(int j=1; j <= sum; ++j) {
 
 			int x = (i-1>=0) ? dp[i-1][j] : 0;	// don't choose the ith element //
 
@@ -61,18 +76,4 @@ int count() {
 		}
 	}
 	return dp[n-1][sum];
-}
-
-// optimized O(n) space // 
-
-int count() {
-	int dp[sum+1] = {};
-
-	dp[0] = 1;
-
-	for(int i=0; i<n; ++i) 
-		for(int j=A[i]; j<=sum; ++j)
-			dp[j] += dp[j-A[i]];
-	
-	return dp[sum];
 }

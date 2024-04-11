@@ -33,3 +33,12 @@ vector<int> previousSmaller(vector<int> a) {
 
 	return res;
 }
+
+////////////////////////////////////////////////////////////////
+// another way
+vector<int> previousGreater(vector<int> a) {
+	reverse(a.begin(), a.end());
+	vector<int> res = nextGreater(a);
+	reverse(res.begin(), res.end());
+	return res;
+}

@@ -38,38 +38,44 @@ vector<string> solve(string s) {
 }
 
 ////////////////////////////////////////////////////////////////
-// get only distinct permutations
+// get only distinct permutations, if string contains duplicate characters
 vector<string> res;
+set<string> st;
 
 void solve(int pos, string &s) {
 	int n = s.length();
 	if (pos == n) {
-		res.push_back(s);
+		st.insert(s);
 		return;
 	}
 
 	for (int i = pos; i < n; ++i) {
-		if (i > pos and s[i] == s[pos]) continue;
-		if (i > pos and s[i] == s[i-1]) continue;
+		if (i > pos and (s[i] == s[pos] or s[i] == s[i-1])) continue;
 		swap(s[pos], s[i]);
 		solve(pos + 1, s);
 		swap(s[pos], s[i]);
 	}
 }
 
-void distinctPermutations(string s) {
+vector<string> distinctPermutations(string s) {
 	sort(s.begin(), s.end());
 	solve(0, s);
+	vector<string> ans;
+	for(string per: st) {
+		ans.push_back(per);
+	}
+	return ans;
 }
 
 ////////////////////////////////////////////////////////////////
 // another way to get distinct permutations
 unordered_map<char, int> f;
+set<string> st;
 
 void go(string s, string t, vector<string> &res) {
 	if (t.size() == s.size()) {
 		cout << t << " ";
-		res.push_back(t);
+		st.insert(t);
 		return;
 	}
 	for (int i = 0; i < s.size(); ++i) {
@@ -83,8 +89,11 @@ void go(string s, string t, vector<string> &res) {
 }
 
 vector<string> solve(string s) {
-	vector<string> res;
 	for (char c : s) f[c]++;
 		go(s, "", res);
-	return res;
+	vector<string> ans;
+	for(string per: st) {
+		ans.push_back(per);
+	}
+	return ans;
 }

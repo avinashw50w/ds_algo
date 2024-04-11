@@ -62,14 +62,14 @@ int subCount(int arr[], int n, int k)
         if (mod[i] > 1)
             result += (mod[i] * (mod[i] - 1)) / 2;
 
-    return result;
-}
+        return result;
+    }
 
-int main()
-{
-    int arr[] = {4, 5, 0, -2, -3, 1};
-    int k = 5;
-    int n = sizeof(arr) / sizeof(arr[0]);
-    cout << subCount(arr, n, k);
-    return 0;
-}
+    int main()
+    {
+        int arr[] = {4, 5, 0, -2, -3, 1};
+        int k = 5;
+        int n = sizeof(arr) / sizeof(arr[0]);
+        cout << subCount(arr, n, k);
+        return 0;
+    }

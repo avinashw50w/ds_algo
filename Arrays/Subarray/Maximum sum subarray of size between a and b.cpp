@@ -2,7 +2,7 @@
 
 int solve(vector<int> A, int a, int b) {
 	int n = A.size();
-	int sum[n + 1] = {};
+	vector<int> sum(n+1, 0);
 	for (int i = 0; i < n; ++i) {
 		sum[i + 1] = A[i] + sum[i];
 	}

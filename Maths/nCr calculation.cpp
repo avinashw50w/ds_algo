@@ -43,6 +43,7 @@ int main(){
 
 //////////////////////////////////////////////////////////////////////////////
 // space optimized way //
+int C[2][maxn];
 
 long nCr(int n, int r){
     for(int i=0; i<=n; ++i){
