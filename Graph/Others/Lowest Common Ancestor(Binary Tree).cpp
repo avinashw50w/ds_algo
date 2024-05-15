@@ -20,11 +20,12 @@ Node LCA(Node *node, int n1, int n2) {
 }
 
 ///////////////////////////////////////////////////////////
-/*In the above code, if any one of the  node is not present, then it returns the available node as lca,
+/*In the above code, if any one of the  node is not found(happens when n2 is present in the subtree on n1 and n1 is returned when found), then it returns the available node as lca,
 whereas ideally, it should return null. So to solve this problem, we check whether both the nodes are
 present int the tree or not
 */
 
+// enough to find lca iff both n1 and n2 are present in the tree
 Node *findlca(Node *root, int n1, int n2, int &v1, int &v2) {
     if (!root) return NULL;
     if (root->data == n1) {
@@ -50,10 +51,11 @@ bool find(Node *root, int val) {
     return false;
 }
 
+// finds the lca, but we are not sure whether both n1 and n2 are present in the tree
 Node *findLCA(Node *root, int n1, int n2) {
     bool v1 = false, v2 = false;
     Node *lca = findlca(root, n1, n2, v1, v2);
-    if ((v1 and v2) or (v1 and find(lca, v1)) or (v2 and find(lca, v2))) return lca;
+    if ((v1 and v2) or (v1 and find(lca, v2)) or (v2 and find(lca, v1))) return lca;
     return NULL;
 }
 ////////////////////////////////////////////////////////////

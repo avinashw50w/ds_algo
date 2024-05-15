@@ -12,9 +12,37 @@ and recursively check whether the new swapped number is at its correct position 
 we check from the start of the array, the first index i where the value is not i+1, then i+1 is our answer. */
 class Solution {
 public:
-  
-    static void correct(vector<int>& a, int idx) {
+    int firstMissingPositive(vector<int>& a) {
+        int n= size(a);
+        int i = 0;
+        while (i < n) {
+            int x = a[i]; // x = current element
+            
+            // x>=1 && x<=n : to check if x is in range[1, n]
+            // x != i+1 : skip if at index i correct element is present.
+            // a[x-1]!=x: skip if at index x-1 correct element is present
+            if(x>=1 && x<=n && a[x-1] != x){
+                swap(a[x-1],a[i]);
+            } else {
+                i++;
+            }
+        }
+
+        for(int i=0;i<n;i++) {
+            if(a[i] != i+1)
+                return i+1;       
+            
+        }
         
+        return n+1;
+    }
+};
+////////////////////////////////////////
+class Solution {
+public:
+
+    static void correct(vector<int>& a, int idx) {
+
         if(a[idx] < a.size()) {
             if(a[a[idx]-1] != a[idx]) {
                 swap(a[a[idx]-1], a[idx]);
@@ -31,10 +59,10 @@ public:
         for(int i = 0; i < n; ++i) 
             if(a[i] > 0 and a[i] != (i+1)) 
                correct(a, i)
-        
-        for(int i = 0; i < n; ++i)
+
+           for(int i = 0; i < n; ++i)
             if(a[i] != i+1) return i+1;
-            
+
         return n+1;
     }
 };
@@ -60,7 +88,7 @@ We traverse the array containing all positive numbers and to mark presence of an
 value at index x to negative. We traverse the array again and print the first index which has positive value. 
 In the following code, findMissingPositive() function does this part. Note that in findMissingPositive, 
 we have subtracted 1 from the values as indexes start from 0 in C.*/
- 
+
 /* Utility function that puts all non-positive (0 and negative) numbers on left 
   side of arr[] and return count of such numbers */
 int segregate (int arr[], int size) {
@@ -70,42 +98,42 @@ int segregate (int arr[], int size) {
            swap(arr[i], arr[j]);
            j++;  // increment count of non-positive integers
        }
-    return j;
-}
- 
+       return j;
+   }
+
 /* Find the smallest positive missing number in an array that contains
   all positive integers */
-int findMissingPositive(int arr[], int size)
-{
-  int i;
- 
+   int findMissingPositive(int arr[], int size)
+   {
+      int i;
+
   // Mark arr[i] as visited by making arr[arr[i] - 1] negative. Note that 
   // 1 is subtracted because index start from 0 and positive numbers start from 1
-  for(i = 0; i < size; i++)
-  {
-    if(abs(arr[i]) - 1 < size && arr[abs(arr[i]) - 1] > 0)
-      arr[abs(arr[i]) - 1] = -arr[abs(arr[i]) - 1];
+      for(i = 0; i < size; i++)
+      {
+        if(abs(arr[i]) - 1 < size && arr[abs(arr[i]) - 1] > 0)
+          arr[abs(arr[i]) - 1] = -arr[abs(arr[i]) - 1];
   }
   // Return the first index value at which is positive
   for(i = 0; i < size; i++)
     if (arr[i] > 0)
       return i+1;  // 1 is added becuase indexes start from 0
- 
+
   return size+1;
 }
- 
+
 /* Find the smallest positive missing number in an array that contains
   both positive and negative integers */
 int findMissing(int arr[], int size)
 {
    // First separate positive and negative numbers
    int shift = segregate (arr, size);
-  
+
    // Shift the array and call findMissingPositive for
    // positive part
    return findMissingPositive(arr+shift, size-shift);
 }
- 
+
 int main()
 {
   int arr[] = {4,3,-1,1};
