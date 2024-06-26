@@ -18,15 +18,11 @@ eg. 0 1 2 3  => 124
 vector<int> solve(vector<int> &A) {
 	int n = A.size();
 	vector<int> res;
+	int sum = 0, carry = 0;
 
-	int sum = A[n-1] + 1;
-	int carry = (sum == 10) ? 1: 0;
-	sum %= 10;
-	res.push_back(sum);
-
-	for (int i = n-2; i >= 0; --i) {
+	for (int i = n-1; i >= 0; --i) {
 		sum = A[i] + carry;
-		carry = (sum == 10) ? 1: 0;
+		carry = sum/10;
 		sum  %= 10;
 
 		res.push_back(sum);

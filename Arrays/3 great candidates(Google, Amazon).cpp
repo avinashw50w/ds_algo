@@ -10,11 +10,12 @@ Find the maximum collective ability from the given pool of candidates.
 // then ans = max(A * B * C, A * a * b)
 /*
 IDEA: we need three max elements and two min elements,
-then maximum product = max(prod of 3 max elements, prod of two min elements and the max element)
+then maximum product = max(prod of 3 max elements, prod of two min elements and the max element),
+coz there is a possibility that the 2 min elements are -ve, so their product will be +ve
  */
 
-sort(a, a + n, greater<int>);
-return max(a[0] * a[1] * a[2], a[0] * a[n - 1] * a[n - 2]);
+sort(a, a + n);
+return max(a[n-1] * a[n-2] * a[n-3], a[n-1] * a[0] * a[1]);
 
 
 /* Sort the array, then check every possible case

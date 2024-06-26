@@ -38,7 +38,7 @@ However, interviewbit seems to have no test cases for this scenario and the code
 int solve(vector<int> a) {
 	sort(a.begin(), a.end());
 	for (int i = 1; i < a.size(); ++i) if (a[i] == a[i - 1]) return a[i];
-	return -1;
+		return -1;
 }
 // Approach 2: use set
 // T: O(nlogn), S: O(n)
@@ -50,6 +50,7 @@ int solve(vector<int> a) {
 	}
 	return -1;
 }
+// Best one
 // Approach 3: Floyd's hare and tortoise algo
 // T: O(n), S: O(1)
 int solve(vector<int> &A) {

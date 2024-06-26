@@ -3,6 +3,47 @@ obtained after merging the above 2 arrays(i.e. array of length 2n). The complexi
 //Note : since each array contains n elements, so the size of the array after merging will be 2n(even)
 so, the median is the average the middle and next middle element.
 
+Method 1: use binary search
+Case 1: when total number of elements (n) is odd, then the median is at position n/2
+Case 2: when total number of elements (n) is even, then the median is the sum of elements 
+at position n/2 and position n/2-1
+*/
+// T: O(logN)
+double median(vector<int> a, vector<int> b) {
+    int n = a.size();
+    int pos = n, l = -1e9, r = 1e9, mid;
+    double ans = 0.0;
+
+    // for case 1:
+    while (l <= r) {
+        mid = l + (r-l)/2;
+        int ub = (upper_bound(a.begin(), a.end(), mid) - a.begin()) + 
+        (upper_bound(b.begin(), b.end(), mid) - b.begin());
+        if (ub <= pos) l = mid + 1;
+        else r = mid - 1;
+    }
+
+    ans = l;
+
+    // for case 2, we also need to find element at pos n/2-1
+    pos--;
+    l = -1e9;
+    r = 1e9;
+
+    while (l <= r) {
+        mid = l + (r-l)/2;
+        int ub = (upper_bound(a.begin(), a.end(), mid) - a.begin()) + 
+        (upper_bound(b.begin(), b.end(), mid) - b.begin());
+        if (ub <= pos) l = mid + 1;
+        else r = mid - 1;
+    }
+
+    ans = (ans + l)/2;
+
+    return ans;
+}
+
+/*
 /*Method 2 (By comparing the medians of two arrays)
 This method works by first getting medians of the two sorted arrays and then comparing them.
 

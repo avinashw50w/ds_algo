@@ -40,11 +40,11 @@ int printTour(struct petrolPump arr[], int n)
  
     /* Run a loop while all petrol pumps are not visited.
       And we have reached first petrol pump again with 0 or more petrol */
-    while (end != start || curr_petrol < 0)
+    while (start != end || curr_petrol < 0)
     {
         // If curremt amount of petrol in truck becomes less than 0, then
         // remove the starting petrol pump from tour
-        while (curr_petrol < 0 && start != end)
+        while (start != end && curr_petrol < 0)
         {
             // Remove starting petrol pump. Change start
             curr_petrol -= arr[start].petrol - arr[start].distance;

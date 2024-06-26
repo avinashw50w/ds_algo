@@ -15,14 +15,13 @@ int solve(vector<int>& a, int k) {
     map<int, int> mp;
     for (int start = 0, end = 0; end < n; ++end) {
         mp[a[end]]++;
-        int mn = (*mp.begin()).first;
-        int mx = (*mp.rbegin()).first;
-        if (mx - mn <= k) ans = max(ans, end - start + 1);
-        else {
+        while (start < end and (*mp.rbegin()).first - (*mp.begin()).first > k) {
             mp[a[start]]--;
             if (mp[a[start]] == 0) mp.erase(a[start]);
             start++;
         }
+
+        ans = max(ans, end - start + 1);
     }
     return ans;
 }

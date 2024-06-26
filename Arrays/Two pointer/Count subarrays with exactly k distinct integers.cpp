@@ -25,3 +25,13 @@ int atmostK(vector<int> a, int k) {
 int solve(vector<int> a, int k) {
     return atmostK(a, k) - atmostK(a, k-1);
 }
+
+/* NOTE: the reason why we didn't count the subarrays on the condition when mp.size() == k
+we could have used 
+if (mp.size() == k) cnt++;
+BUT, it will give wrong ans. For eg.
+
+arr = [1 1 1 2 3 4 6], k = 3
+mp.size() becomes 3 when we reach 3(index 4), and the cnt is incemented only once, whereas the 
+cnt should be 3 because there are 3 1's in the begining.
+*/
